@@ -15,7 +15,6 @@ class WebTest extends TestCase
     public function test_can_show_pack()
     {
         $pack = factory(Pack::class)->create();
-        dd ($pack);
 
         $response = $this->get(route ('packs.show', ['pack' => $pack]));
 
