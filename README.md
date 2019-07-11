@@ -3,13 +3,11 @@ Overview
 
 Allows people to manage their backpack weights and view the packs of other hikers.
 
-[nobo.at](https://nobo.at)
-
 
 Live Website
 =======================
 
-[nobo.at](https://nobo.at)
+[https://nobo.at](https://nobo.at)
 
 
 Requirements
