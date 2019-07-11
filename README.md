@@ -3,6 +3,8 @@ Overview
 
 Allows people to manage their backpack weights and view the packs of other hikers.
 
+[nobo.at](https://nobo.at)
+
 
 Requirements
 ============
@@ -10,6 +12,7 @@ Requirements
 * Composer
 * npm
 * Node
+* Redis
 * PHP >= 7.1.3
 * BCMath PHP Extension
 * Ctype PHP Extension
