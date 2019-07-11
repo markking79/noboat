@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PackSeason extends Model
+class PackCategory extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,7 +13,11 @@ class PackSeason extends Model
      */
     protected $fillable = [
         'name',
-        'weight'
+        'description',
+        'weight',
+        'is_visible',
+        'include_in_base_weight',
+        'include_in_pack_weight'
     ];
 
     public function pack()
