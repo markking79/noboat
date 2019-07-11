@@ -13,10 +13,29 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            'App\Repositories\PackCategoryRepositoryInterface',
+            'App\Repositories\PackCategoryRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\PackItemRepositoryInterface',
+            'App\Repositories\PackItemRepository'
+        );
+
         $this->app->bind(
             'App\Repositories\PackRepositoryInterface',
             'App\Repositories\PackRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\PackSeasonRepositoryInterface',
+            'App\Repositories\PackSeasonRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\UserRepositoryInterface',
+            'App\Repositories\UserRepository'
         );
     }
 

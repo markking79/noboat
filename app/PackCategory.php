@@ -24,5 +24,4 @@ class PackCategory extends Model
     {
         return $this->belongsTo(Pack::class);
     }
-
 }
