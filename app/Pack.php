@@ -29,7 +29,7 @@ class Pack extends Model
 
     public function season()
     {
-        return $this->hasOne(PackSeason::class);
+        return $this->hasOne(PackSeason::class, 'id', 'pack_season_id');
     }
 
     public function items ()

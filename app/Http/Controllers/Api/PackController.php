@@ -33,7 +33,7 @@ class PackController extends Controller
 
         $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
 
-        $pack = fractal($pack, new PackTransformer())->parseIncludes(['user'])->toArray();
+        $pack = fractal($pack, new PackTransformer())->parseIncludes(['user', 'season'])->toArray();
 
         return response()->json($pack);
     }

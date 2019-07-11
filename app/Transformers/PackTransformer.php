@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Pack;
 use League\Fractal\TransformerAbstract;
+use Illuminate\Support\Facades\Storage;
 
 class PackTransformer extends TransformerAbstract
 {
@@ -13,7 +14,7 @@ class PackTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'user'
+        'user', 'season'
     ];
 
     /**
@@ -26,11 +27,16 @@ class PackTransformer extends TransformerAbstract
         return [
             'id'    => (int) $pack->id,
             'name'  => (string) $pack->name,
+            'image' => (string) (($pack->image) ? Storage::url ($pack->image) : ''),
+            'heart_count'  => (int) $pack->heart_count,
+            'item_count'  => (int) $pack->visible_item_count,
+            'weight_ounces'  => (float) $pack->visible_ounces,
+            'cost'  => (float) $pack->visible_cost,
         ];
     }
 
     /**
-     * Include Author
+     * Include User
      *
      * @return \League\Fractal\Resource\Item
      */
@@ -39,5 +45,20 @@ class PackTransformer extends TransformerAbstract
         $user = $pack->user;
 
         return $this->item($user, new UserTransformer);
+    }
+
+    /**
+     * Include User
+     *
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeSeason(Pack $pack)
+    {
+        if (!$pack->season)
+            return;
+
+        $packSeason = $pack->season;
+
+        return $this->item($packSeason, new PackSeasonTransformer);
     }
 }
