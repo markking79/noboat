@@ -29,9 +29,7 @@ class PackController extends Controller
      */
     public function show($id, Request $request, PackService $packService)
     {
-        $pack_weight_units = $request->get('pack_weight_units', 'Imperial');
-
-        $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+        $pack = $packService->getByIdWithOnlyPublicPackItems($id);
 
         $pack = fractal($pack, new PackTransformer())->parseIncludes(['user', 'season', 'categories', 'categories.items'])->toArray();
 

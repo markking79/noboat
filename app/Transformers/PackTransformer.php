@@ -28,10 +28,13 @@ class PackTransformer extends TransformerAbstract
             'id'    => (int) $pack->id,
             'name'  => (string) $pack->name,
             'image' => (string) (($pack->image) ? Storage::url ($pack->image) : ''),
+            'cost'  => (float) $pack->visible_cost,
             'heart_count'  => (int) $pack->heart_count,
             'item_count'  => (int) $pack->visible_item_count,
             'weight_ounces'  => (float) $pack->visible_ounces,
-            'cost'  => (float) $pack->visible_cost,
+            'weight_imperial' => (string) $pack->visible_imperial,
+            'weight_metric' => (string) $pack->visible_metric,
+
         ];
     }
 

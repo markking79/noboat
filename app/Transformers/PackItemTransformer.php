@@ -22,9 +22,11 @@ class PackItemTransformer extends TransformerAbstract
             'description' => (string) $packItem->description,
             'purchase_link' => (string) $packItem->purchase_link,
             'image' => (string) (($packItem->image) ? Storage::url ($packItem->image) : ''),
-            'ounces_each' => (float) $packItem->ounces_each,
             'cost_each' => (float) $packItem->cost_each,
             'quantity' => (int) $packItem->quantity,
+            'ounces_each' => (float) $packItem->ounces_each,
+            'imperial_each' => (string) $packItem->imperial_each,
+            'metric_each' => (string) $packItem->metric_each,
         ];
     }
 

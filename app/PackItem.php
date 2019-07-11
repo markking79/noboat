@@ -33,4 +33,14 @@ class PackItem extends Model
         return $this->hasOne(PackCategory::class);
     }
 
+    public function getImperialEachAttribute ()
+    {
+        return round ($this->ounces_each / 16, 1) . ' lb.';
+    }
+
+    public function getMetricEachAttribute ()
+    {
+        return round ($this->ounces_each / 35.27, 1) . ' kg.';
+    }
+
 }

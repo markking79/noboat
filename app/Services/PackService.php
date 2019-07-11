@@ -18,7 +18,7 @@ class PackService
         $this->packCategoryRepository = $packCategoryRepository;
     }
 
-    public function getByIdWithOnlyPublicPackItems ($id, $pack_weight_units = 'Imperial')
+    public function getByIdWithOnlyPublicPackItems ($id)
     {
         $pack = $this->packRepository->getByIdWithAllPackItems($id);
 
@@ -29,7 +29,22 @@ class PackService
         $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = true);
         $pack->unsetRelation('items');
 
-        //dd ($pack);
+
+        return $pack;
+    }
+
+    public function getByIdWithAllPackItems ($id)
+    {
+        $pack = $this->packRepository->getByIdWithAllPackItems($id);
+
+        if (!$pack) return false;
+
+        $categories = $this->packCategoryRepository->getAll();
+
+        $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = false);
+        $pack->unsetRelation('items');
+
+
         return $pack;
     }
 

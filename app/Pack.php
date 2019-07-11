@@ -37,4 +37,14 @@ class Pack extends Model
         return $this->hasMany(PackItem::class);
     }
 
+    public function getVisibleImperialAttribute ()
+    {
+        return round ($this->visible_ounces / 16, 1) . ' lb.';
+    }
+
+    public function getVisibleMetricAttribute ()
+    {
+        return round ($this->visible_ounces / 35.27, 1) . ' kg.';
+    }
+
 }
