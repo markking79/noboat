@@ -22,12 +22,10 @@ class PackRepository implements PackRepositoryInterface
 
     public function getByIdWithAllPackItems ($id)
     {
-
         $data = Cache::tags('pack-'.$id)->remember('pack-'.$id, $this->secondsCache, function () use ($id) {
             return Pack::where ('id', $id)->with (['user', 'items'])->first ();
         });
 
         return $data;
-
     }
 }

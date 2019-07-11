@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Transformers\PackTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,6 +32,8 @@ class PackController extends Controller
         $pack_weight_units = $request->get('pack_weight_units', 'Imperial');
 
         $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+
+        $pack = fractal($pack, new PackTransformer())->parseIncludes(['user'])->toArray();
 
         return response()->json($pack);
     }
