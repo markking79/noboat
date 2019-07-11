@@ -14,7 +14,7 @@ class PackTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'user', 'season'
+        'user', 'season', 'categories'
     ];
 
     /**
@@ -48,7 +48,7 @@ class PackTransformer extends TransformerAbstract
     }
 
     /**
-     * Include User
+     * Include Season
      *
      * @return \League\Fractal\Resource\Item
      */
@@ -61,4 +61,20 @@ class PackTransformer extends TransformerAbstract
 
         return $this->item($packSeason, new PackSeasonTransformer);
     }
+
+    /**
+     * Include Categories
+     *
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeCategories(Pack $pack)
+    {
+        if (!$pack->categories)
+            return;
+
+        $packCategories = $pack->categories;
+
+        return $this->collection($packCategories, new PackCategoryTransformer);
+    }
+
 }

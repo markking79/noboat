@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d30e27f5-8b80-4335-bbcf-69a7f3857adf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Transformers/PackSeasonTransformer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Transformers/PackCategoryTransformer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Transformers/PackItemTransformer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Pack.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Pack.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/PackRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/PackRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/PackService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/PackService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Transformers/PackTransformer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Transformers/PackTransformer.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,40 +24,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Repositories/PackRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="25" column="69" selection-start-line="25" selection-start-column="69" selection-end-line="25" selection-end-column="69" />
-              <folding>
-                <element signature="e#36#49#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/PackItem.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Pack.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="35" column="85" selection-start-line="35" selection-start-column="85" selection-end-line="35" selection-end-column="85" />
+            <state relative-caret-position="402">
+              <caret line="35" column="119" selection-start-line="35" selection-start-column="119" selection-end-line="35" selection-end-column="119" />
               <folding>
                 <element signature="e#44#81#0#PHP" expanded="true" />
               </folding>
@@ -65,11 +35,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Transformers/PackItemTransformer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="1" lean-forward="true" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+              <folding>
+                <element signature="e#36#55#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Transformers/PackTransformer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49">
-              <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+            <state relative-caret-position="493">
+              <caret line="29" column="84" lean-forward="true" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="84" />
               <folding>
                 <element signature="e#36#49#0#PHP" expanded="true" />
               </folding>
@@ -77,11 +59,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Transformers/PackSeasonTransformer.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Services/PackService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+            <state relative-caret-position="187">
+              <caret line="28" column="106" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="106" />
+              <folding>
+                <element signature="e#32#68#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -132,7 +117,6 @@
         <option value="$PROJECT_DIR$/app/Repositories/PackCategoryRepositoryInterface.php" />
         <option value="$PROJECT_DIR$/app/Providers/RepositoryServiceProvider.php" />
         <option value="$PROJECT_DIR$/app/PackCategory.php" />
-        <option value="$PROJECT_DIR$/app/Services/PackService.php" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Repositories/PackCategoryRepository.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
@@ -141,9 +125,12 @@
         <option value="$PROJECT_DIR$/app/PackItem.php" />
         <option value="$PROJECT_DIR$/app/Repositories/PackRepository.php" />
         <option value="$PROJECT_DIR$/app/Pack.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php" />
         <option value="$PROJECT_DIR$/app/Transformers/PackSeasonTransformer.php" />
         <option value="$PROJECT_DIR$/app/Transformers/PackTransformer.php" />
+        <option value="$PROJECT_DIR$/app/Transformers/PackCategoryTransformer.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php" />
+        <option value="$PROJECT_DIR$/app/Transformers/PackItemTransformer.php" />
+        <option value="$PROJECT_DIR$/app/Services/PackService.php" />
       </list>
     </option>
   </component>
@@ -267,6 +254,12 @@
               <item name="noboat" type="b2602c69:ProjectViewProjectNode" />
               <item name="noboat" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="noboat" type="b2602c69:ProjectViewProjectNode" />
+              <item name="noboat" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Transformers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -310,12 +303,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562747875551</updated>
-      <workItem from="1562747879048" duration="27024000" />
+      <workItem from="1562747879048" duration="29148000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27024000" />
+    <option name="totallyTimeSpent" value="29148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="96" width="1318" height="728" extended-state="0" />
@@ -369,23 +362,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tests/Feature/PackTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#33#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phpunit.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -621,16 +597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/PackService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding>
-            <element signature="e#32#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
@@ -714,33 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Transformers/UserTransformer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="6" lean-forward="true" selection-end-line="23" />
-          <folding>
-            <element signature="e#36#49#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="85" selection-start-line="35" selection-start-column="85" selection-end-line="35" selection-end-column="85" />
-          <folding>
-            <element signature="e#44#81#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Transformers/PackSeasonTransformer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Repositories/PackRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="419">
@@ -751,12 +690,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Transformers/PackTransformer.php">
+    <entry file="file://$PROJECT_DIR$/app/Transformers/UserTransformer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+        <state relative-caret-position="204">
+          <caret line="12" column="6" lean-forward="true" selection-end-line="23" />
           <folding>
             <element signature="e#36#49#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Transformers/PackSeasonTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="12" lean-forward="true" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Transformers/PackCategoryTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+          <folding>
+            <element signature="e#36#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PackController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="35" column="119" selection-start-line="35" selection-start-column="119" selection-end-line="35" selection-end-column="119" />
+          <folding>
+            <element signature="e#44#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Transformers/PackTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="84" lean-forward="true" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="84" />
+          <folding>
+            <element signature="e#36#49#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Transformers/PackItemTransformer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="1" lean-forward="true" selection-start-line="30" selection-start-column="1" selection-end-line="30" selection-end-column="1" />
+          <folding>
+            <element signature="e#36#55#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/PackService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="28" column="106" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="106" />
+          <folding>
+            <element signature="e#32#68#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

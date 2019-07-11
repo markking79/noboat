@@ -26,14 +26,14 @@ class PackService
 
         $categories = $this->packCategoryRepository->getAll();
 
-        $pack->categories = $this->groupItemsByCategories ($pack, $categories);
+        $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = true);
         $pack->unsetRelation('items');
 
         //dd ($pack);
         return $pack;
     }
 
-    private function groupItemsByCategories ($pack, $categories) : Collection
+    private function groupItemsByCategories (&$pack, &$categories, $return_only_visible = false) : Collection
     {
         $categoriesWithItems = collect ();
 
@@ -41,8 +41,16 @@ class PackService
         {
             foreach ($categories as $category)
             {
-                $category['items'] = $pack->items->where ('category_id', $category->id);
-                $categoriesWithItems->push ($category);
+                $includeCategory = $category->is_visible;
+
+                if (!$return_only_visible)
+                    $includeCategory = true;
+
+                if ($includeCategory)
+                {
+                    $category['items'] = $pack->items->where ('category_id', $category->id);
+                    $categoriesWithItems->push ($category);
+                }
             }
         }
 
