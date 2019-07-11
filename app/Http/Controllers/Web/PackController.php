@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Services\SessionService;
+use App\Services\PackService;
+
 class PackController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -20,12 +23,16 @@ class PackController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int        $id
+     * @param PackService $packService
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show($id, Request $request, PackService $packService, SessionService $sessionService)
     {
-        return view ('site/packs/show');
-    }
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
+        $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+
+        return view('site/packs/show', compact('pack', 'pack_weight_units'));
+    }
 }
