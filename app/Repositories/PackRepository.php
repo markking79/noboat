@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Pack;
+
 class PackRepository implements PackRepositoryInterface
 {
     public function getAll ()
@@ -14,8 +16,8 @@ class PackRepository implements PackRepositoryInterface
 
     }
 
-    public function getById ($id)
+    public function getByIdWithAllPackItems ($id)
     {
-
+        return Pack::where ('id', $id)->firstOrFail ();
     }
 }

@@ -1,1 +1,3 @@
 show pack
+
+@dd ($pack)
