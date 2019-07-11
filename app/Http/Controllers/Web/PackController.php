@@ -32,6 +32,8 @@ class PackController extends Controller
         $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
         $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+        if (!$pack)
+            abort(404);
 
         return view('site/packs/show', compact('pack', 'pack_weight_units'));
     }

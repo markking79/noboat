@@ -32,4 +32,9 @@ class Pack extends Model
         return $this->hasOne(PackSeason::class);
     }
 
+    public function items ()
+    {
+        return $this->hasMany(PackItem::class);
+    }
+
 }

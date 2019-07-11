@@ -18,6 +18,6 @@ class PackRepository implements PackRepositoryInterface
 
     public function getByIdWithAllPackItems ($id)
     {
-        return Pack::where ('id', $id)->firstOrFail ();
+        return Pack::where ('id', $id)->with (['items'])->first ();
     }
 }

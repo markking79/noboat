@@ -17,6 +17,7 @@ class PackService
     public function getByIdWithOnlyPublicPackItems ($id, $pack_weight_units = 'Imperial')
     {
         $pack = $this->packRepository->getByIdWithAllPackItems($id);
+        //dd ($pack);
         return $pack;
     }
 }

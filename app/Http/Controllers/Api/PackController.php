@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Services\SessionService;
 use App\Services\PackService;
 
 class PackController extends Controller
@@ -27,9 +26,9 @@ class PackController extends Controller
      * @param PackService $packService
      * @return \Illuminate\View\View
      */
-    public function show($id, Request $request, PackService $packService, SessionService $sessionService)
+    public function show($id, Request $request, PackService $packService)
     {
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
+        $pack_weight_units = $request->get('pack_weight_units', 'Imperial');
 
         $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
 

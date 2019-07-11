@@ -23,6 +23,11 @@ class PackItem extends Model
         'weight'
     ];
 
+    public function pack()
+    {
+        return $this->belongsTo(Pack::class);
+    }
+
     public function category()
     {
         return $this->hasOne(PackCategory::class);
