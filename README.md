@@ -6,6 +6,12 @@ Allows people to manage their backpack weights and view the packs of other hiker
 [nobo.at](https://nobo.at)
 
 
+Live Website
+=======================
+
+[nobo.at](https://nobo.at)
+
+
 Requirements
 ============
 
@@ -65,6 +71,7 @@ Installing jpegoptim
     yum install -y epel-release
     yum install jpegoptim
     
+    
 Setup cPanel (if needed)
 ============
 
@@ -85,6 +92,7 @@ Update Pulls From GitHub
     cd /root/web/folder
     
     git --work-tree=/root/web/folder pull https://markking79@github.com/markking79/noboat.git
+    
     
 Push Changes To GitHub
 ============
