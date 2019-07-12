@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Transformers\PackTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Transformers\PackTransformer;
 use App\Services\PackService;
 
 class PackController extends Controller
@@ -15,9 +14,16 @@ class PackController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request, PackService $packService)
     {
-        return view ('site/packs/index');
+        $page_number = $request->get ('page', 1);
+
+        $packs = $packService->getAllPaginate($page_number);
+
+        if ($packs)
+            $packs = fractal($packs, new PackTransformer())->parseIncludes(['season'])->toArray();
+        
+        return response()->json($packs);
     }
 
     /**
@@ -27,11 +33,12 @@ class PackController extends Controller
      * @param PackService $packService
      * @return \Illuminate\View\View
      */
-    public function show($id, Request $request, PackService $packService)
+    public function show($id, PackService $packService)
     {
-        $pack = $packService->getByIdWithOnlyPublicPackItems($id);
+        $pack = $packService->getById($id);
 
-        $pack = fractal($pack, new PackTransformer())->parseIncludes(['user', 'season', 'categories', 'categories.items'])->toArray();
+        if ($pack)
+            $pack = fractal($pack, new PackTransformer())->parseIncludes(['user', 'season', 'categories', 'categories.items'])->toArray();
 
         return response()->json($pack);
     }

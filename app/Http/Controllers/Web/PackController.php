@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use App\Services\SessionService;
+use App\Transformers\PackTransformer;
 use App\Services\PackService;
 
 class PackController extends Controller
@@ -32,6 +31,7 @@ class PackController extends Controller
         $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
         $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+
         if (!$pack)
             abort(404);
 

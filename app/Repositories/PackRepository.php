@@ -10,14 +10,13 @@ class PackRepository implements PackRepositoryInterface
 
     private $secondsCache = 1;//60*60*24;
 
-    public function getAll ()
+    public function getAllWithSeasonPaginate ($page)
     {
+        $data = Cache::tags('packs')->remember('packs', $this->secondsCache, function () use ($page) {
+            return Pack::with (['season'])->paginate(21);
+        });
 
-    }
-
-    public function getAllPaginate ($page)
-    {
-
+        return $data;
     }
 
     public function getByIdWithAllPackItems ($id)

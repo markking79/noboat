@@ -18,7 +18,14 @@ class PackService
         $this->packCategoryRepository = $packCategoryRepository;
     }
 
-    public function getByIdWithOnlyPublicPackItems ($id)
+    public function getAllPaginate ($page)
+    {
+        $packs = $this->packRepository->getAllWithSeasonPaginate($page);
+
+        return $packs;
+    }
+
+    public function getById ($id)
     {
         $pack = $this->packRepository->getByIdWithAllPackItems($id);
 

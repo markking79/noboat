@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 interface PackRepositoryInterface
 {
-    public function getAll();
-    public function getAllPaginate($page);
+    public function getAllWithSeasonPaginate($page);
     public function getByIdWithAllPackItems($id);
 }
