@@ -15,16 +15,8 @@ class PackRepository implements PackRepositoryInterface
         $this->secondsCache = config('custom.seconds_database_cache');
     }
 
-    public function getAllWithSeasonPaginate ($page)
-    {
-        $data = Cache::tags('packs')->remember('packs-'.$page, $this->secondsCache, function () use ($page) {
-            return Pack::where ('is_visible', true)->with (['season'])->orderBy ('heart_count', 'desc')->paginate(21);
-        });
 
-        return $data;
-    }
-
-    public function getAllByColumnsWithSeasonPaginate ($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id)
+    public function getAllWithSeasonPaginate ($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id)
     {
         $data = Cache::tags('packs')->remember('packs-'.$page.'_'.$ounces_min.'_'.$ounces_max.'_'.$cost_min.'_'.$cost_max.'_'.$season_id, $this->secondsCache, function () use ($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id) {
 
@@ -41,7 +33,7 @@ class PackRepository implements PackRepositoryInterface
                 $whereArray[] = ['visible_ounces', '>=', $ounces_min];
                 $whereArray[] = ['visible_ounces', '<=', $ounces_max];
             }
-            else
+            else if (!$ounces_min && $ounces_max)
             {
                 $whereArray[] = ['visible_ounces', '<=', $ounces_max];
             }
@@ -56,17 +48,18 @@ class PackRepository implements PackRepositoryInterface
                 $whereArray[] = ['visible_cost', '>=', $cost_min];
                 $whereArray[] = ['visible_cost', '<=', $cost_max];
             }
-            else
+            else if (!$cost_min && $cost_max)
             {
                 $whereArray[] = ['visible_cost', '<=', $cost_max];
             }
 
             // season
-            if ($season_id != 'all')
+            if ($season_id)
             {
 
-                $whereArray[] = ['packseason_id', '=', $season_id];
+                $whereArray[] = ['pack_season_id', '=', $season_id];
             }
+            //dd ($whereArray);
 
             return Pack::where($whereArray)->with (['season'])->orderBy ('heart_count', 'desc')->paginate(21);
         });

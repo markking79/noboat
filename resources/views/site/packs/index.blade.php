@@ -19,14 +19,14 @@
             <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                 <div class="btn-group btn-group-sm" role="group">
                     <button id="btnGroupPackWeight" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Weight (Light)
+                        Weight (All)
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupPackWeight">
-                        <a class="dropdown-item @if ($selected_pack_weight == 'all') active @endif "  href="?selected_pack_weight=all">All</a>
-                        <a class="dropdown-item @if ($selected_pack_weight == '0-80') active @endif "  href="?selected_pack_weight=0-80">Super Ultra Light <b>under <span class="convertOunces">80</span></b></a>
-                        <a class="dropdown-item @if ($selected_pack_weight == '80-160') active @endif "  href="?selected_pack_weight=80-160">Ultra Light <b><span class="convertOunces">80</span> - <span class="convertOunces">1600</span></b></a>
-                        <a class="dropdown-item @if ($selected_pack_weight == '160-240') active @endif " href="?selected_pack_weight=160-240">Light <b><span class="convertOunces">160</span> - <span class="convertOunces">240</span></b></a>
-                        <a class="dropdown-item @if ($selected_pack_weight == '240') active @endif "  href="?selected_pack_weight=240">Traditional <b>over <span class="convertOunces">240</span></b></a>
+                        <a class="dropdown-item @if (!$pack_filter_ounces_min && !$pack_filter_ounces_max) active @endif "  href="?pack_filter_ounces_min=&pack_filter_ounces_max=">All</a>
+                        <a class="dropdown-item @if (!$pack_filter_ounces_min && $pack_filter_ounces_max == '80') active @endif "  href="?pack_filter_ounces_min=0&pack_filter_ounces_max=80">Super Ultra Light <b>under <span class="convertOunces">80</span></b></a>
+                        <a class="dropdown-item @if ($pack_filter_ounces_min == '80' && $pack_filter_ounces_max == '160') active @endif "  href="?pack_filter_ounces_min=80&pack_filter_ounces_max=160">Ultra Light <b><span class="convertOunces">80</span> - <span class="convertOunces">160</span></b></a>
+                        <a class="dropdown-item @if ($pack_filter_ounces_min == '160' && $pack_filter_ounces_max == '240') active @endif " href="?pack_filter_ounces_min=160&pack_filter_ounces_max=240">Light <b><span class="convertOunces">160</span> - <span class="convertOunces">240</span></b></a>
+                        <a class="dropdown-item @if ($pack_filter_ounces_min == '240') active @endif "  href="?pack_filter_ounces_min=240&pack_filter_ounces_max=">Traditional <b>over <span class="convertOunces">240</span></b></a>
                     </div>
                 </div>
                 <div class="btn-group btn-group-sm" role="group">
@@ -34,22 +34,22 @@
                         Price (All)
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupPackPrice">
-                        <a class="dropdown-item @if ($selected_pack_price == 'all') active @endif " href="?pack_price=all">All</a>
-                        <a class="dropdown-item @if ($selected_pack_price == '0-500') active @endif "  href="?pack_price=0-500">$0.00 - $500.00</a>
-                        <a class="dropdown-item @if ($selected_pack_price == '500-1000') active @endif " href="?pack_price=500-1000">$500.00 - $1000.00</a>
-                        <a class="dropdown-item @if ($selected_pack_price == '1000-1500') active @endif " href="?pack_price=1000-1500">$1500.00 - $2000.00</a>
-                        <a class="dropdown-item @if ($selected_pack_price == '2000') active @endif " href="?pack_price=2000">$2000.00+</a>
+                        <a class="dropdown-item @if (!$pack_filter_cost_min && !$pack_filter_cost_max) active @endif " href="?pack_filter_cost_min=&pack_filter_cost_max=">All</a>
+                        <a class="dropdown-item @if (!$pack_filter_cost_min && $pack_filter_cost_max == '500') active @endif "  href="?pack_filter_cost_min=0&pack_filter_cost_max=500">$0.00 - $500.00</a>
+                        <a class="dropdown-item @if ($pack_filter_cost_min == '500' && $pack_filter_cost_max == '1000') active @endif " href="?pack_filter_cost_min=500&pack_filter_cost_max=1000">$500.00 - $1000.00</a>
+                        <a class="dropdown-item @if ($pack_filter_cost_min == '1000' && $pack_filter_cost_max == '1500') active @endif " href="?pack_filter_cost_min=1000&pack_filter_cost_max=1500">$1500.00 - $2000.00</a>
+                        <a class="dropdown-item @if ($pack_filter_cost_min == '2000' && !$pack_filter_cost_max) active @endif " href="?pack_filter_cost_min=2000&pack_filter_cost_max=">$2000.00+</a>
                     </div>
                 </div>
                 <div class="btn-group btn-group-sm" role="group">
                     <button id="btnGroupPackSeason" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Season (Summer)
+                        Season (All)
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupPackSeason">
-                        <a class="dropdown-item @if ($selected_pack_season == 'all') active @endif " href="?selected_pack_season=all">All</a>
+                        <a class="dropdown-item @if (!$pack_filter_season_id) active @endif " href="?pack_filter_season_id=">All</a>
                         @if ($pack_seasons)
                             @foreach ($pack_seasons as $season)
-                                <a class="dropdown-item @if ($selected_pack_season == $season->id) active @endif " href="?selected_pack_season={{$season->id}}">{{$season->name}}</a>
+                                <a class="dropdown-item @if ($selected_pack_season == $season->id) active @endif " href="?pack_filter_season_id={{$season->id}}">{{$season->name}}</a>
                             @endforeach
                         @endif
                     </div>

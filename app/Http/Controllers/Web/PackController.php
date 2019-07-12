@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Services\SessionService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Transformers\PackTransformer;
 use App\Services\PackService;
 
 class PackController extends Controller
@@ -19,20 +18,31 @@ class PackController extends Controller
     {
         $page_number = $request->get ('page', 1);
 
-        $selected_pack_weight = $sessionService->value('selected_pack_weight', 'all', $request);
-        $selected_pack_price = $sessionService->value('selected_pack_price', 'all', $request);
-        $selected_pack_season = $sessionService->value('selected_pack_season', 'all', $request);
+        $pack_filter_ounces_min = $sessionService->value('pack_filter_ounces_min', '', $request);
+        $pack_filter_ounces_max = $sessionService->value('pack_filter_ounces_max', '', $request);
+        $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $request);
+        $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $request);
+        $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $request);
         $selected_pack_weight_units = $sessionService->value('selected_pack_weight_units', 'Imperial', $request);
+
         $pack_seasons = collect ();
 
-        $packs = $packService->getAllPaginate($page_number, $selected_pack_weight, $selected_pack_price, $selected_pack_season);
+        $packs = $packService->getAllPaginate(
+            $page_number,
+            $pack_filter_ounces_min,
+            $pack_filter_ounces_max,
+            $pack_filter_cost_min,
+            $pack_filter_cost_max,
+            $pack_filter_season_id);
 
         return view ('site/packs/index',
             compact('packs',
-                'selected_pack_weight',
-                'selected_pack_price',
-                'selected_pack_season',
+                'pack_filter_ounces_min',
+                'pack_filter_ounces_max',
+                'pack_filter_cost_min',
+                'pack_filter_cost_max',
                 'selected_pack_weight_units',
+                'pack_filter_season_id',
                 'pack_seasons'));
     }
 

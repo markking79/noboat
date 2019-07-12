@@ -18,35 +18,9 @@ class PackService
         $this->packCategoryRepository = $packCategoryRepository;
     }
 
-    public function getAllPaginate ($page, $weight_range, $price_range, $season_id)
+    public function getAllPaginate ($page, $ounces_min = false, $ounces_max = false, $cost_min = false, $cost_max = false, $season_id = false)
     {
-        if ($weight_range != 'all')
-        {
-            $splitWeight = explode("-", $weight_range);
-            $ounces_min = $splitWeight[0];
-            $ounces_max = false;
-            if (isset($splitWeight[1]))
-                $ounces_max = $splitWeight[1];
-        }
-
-        if ($pack_price != 'all')
-        {
-            $splitPrice = explode("-", $pack_price);
-            $startPrice = $splitPrice[0];
-            $endPrice = false;
-            if (isset($splitPrice[1]))
-                $endPrice = $splitPrice[1];
-        }
-
-        if ($pack_season != 'all')
-        {
-
-            $whereArray[] = ['packseason_id', '=', $pack_season];
-        }
-
-
-
-        $packs = $this->packRepository->getAllByColumnsWithSeasonPaginate($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id);
+        $packs = $this->packRepository->getAllWithSeasonPaginate($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id);
 
         return $packs;
     }
