@@ -1,0 +1,53 @@
+body
+{
+  color: #777777;
+}
+
+a {
+  color: $primary;
+}
+
+.btn-group > .btn:not(:first-child), .btn-group > .btn-group:not(:first-child)
+{
+  border-left: 1px #979797 solid;
+}
+
+.left-menu-spacer {
+  height: 15px;
+}
+
+.left-menu-item {
+  padding: 3px;
+  padding-left: 8px;
+}
+
+.left-menu-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.left-menu-item svg {
+  height: 15px;
+  width: 15px;
+  fill: #666;
+  margin-right: 7px;
+}
+
+.selected-side-menu-link {
+  color: #666;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}

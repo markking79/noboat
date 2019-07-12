@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Cache;
 
 class PackCategoryRepository implements PackCategoryRepositoryInterface
 {
-    private $secondsCache = 60;//60*60*24;
+    private $secondsCache = 1;
+
+    function __construct()
+    {
+        $this->secondsCache = config('custom.seconds_database_cache');
+    }
 
     public function getAll ()
     {

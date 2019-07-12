@@ -89,9 +89,11 @@ Setup cPanel (if needed)
 Update Pulls From GitHub
 ============
 
-    cd /root/web/folder
+    cd /home/nobo
     
-    git --work-tree=/root/web/folder pull https://markking79@github.com/markking79/noboat.git
+    git --work-tree=/home/nobo pull https://markking79@github.com/markking79/noboat.git
+    
+    npm run production
     
     
 Push Changes To GitHub
