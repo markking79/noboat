@@ -23,7 +23,7 @@ class PackController extends Controller
         $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $request);
         $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $request);
         $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $request);
-        $selected_pack_weight_units = $sessionService->value('selected_pack_weight_units', 'Imperial', $request);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
         $pack_seasons = collect ();
 
@@ -41,7 +41,7 @@ class PackController extends Controller
                 'pack_filter_ounces_max',
                 'pack_filter_cost_min',
                 'pack_filter_cost_max',
-                'selected_pack_weight_units',
+                'pack_weight_units',
                 'pack_filter_season_id',
                 'pack_seasons'));
     }
@@ -57,7 +57,7 @@ class PackController extends Controller
     {
         $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
-        $pack = $packService->getByIdWithOnlyPublicPackItems($id, $pack_weight_units);
+        $pack = $packService->getById($id);
 
         if (!$pack)
             abort(404);

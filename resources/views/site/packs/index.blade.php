@@ -9,7 +9,7 @@
         </div>
         @guest
             <div class="col-6 text-right">
-                <a class="btn btn-lg btn-primary" href="{{route ('panel.packs.create')}}">Add Your Pack</a><br /><br />
+                <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
             </div>
         @endguest
     </div>
@@ -58,8 +58,8 @@
         </div>
         <div class="col-12 col-md-6 text-md-right">
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 10px;">
-                <a href="?selected_pack_weight_units=Imperial" class="btn @if ($selected_pack_weight_units == 'Imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
-                <a href="?selected_pack_weight_units=Metric" class="btn @if ($selected_pack_weight_units == 'Metric') btn-primary @else btn-secondary @endif ">Metric</a>
+                <a href="?pack_weight_units=Imperial" class="btn @if ($pack_weight_units == 'Imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
+                <a href="?pack_weight_units=Metric" class="btn @if ($pack_weight_units == 'Metric') btn-primary @else btn-secondary @endif ">Metric</a>
             </div><br />
         </div>
     </div>
@@ -132,7 +132,7 @@
     <script>
         window.onload = function () {
 
-            ouncesConvertToPretty ('{{$selected_pack_weight_units}}');
+            ouncesConvertToPretty ('{{$pack_weight_units}}');
 
             $('#btnGroupPackWeight').html ('Weight (' + $('#btnGroupPackWeight').parent ().find ('.active').text () + ')');
             $('#btnGroupPackPrice').html ('Price (' + $('#btnGroupPackPrice').parent ().find ('.active').text () + ')');

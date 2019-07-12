@@ -28,6 +28,9 @@ class PackCategoryTransformer extends TransformerAbstract
         return [
             'name' => (string) $packCategory->name,
             'description' => (string) $packCategory->description,
+            'total_ounces' => (float) $packCategory->total_ounces,
+            'total_cost' => (float) $packCategory->total_cost,
+            'item_count' => (int) $packCategory->item_count,
         ];
     }
 

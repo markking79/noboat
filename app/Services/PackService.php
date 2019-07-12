@@ -35,6 +35,7 @@ class PackService
 
         $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = true);
         $pack->unsetRelation('items');
+        $this->fillCategoryStats ($pack->categories);
 
 
         return $pack;
@@ -50,7 +51,7 @@ class PackService
 
         $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = false);
         $pack->unsetRelation('items');
-
+        $this->fillCategoryStats ($pack->categories);
 
         return $pack;
     }
@@ -77,5 +78,39 @@ class PackService
         }
 
         return $categoriesWithItems;
+    }
+
+    private function fillCategoryStats (&$categories)
+    {
+        if ($categories)
+        {
+
+            $i = 0;
+            foreach ($categories as $category)
+            {
+
+                $total_ounces = 0;
+                $total_cost = 0;
+                $item_count = 0;
+
+                $category->item_count = 0;
+                if ($category['items'])
+                {
+                    foreach ($category['items'] as $item)
+                    {
+                        $total_ounces += $item->ounces_each * $item->quantity;
+                        $total_cost += $item->cost_each * $item->quantity;
+                        $item_count +=  $item->quantity;
+                    }
+                }
+
+                $categories[$i]->total_ounces = $total_ounces;
+                $categories[$i]->total_cost = $total_cost;
+                $categories[$i]->item_count = $item_count;
+
+                $i++;
+            }
+            //dd ($categories);
+        }
     }
 }
