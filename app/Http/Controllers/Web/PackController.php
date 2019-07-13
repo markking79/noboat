@@ -6,6 +6,7 @@ use App\Services\SessionService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PackService;
+use App\Repositories\PackSeasonRepository;
 
 class PackController extends Controller
 {
@@ -14,7 +15,7 @@ class PackController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request, PackService $packService, SessionService $sessionService)
+    public function index(Request $request, PackService $packService, SessionService $sessionService, PackSeasonRepository $packSeasonRepository)
     {
         $page_number = $request->get ('page', 1);
 
@@ -25,7 +26,7 @@ class PackController extends Controller
         $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $request);
         $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
-        $pack_seasons = collect ();
+        $pack_seasons = $packSeasonRepository->getAll();
 
         $packs = $packService->getAllPaginate(
             $page_number,
@@ -57,7 +58,7 @@ class PackController extends Controller
     {
         $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
 
-        $pack = $packService->getById($id);
+        $pack = $packService->getById($id, true, true);
 
         if (!$pack)
             abort(404);

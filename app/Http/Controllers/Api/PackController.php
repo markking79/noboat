@@ -35,7 +35,7 @@ class PackController extends Controller
      */
     public function show($id, PackService $packService)
     {
-        $pack = $packService->getById($id);
+        $pack = $packService->getById($id, true, true);
 
         if ($pack)
             $pack = fractal($pack, new PackTransformer())->parseIncludes(['user', 'season', 'categories', 'categories.items'])->toArray();

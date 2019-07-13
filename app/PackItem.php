@@ -43,4 +43,12 @@ class PackItem extends Model
         return round ($this->ounces_each / 35.27, 1) . ' kg.';
     }
 
+    public function desired_weight_format ($metric = 'Imperial')
+    {
+        if ($metric == 'Imperial')
+            return $this->imperial_each;
+        else
+            return $this->metric_each;
+    }
+
 }

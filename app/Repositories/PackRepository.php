@@ -67,12 +67,26 @@ class PackRepository implements PackRepositoryInterface
         return $data;
     }
 
-    public function getByIdWithAllPackItems ($id)
+    public function getById ($id)
     {
         $data = Cache::tags('packs')->remember('pack-'.$id, $this->secondsCache, function () use ($id) {
+            return Pack::where ('id', $id)->first ();
+        });
+
+        return $data;
+    }
+
+    public function getByIdWithAllPackItems ($id)
+    {
+        $data = Cache::tags('packs')->remember('pack-with-categories-'.$id, $this->secondsCache, function () use ($id) {
             return Pack::where ('id', $id)->with (['user', 'items', 'season'])->first ();
         });
 
         return $data;
+    }
+
+    public function clearCache ()
+    {
+        Cache::tags('packs')->flush();
     }
 }

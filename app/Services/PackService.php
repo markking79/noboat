@@ -25,18 +25,23 @@ class PackService
         return $packs;
     }
 
-    public function getById ($id)
+    public function getById ($id, $with_categories = false, $return_only_visible_categories = true)
     {
-        $pack = $this->packRepository->getByIdWithAllPackItems($id);
+        if ($with_categories)
+            $pack = $this->packRepository->getByIdWithAllPackItems($id);
+        else
+            $pack = $this->packRepository->getById($id);
 
         if (!$pack) return false;
 
-        $categories = $this->packCategoryRepository->getAll();
+        if ($with_categories)
+        {
+            $categories = $this->packCategoryRepository->getAll();
 
-        $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible = true);
-        $pack->unsetRelation('items');
-        $this->fillCategoryStats ($pack->categories);
-
+            $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible_categories);
+            $pack->unsetRelation('items');
+            $this->fillCategoryStats ($pack->categories);
+        }
 
         return $pack;
     }
@@ -54,6 +59,78 @@ class PackService
         $this->fillCategoryStats ($pack->categories);
 
         return $pack;
+    }
+
+    public function recordUserLike ($pack_id, $user_id)
+    {
+        $pack = $this->getById ($pack_id);
+
+        if (!$pack)
+            return;
+
+        $pack->likes ()->syncWithoutDetaching ($user_id);
+        $pack->heart_count = $pack->likes->count ();
+        $pack->touch ();
+        $pack->save ();
+
+        $this->packRepository->clearCache ();
+    }
+
+    public function removeUserLike ($pack_id, $user_id)
+    {
+        $pack = $this->getById ($pack_id);
+
+        if (!$pack)
+            return;
+
+        $pack->likes ()->detach ($user_id);
+        $pack->heart_count = $pack->likes->count ();
+        $pack->touch ();
+        $pack->save ();
+
+        $this->packRepository->clearCache ();
+    }
+
+    public function calculateAndSavePackStats ($pack)
+    {
+        $item_count = 0;
+        $ounces = 0;
+        $cost = 0;
+
+        if (!$pack->categories)
+        {
+            $categories = $this->packCategoryRepository->getAll();
+
+            $pack->categories = $this->groupItemsByCategories ($pack, $categories);
+        }
+
+
+        if ($pack->categories)
+        {
+            foreach ($pack->categories as $category)
+            {
+                if ($category->is_visible && $category->include_in_base_weight)
+                {
+                    $ounces += $category->total_ounces;
+                    $cost += $category->total_cost;
+                }
+
+                if ($category->is_visible)
+                {
+                    $item_count += $category->item_count;
+                }
+
+            }
+        }
+
+        $categories = $pack->categories;
+        unset ($pack->categories);
+        $pack->visible_item_count = $item_count;
+        $pack->visible_ounces  = $ounces;
+        $pack->visible_cost = $cost;
+        $pack->touch ();
+        $pack->save ();
+        $pack->categories = $categories;
     }
 
     private function groupItemsByCategories (&$pack, &$categories, $return_only_visible = false) : Collection
@@ -113,4 +190,5 @@ class PackService
             //dd ($categories);
         }
     }
+
 }

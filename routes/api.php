@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('packs', 'Api\PackController')->only(['index', 'show']);
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::apiResource('pack_likes', 'Api\PackLikeController')->only(['store', 'destroy']);
+});

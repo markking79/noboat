@@ -37,6 +37,11 @@ class Pack extends Model
         return $this->hasMany(PackItem::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'pack_likes', 'pack_id', 'user_id')->withTimestamps();
+    }
+
     public function getVisibleImperialAttribute ()
     {
         return round ($this->visible_ounces / 16, 1) . ' lb.';
@@ -45,6 +50,26 @@ class Pack extends Model
     public function getVisibleMetricAttribute ()
     {
         return round ($this->visible_ounces / 35.27, 1) . ' kg.';
+    }
+
+    public function getLoginUserLikedAttribute ()
+    {
+        if (!auth()->check())
+            return false;
+
+        $liked = $this->likes->where ('id', auth()->user()->id)->first ();
+        if ($liked)
+            return true;
+
+        return false;
+    }
+
+    public function desired_weight_format ($metric = 'Imperial')
+    {
+        if ($metric == 'Imperial')
+            return $this->visible_imperial;
+        else
+            return $this->visible_metric;
     }
 
 }

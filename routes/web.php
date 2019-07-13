@@ -17,3 +17,4 @@ Auth::routes();
 Route::resource('packs', 'Web\PackController')->only(['index', 'show']);
 
 Route::get('/home', 'HomeController@index')->name('home');
+

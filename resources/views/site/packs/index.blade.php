@@ -49,7 +49,7 @@
                         <a class="dropdown-item @if (!$pack_filter_season_id) active @endif " href="?pack_filter_season_id=">All</a>
                         @if ($pack_seasons)
                             @foreach ($pack_seasons as $season)
-                                <a class="dropdown-item @if ($selected_pack_season == $season->id) active @endif " href="?pack_filter_season_id={{$season->id}}">{{$season->name}}</a>
+                                <a class="dropdown-item @if ($pack_filter_season_id == $season->id) active @endif " href="?pack_filter_season_id={{$season->id}}">{{$season->name}}</a>
                             @endforeach
                         @endif
                     </div>
@@ -102,7 +102,7 @@
 
                                     {{$pack->heart_count ?? "0" }} likes</h6>
                                 <p class="card-text">
-                                    <span class="convertOunces">{{$pack->visible_ounces  ?? "0"}}</span> <i>(base weight)</i><br />
+                                    {{$pack->desired_weight_format($pack_weight_units)}} <i>(base weight)</i><br />
 
                                     @if ($pack->season)
                                         {{$pack->season->name}} Pack<br />

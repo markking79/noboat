@@ -25,7 +25,7 @@
         <div class="col-12 col-md-6">
             <h1>{{$pack->name}}</h1>
             <p>
-                <span class="convertOunces">{{$pack->visible_ounces  ?? "0"}}</span> <i>(base weight)</i><br />
+                {{$pack->desired_weight_format ($pack_weight_units)}} <i>(base weight)</i><br />
                 ${{number_format ($pack->visible_cost, 2)}} USD<br />
                 {{$pack->visible_item_count  ?? "0"}} items<br />
 
@@ -63,7 +63,7 @@
                             </div>
                             @if (count($category['items']) > 0)
                                 <div class="col-12 col-md-4 text-md-right">
-                                    {{$category->total_ounces}} oz. (<span class="convertOunces">{{$category->total_ounces}}</span>)<br />
+                                    {{$category->total_ounces}} oz. ({{$category->desired_weight_format ($pack_weight_units)}})<br />
                                     ${{number_format ($category->total_cost, 2)}}
                                 </div>
                             @endif
@@ -117,7 +117,7 @@
 
                                     </div>
                                     <div class="col-12 col-md-2 text-left text-md-center">
-                                        <p>{{$item->ounces_each  ?? "0"}} oz. <i>(<span class="convertOunces">{{$item->ounces_each  ?? "0"}}</span>) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
+                                        <p>{{$item->ounces_each  ?? "0"}} oz. <i>({{$item->desired_weight_format ($pack_weight_units)}}) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
                                     </div>
                                     <div class="col-12 col-md-1 text-left text-md-center">
                                         <p>x {{$item->quantity  ?? "0"}} <span class="d-inline-flex d-md-none font-weight-bold">(quantity)</span></p>
@@ -142,11 +142,10 @@
 @endsection
 @section('script')
     <script>
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
         window.onload = function () {
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
-            ouncesConvertToPretty ('{{$pack_weight_units}}');
+            let pack_id = {{$pack->id}};
 
             $('.readMoreLink').click (function (e) {
                 e.preventDefault ();
@@ -162,7 +161,9 @@
 
                 $('#likeCountContent').html (parseInt($('#likeCountContent').html ())-1);
 
-                $.post ('#', {'like': false});
+                $.ajax({ url: '{{route ('pack_likes.destroy', ['pack_id' => $pack->id])}}', type: 'DELETE'});
+
+
             });
 
             $('#unlikableHeart svg').click (function () {
@@ -171,29 +172,14 @@
 
                 $('#likeCountContent').html (parseInt($('#likeCountContent').html ())+1);
 
-                $.post ('#', {'like': true});
+                $.post ('{{route ('pack_likes.store')}}', {'pack_id': pack_id});
+
+
+
             });
             @endif
 
         }
 
-        function ouncesConvertToPretty (convertTo)
-        {
-
-            if (convertTo == 'Metric')
-            {
-                $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 35.27).toFixed (1) + ' kg.');
-                });
-            }
-            else if (convertTo == 'Imperial')
-            {
-                $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 16).toFixed (1) + ' lb.');
-                });
-            }
-        }
     </script>
 @endsection
