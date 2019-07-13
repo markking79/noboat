@@ -55,7 +55,7 @@
         @foreach ($pack->categories as $category)
             @if ($category->is_visible)
                 <div class="card">
-                    <div class="card-header text-white bg-primary">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col-12 col-md-8">
 
@@ -161,7 +161,7 @@
 
                 $('#likeCountContent').html (parseInt($('#likeCountContent').html ())-1);
 
-                $.ajax({ url: '{{route ('pack_likes.destroy', ['pack_id' => $pack->id])}}', type: 'DELETE'});
+                $.ajax({ url: '{{route ('api.pack_likes.destroy', ['pack_id' => $pack->id])}}', type: 'DELETE'});
 
 
             });
@@ -172,7 +172,7 @@
 
                 $('#likeCountContent').html (parseInt($('#likeCountContent').html ())+1);
 
-                $.post ('{{route ('pack_likes.store')}}', {'pack_id': pack_id});
+                $.post ('{{route ('api.pack_likes.store')}}', {'pack_id': pack_id});
 
 
 

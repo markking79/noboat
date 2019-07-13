@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {return view('welcome'); });
-
-Auth::routes();
+Route::get('/', function () {return redirect(route('packs.index')); });
 Route::resource('packs', 'Web\PackController')->only(['index', 'show']);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+Auth::routes();
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function() {
+    Route::resource('', 'Web\UserController')->only(['index']);
+    Route::resource('packs', 'Web\UserPackController');
+});

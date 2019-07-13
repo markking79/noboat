@@ -7,6 +7,12 @@ a {
   color: $primary;
 }
 
+.card-header
+{
+  background-color: $primary;
+  color: #fff;
+}
+
 .btn-group > .btn:not(:first-child), .btn-group > .btn-group:not(:first-child)
 {
   border-left: 1px #979797 solid;
@@ -34,7 +40,7 @@ a {
   margin-right: 7px;
 }
 
-.selected-side-menu-link {
+.left-menu-item .active {
   color: #666;
 }
 
