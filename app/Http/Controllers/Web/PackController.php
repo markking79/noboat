@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Services\SessionService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PackService;
 use App\Repositories\PackSeasonRepository;
+use App\Http\Requests\PackFilterRequest;
 
 class PackController extends Controller
 {
@@ -15,16 +15,16 @@ class PackController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request, PackService $packService, SessionService $sessionService, PackSeasonRepository $packSeasonRepository)
+    public function index(PackFilterRequest $packFilterRequest, PackService $packService, SessionService $sessionService, PackSeasonRepository $packSeasonRepository)
     {
-        $page_number = $request->get ('page', 1);
+        $page_number = $packFilterRequest->get ('page', 1);
 
-        $pack_filter_ounces_min = $sessionService->value('pack_filter_ounces_min', '', $request);
-        $pack_filter_ounces_max = $sessionService->value('pack_filter_ounces_max', '', $request);
-        $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $request);
-        $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $request);
-        $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $request);
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
+        $pack_filter_ounces_min = $sessionService->value('pack_filter_ounces_min', '', $packFilterRequest);
+        $pack_filter_ounces_max = $sessionService->value('pack_filter_ounces_max', '', $packFilterRequest);
+        $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $packFilterRequest);
+        $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $packFilterRequest);
+        $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $packFilterRequest);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
 
         $pack_seasons = $packSeasonRepository->getAll();
 
@@ -54,9 +54,9 @@ class PackController extends Controller
      * @param PackService $packService
      * @return \Illuminate\View\View
      */
-    public function show($id, Request $request, PackService $packService, SessionService $sessionService)
+    public function show($id, PackFilterRequest $packFilterRequest, PackService $packService, SessionService $sessionService)
     {
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $request);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
 
         $pack = $packService->getById($id, true, true);
 

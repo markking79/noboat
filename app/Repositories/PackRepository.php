@@ -15,7 +15,6 @@ class PackRepository implements PackRepositoryInterface
         $this->secondsCache = config('custom.seconds_database_cache');
     }
 
-
     public function getAllWithSeasonPaginate ($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id)
     {
         $data = Cache::tags('packs')->remember('packs-'.$page.'_'.$ounces_min.'_'.$ounces_max.'_'.$cost_min.'_'.$cost_max.'_'.$season_id, $this->secondsCache, function () use ($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id) {
@@ -61,7 +60,7 @@ class PackRepository implements PackRepositoryInterface
             }
             //dd ($whereArray);
 
-            return Pack::where($whereArray)->with (['season'])->orderBy ('heart_count', 'desc')->paginate(21);
+            return Pack::where($whereArray)->with (['season', 'likes'])->orderBy ('heart_count', 'desc')->paginate(21);
         });
 
         return $data;

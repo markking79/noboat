@@ -58,8 +58,8 @@
         </div>
         <div class="col-12 col-md-6 text-md-right">
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 10px;">
-                <a href="?pack_weight_units=Imperial" class="btn @if ($pack_weight_units == 'Imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
-                <a href="?pack_weight_units=Metric" class="btn @if ($pack_weight_units == 'Metric') btn-primary @else btn-secondary @endif ">Metric</a>
+                <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
+                <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Metric</a>
             </div><br />
         </div>
     </div>
