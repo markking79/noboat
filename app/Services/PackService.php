@@ -72,8 +72,6 @@ class PackService
         $pack->heart_count = $pack->likes->count ();
         $pack->touch ();
         $pack->save ();
-
-        $this->packRepository->clearCache ();
     }
 
     public function removeUserLike ($pack_id, $user_id)
@@ -88,7 +86,6 @@ class PackService
         $pack->touch ();
         $pack->save ();
 
-        $this->packRepository->clearCache ();
     }
 
     public function calculateAndSavePackStats ($pack)

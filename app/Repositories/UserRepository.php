@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 
+use Illuminate\Support\Facades\Cache;
+
 class UserRepository implements UserRepositoryInterface
 {
     private $secondsCache = 1;
@@ -10,5 +12,10 @@ class UserRepository implements UserRepositoryInterface
     function __construct()
     {
         $this->secondsCache = config('custom.seconds_database_cache');
+    }
+
+    public function clearCache ()
+    {
+        Cache::tags('users')->flush();
     }
 }

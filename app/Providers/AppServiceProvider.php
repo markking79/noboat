@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Observers\PackItemObserver;
+use App\Observers\PackObserver;
+use App\Observers\UserObserver;
+use App\Pack;
+use App\PackItem;
+use App\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Redis;
 
@@ -24,15 +30,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-        //Redis::enableEvents();
 
-        // For previously resolved connections.
+        // redis
         foreach ((array) Redis::connections() as $connection) {
             $connection->setEventDispatcher($this->app->make('events'));
         }
 
-// For new connections.
         Redis::enableEvents();
+
+        // observers
+        User::observe(UserObserver::class);
+        Pack::observe(PackObserver::class);
+        PackItem::observe(PackItemObserver::class);
     }
 }
