@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('page-title') User Dashboard @endsection
+@section('page-title') Update Account @endsection
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <h3>Dashboard</h3>
+            <h3>Update Account</h3>
         </div>
         <div class="card-body">
-           Welcome to your dashboard.
+            Account saved. <a href="{{route ('user.edit')}}">continue -></a>
         </div>
     </div><br />
 

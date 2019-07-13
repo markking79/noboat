@@ -93,7 +93,7 @@
                             </div>
                             <div class="left-menu-item">
                                 <svg enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(14.692470727591916) translate(1.5585002899169922 0)"><path d="M16.621,19.738h-2c0-3.374-2.83-6.118-6.311-6.118S2,16.365,2,19.738H0c0-4.478,3.729-8.118,8.311-8.118  C12.893,11.62,16.621,15.26,16.621,19.738z"xmlns=http://www.w3.org/2000/svg></path><path d="M8.311,10.97c-3.023,0-5.484-2.462-5.484-5.485C2.827,2.461,5.287,0,8.311,0c3.025,0,5.486,2.46,5.486,5.485  C13.797,8.51,11.336,10.97,8.311,10.97z M8.311,2C6.389,2,4.826,3.563,4.826,5.485S6.389,8.97,8.311,8.97  c1.923,0,3.486-1.563,3.486-3.485S10.232,2,8.311,2z"xmlns=http://www.w3.org/2000/svg></path></g></svg>
-                                <a class="{{ (strpos(Route::currentRouteName(), 'user.index') === 0) ? 'active' : '' }}" href="{{route ('user.index')}}">
+                                <a class="{{ (strpos(Route::currentRouteName(), 'user.edit') === 0) ? 'active' : '' }}" href="{{route ('user.edit')}}">
                                     Account
                                 </a>
                             </div>
