@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
@@ -36,8 +37,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UserUpdateRequest $request, UserService $userService)
     {
+        $user = auth()->user ();
+        $userService->update ($user->id, $request->all());
+
         return view ('user.account.update');
     }
 }

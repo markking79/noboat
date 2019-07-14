@@ -75,7 +75,7 @@
         <main class="py-4">
             <div class="container">
                 <div class="row">
-                    <div class="@guest col-0 d-none @else col-lg-2 d-none d-lg-block @endguest">
+                    <div class="@guest col-0 d-none @else col-lg-3 col-xl-2 d-none d-lg-block @endguest">
 
                         <!-- <div class="left-menu-spacer"></div> -->
                         <div class="left-menu-item">
@@ -102,12 +102,6 @@
                                     <svg enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(1) translate(-5 -5.000007629394531)"><g xmlns=http://www.w3.org/2000/svg transform="translate(5 5) scale(7.631578947368421) translate(0 2.7960003912448883)"><g xmlns=http://www.w3.org/2000/svg id=_x33_43._Playlist><g><path d="M6.304,3.145l-4.608-2.88C0.759-0.321,0,0.1,0,1.204v6c0,1.104,0.759,1.525,1.696,0.94l4.608-2.88    C7.241,4.679,7.241,3.729,6.304,3.145z M36,1.204H12c-1.105,0-2,0.896-2,2v2c0,1.104,0.895,2,2,2h24c1.104,0,2-0.896,2-2v-2    C38,2.1,37.105,1.204,36,1.204z M1.696,20.145l4.608-2.88c0.937-0.586,0.895-1.461-0.093-1.955l-4.422-2.211    C0.801,12.605,0,13.1,0,14.204v5C0,20.309,0.759,20.729,1.696,20.145z M36,13.204H12c-1.105,0-2,0.896-2,2v2c0,1.104,0.895,2,2,2    h24c1.104,0,2-0.896,2-2v-2C38,14.1,37.105,13.204,36,13.204z M6.304,27.145l-4.608-2.88C0.759,23.679,0,24.1,0,25.204v6    c0,1.104,0.759,1.525,1.696,0.94l4.608-2.88C7.241,28.68,7.241,27.73,6.304,27.145z M36,25.204H12c-1.105,0-2,0.896-2,2v2    c0,1.104,0.895,2,2,2h24c1.104,0,2-0.896,2-2v-2C38,26.1,37.105,25.204,36,25.204z"></path></g></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g></g></g></svg>
                                     <a @if (\Request::is('admin/*') || \Request::is('admin/packs/autocomplete')) class="selected-side-menu-link"@endif href="/admin/packs/autocomplete">Admin Autocompletes</a>
                                 </div>
-
-
-                            <div class="left-menu-item">
-                                <svg enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(14.692470727591916) translate(1.5585002899169922 0)"><path d="M16.621,19.738h-2c0-3.374-2.83-6.118-6.311-6.118S2,16.365,2,19.738H0c0-4.478,3.729-8.118,8.311-8.118  C12.893,11.62,16.621,15.26,16.621,19.738z"xmlns=http://www.w3.org/2000/svg></path><path d="M8.311,10.97c-3.023,0-5.484-2.462-5.484-5.485C2.827,2.461,5.287,0,8.311,0c3.025,0,5.486,2.46,5.486,5.485  C13.797,8.51,11.336,10.97,8.311,10.97z M8.311,2C6.389,2,4.826,3.563,4.826,5.485S6.389,8.97,8.311,8.97  c1.923,0,3.486-1.563,3.486-3.485S10.232,2,8.311,2z"xmlns=http://www.w3.org/2000/svg></path></g></svg>
-                                <a @if (\Request::is('panel/account/*') || \Request::is('panel/account')) class="selected-side-menu-link"@endif href="{{route ('panel.account.edit')}}">Account</a>
-                            </div>
                             @endif
                             <div class="left-menu-item">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(2.350081153515049) translate(-3.3000030517578125 -1.5500011444091797)">
@@ -122,7 +116,7 @@
 
                     <!-- <div class="left-menu-spacer"></div> -->
                     </div>
-                    <div class="@guest col-12 @else col-lg-10 col-md-12 @endguest">
+                    <div class="@guest col-12 @else col-lg-9 col-xl-10 col-md-12 @endguest">
                         @yield('content')
                     </div>
                 </div>
