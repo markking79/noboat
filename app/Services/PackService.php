@@ -18,9 +18,21 @@ class PackService
         $this->packCategoryRepository = $packCategoryRepository;
     }
 
+    public function store ($user_id)
+    {
+        return $this->packRepository->store($user_id);
+    }
+
     public function getAllPaginate ($page, $ounces_min = false, $ounces_max = false, $cost_min = false, $cost_max = false, $season_id = false)
     {
         $packs = $this->packRepository->getAllWithSeasonPaginate($page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id);
+
+        return $packs;
+    }
+
+    public function getAllByUserIdPaginate ($user_id, $page, $ounces_min = false, $ounces_max = false, $cost_min = false, $cost_max = false, $season_id = false)
+    {
+        $packs = $this->packRepository->getAllByUserIdWithSeasonPaginate($user_id, $page, $ounces_min, $ounces_max, $cost_min, $cost_max, $season_id);
 
         return $packs;
     }

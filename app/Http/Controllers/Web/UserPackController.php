@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Requests\PackFilterRequest;
+use App\Services\PackService;
+use App\Services\SessionService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +15,16 @@ class UserPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PackFilterRequest $packFilterRequest, PackService $packService, SessionService $sessionService)
     {
-        return view ('user.packs.index');
+        $user = auth()->user();
+
+        $page_number = $packFilterRequest->get ('page', 1);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
+
+        $packs = $packService->getAllByUserIdPaginate($user->id, $page_number);
+
+        return view ('user.packs.index', compact ('packs', 'pack_weight_units'));
     }
 
     /**
@@ -22,9 +32,14 @@ class UserPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(PackService $packService)
     {
-        //
+        $user = auth()->user();
+
+        $pack = $packService->store($user->id);
+
+        return redirect(route ('user.packs.edit', ['pack' => $pack]));
+
     }
 
     /**
@@ -57,7 +72,7 @@ class UserPackController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd ($id);
     }
 
     /**

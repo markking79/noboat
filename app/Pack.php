@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Pack extends Model
@@ -12,6 +13,7 @@ class Pack extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'pack_season_id',
         'name',
         'image',
@@ -70,6 +72,13 @@ class Pack extends Model
             return $this->visible_imperial;
         else
             return $this->visible_metric;
+    }
+
+    public function getDisplayDateAttribute ()
+    {
+        $dt = Carbon::createFromTimeString($this->created_at);
+        $dt->setTimezone('America/New_York');
+        return $dt->format('M. j, Y') . ' (' . $dt->diffForHumans() . ')';
     }
 
 }
