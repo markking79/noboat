@@ -95,6 +95,9 @@ Update Pulls From GitHub
     
     npm run production
     
+Generate the API docs
+============   
+   php artisan apidoc:generate
     
 Push Changes To GitHub
 ============

@@ -14,6 +14,16 @@ class PackController extends Controller
      *
      * @return \Illuminate\View\View
      */
+
+    /**
+     * List backpacks
+     *
+     * List all the public viewable packs using pagination
+     *
+     * @bodyParam page int optional The page number to return.
+     *
+     * @transformer \App\Transformers\PackTransformer
+     */
     public function index(Request $request, PackService $packService)
     {
         $page_number = $request->get ('page', 1);

@@ -16,7 +16,7 @@ class UserService
 
     public function getById ($id)
     {
-        return $this->userRepository->getById($id, $data);
+        return $this->userRepository->getById($id);
     }
 
     public function update ($id, $data)

@@ -24,3 +24,8 @@ Route::middleware(['auth:api'])->name('api.user.')->group(function() {
 // /api/user/login' : api.user.login
 // /api/pack_likes/1 : api.user.pack_likes.store
 // /api/packs/index : api.user.packs.index
+
+
+// login at /api/user/login : pass in email, password, remember_me
+// - will return a bearer token
+// - pass: Authorization Bearer %%TOKEN%%
