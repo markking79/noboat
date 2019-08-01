@@ -24,7 +24,7 @@ class PackController extends Controller
         $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $packFilterRequest);
         $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $packFilterRequest);
         $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $packFilterRequest);
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial', $packFilterRequest);
 
         $pack_seasons = $packSeasonRepository->getAll();
 
@@ -56,7 +56,7 @@ class PackController extends Controller
      */
     public function show($id, PackFilterRequest $packFilterRequest, PackService $packService, SessionService $sessionService)
     {
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial', $packFilterRequest);
 
         $pack = $packService->getById($id, true, true);
 

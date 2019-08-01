@@ -5,6 +5,9 @@
 @section('content')
 
     <div class="row view-pack-heading-row">
+        <div class="col-12 d-sm-block d-md-none text-right">
+            <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
+        </div>
 
         <div class="col-12 col-md-2">
             <div class="image-content text-center">
@@ -18,7 +21,7 @@
                         </g></svg>
                 @endif
             </div>
-            <div class="text-center col-12" style="margin-top: 10px;">
+            <div class="text-center col-12 mt-2">
                 <iframe src="https://www.facebook.com/plugins/share_button.php?href={{config('APP_URL')}}{{url()->current()}}&layout=button&size=small&appId=538515852997725&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
             </div>
         </div>
@@ -43,6 +46,9 @@
             </p>
         </div>
         <div class="col-12 col-md-4 text-right">
+            <span class="d-none d-md-block">
+                <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
+            </span>
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 10px;">
                 <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
                 <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Metric</a>

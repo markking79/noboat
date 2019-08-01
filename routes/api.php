@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,12 +11,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/user/login', 'Api\UserLoginController@login')->name('api.user.login');
+
+Route::resource('packs', 'Api\PackController')->only(['index', 'show']);
+
+Route::middleware(['auth:api'])->name('api.user.')->group(function() {
+    Route::apiResource('user/pack_likes', 'Api\PackLikeController', ['as' => 'user'])->only(['store', 'destroy']);
+    Route::apiResource('user/packs', 'Api\UserPackController');
 });
 
-Route::resource('packs', 'Api\PackController', ['as' => 'api'])->only(['index', 'show']);
-
-Route::middleware(['auth:api'])->name('api.')->group(function() {
-    Route::apiResource('pack_likes', 'Api\PackLikeController')->only(['store', 'destroy']);
-});
+// /api/user
+// /api/user/login' : api.user.login
+// /api/pack_likes/1 : api.user.pack_likes.store
+// /api/packs/index : api.user.packs.index
