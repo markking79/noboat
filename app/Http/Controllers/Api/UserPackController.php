@@ -7,12 +7,20 @@ use App\Transformers\PackTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group User Packs
+ *
+ * APIs for listing and viewing user's packs
+ */
 class UserPackController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List user's backpacks
      *
-     * @return \Illuminate\Http\Response
+     * List all the user's packs using pagination
+     *
+     * @queryParam page The page number. Example: 1
+     *
      */
     public function index(Request $request, PackService $packService)
     {
