@@ -49,78 +49,45 @@
 <p>Welcome to the generated API reference.
 <a href="http://noboat.test/docs/collection.json">Get Postman Collection</a></p>
 <!-- END_INFO -->
-<h1>general</h1>
-<!-- START_57e3b4272508c324659e49ba5758c70f -->
-<h2>Display a listing of the resource.</h2>
+<h1>Authentication</h1>
+<p>APIs for logging in</p>
+<!-- START_3338623ec1be24c33c9d05357cb399fb -->
+<h2>Login</h2>
+<p>Login and return the bearer token</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
-$response = $client-&gt;post("http://noboat.test/api/user/login", [
+$response = $client-&gt;post("http://noboat.test/api/public/login", [
     'headers' =&gt; [
-            "Authorization" =&gt; "Bearer {token}",
-        ],
-]);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre>
-<pre><code class="language-bash">curl -X POST "http://noboat.test/api/user/login" \
-    -H "Authorization: Bearer {token}"</code></pre>
-<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/user/login");
-
-let headers = {
-    "Authorization": "Bearer {token}",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response =&gt; response.json())
-    .then(json =&gt; console.log(json));</code></pre>
-<h3>HTTP Request</h3>
-<p><code>POST api/user/login</code></p>
-<!-- END_57e3b4272508c324659e49ba5758c70f -->
-<!-- START_7500c63828c1ba57680234e355fcbbce -->
-<h2>List backpacks</h2>
-<p>List all the public viewable packs using pagination</p>
-<blockquote>
-<p>Example request:</p>
-</blockquote>
-<pre><code class="language-php">
-$client = new \GuzzleHttp\Client();
-$response = $client-&gt;get("http://noboat.test/api/packs", [
-    'headers' =&gt; [
-            "Authorization" =&gt; "Bearer {token}",
             "Content-Type" =&gt; "application/json",
         ],
     'json' =&gt; [
-            "page" =&gt; "5",
+            "email" =&gt; "test@test.com",
+            "password" =&gt; "password",
         ],
 ]);
 $body = $response-&gt;getBody();
 print_r(json_decode((string) $body));</code></pre>
-<pre><code class="language-bash">curl -X GET -G "http://noboat.test/api/packs" \
-    -H "Authorization: Bearer {token}" \
+<pre><code class="language-bash">curl -X POST "http://noboat.test/api/public/login" \
     -H "Content-Type: application/json" \
-    -d '{"page":5}'
+    -d '{"email":"test@test.com","password":"password"}'
 </code></pre>
-<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/packs");
+<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/public/login");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "page": 5
+    "email": "test@test.com",
+    "password": "password"
 }
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     body: body
 })
@@ -130,20 +97,18 @@ fetch(url, {
 <p>Example response (200):</p>
 </blockquote>
 <pre><code class="language-json">{
-    "data": {
-        "id": 0,
-        "name": "Dr. Chauncey Lubowitz III",
-        "image": "\/storage\/packs\/pHVEjQRz1Dc8RQxgXXLAfO4yZZUHpHbkU0CH3Dfw.png",
-        "cost": 100,
-        "heart_count": 241,
-        "item_count": 10,
-        "weight_ounces": 10,
-        "weight_imperial": "0.6 lb.",
-        "weight_metric": "0.3 kg."
-    }
+    "access_token": "{token}",
+    "token_type": "Bearer",
+    "expires_at": "2029-08-02 04:16:22"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "message": "Unauthorized"
 }</code></pre>
 <h3>HTTP Request</h3>
-<p><code>GET api/packs</code></p>
+<p><code>POST api/public/login</code></p>
 <h4>Body Parameters</h4>
 <table>
 <thead>
@@ -156,34 +121,181 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>page</td>
-<td>integer</td>
+<td>email</td>
+<td>required</td>
 <td>optional</td>
-<td>optional The page number to return.</td>
+<td>The user's email address.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>required</td>
+<td>optional</td>
+<td>The user's password.</td>
 </tr>
 </tbody>
 </table>
-<!-- END_7500c63828c1ba57680234e355fcbbce -->
-<!-- START_7213f238adb4daadf1bde8f76c4b1b4e -->
-<h2>Display the specified resource.</h2>
+<!-- END_3338623ec1be24c33c9d05357cb399fb -->
+<h1>Packs</h1>
+<p>APIs for listing and viewing packs</p>
+<!-- START_cada61ef55ca6b8d0b311205a8f15402 -->
+<h2>List backpacks</h2>
+<p>List all the public viewable packs using pagination</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
-$response = $client-&gt;get("http://noboat.test/api/packs/1", [
-    'headers' =&gt; [
-            "Authorization" =&gt; "Bearer {token}",
+$response = $client-&gt;get("http://noboat.test/api/public/packs", [
+    'query' =&gt; [
+            "page" =&gt; "1",
         ],
 ]);
 $body = $response-&gt;getBody();
 print_r(json_decode((string) $body));</code></pre>
-<pre><code class="language-bash">curl -X GET -G "http://noboat.test/api/packs/1" \
-    -H "Authorization: Bearer {token}"</code></pre>
-<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/packs/1");
+<pre><code class="language-bash">curl -X GET -G "http://noboat.test/api/public/packs" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/public/packs");
+
+    let params = {
+            "page": "1",
+        };
+    Object.keys(params).forEach(key =&gt; url.searchParams.append(key, params[key]));
 
 let headers = {
-    "Authorization": "Bearer {token}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "id": 1,
+            "name": "one",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 5,
+            "name": "two",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 6,
+            "name": "three",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 7,
+            "name": "four",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "total": 4,
+            "count": 4,
+            "per_page": 21,
+            "current_page": 1,
+            "total_pages": 1,
+            "links": {}
+        }
+    }
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/public/packs</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page</td>
+<td>optional</td>
+<td>The page number.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_cada61ef55ca6b8d0b311205a8f15402 -->
+<!-- START_56bdd6111788516f2d03cc102020b722 -->
+<h2>Get a backpack</h2>
+<p>Get a pack and all the attached details</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get("http://noboat.test/api/public/packs/1", [
+    'query' =&gt; [
+            "id" =&gt; "1",
+        ],
+]);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-bash">curl -X GET -G "http://noboat.test/api/public/packs/1" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://noboat.test/api/public/packs/1");
+
+    let params = {
+            "id": "1",
+        };
+    Object.keys(params).forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
 }
@@ -200,7 +312,7 @@ fetch(url, {
 <pre><code class="language-json">{
     "data": {
         "id": 1,
-        "name": "Kim's Pack",
+        "name": "one",
         "image": "",
         "cost": 30,
         "heart_count": 2,
@@ -280,8 +392,26 @@ fetch(url, {
     }
 }</code></pre>
 <h3>HTTP Request</h3>
-<p><code>GET api/packs/{pack}</code></p>
-<!-- END_7213f238adb4daadf1bde8f76c4b1b4e -->
+<p><code>GET api/public/packs/{pack}</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>required</td>
+<td>The pack id.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_56bdd6111788516f2d03cc102020b722 -->
+<h1>general</h1>
 <!-- START_37b2ac89fbef2e2e50c9c6fac4819308 -->
 <h2>Store a newly created resource in storage.</h2>
 <blockquote>

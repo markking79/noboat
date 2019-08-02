@@ -21,72 +21,26 @@ Welcome to the generated API reference.
 
 <!-- END_INFO -->
 
-#general
-<!-- START_57e3b4272508c324659e49ba5758c70f -->
-## Display a listing of the resource.
+#Authentication
+
+APIs for logging in
+<!-- START_3338623ec1be24c33c9d05357cb399fb -->
+## Login
+
+Login and return the bearer token
 
 > Example request:
 
 ```php
 
 $client = new \GuzzleHttp\Client();
-$response = $client->post("http://noboat.test/api/user/login", [
+$response = $client->post("http://noboat.test/api/public/login", [
     'headers' => [
-            "Authorization" => "Bearer {token}",
-        ],
-]);
-$body = $response->getBody();
-print_r(json_decode((string) $body));
-```
-
-
-```bash
-curl -X POST "http://noboat.test/api/user/login" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL("http://noboat.test/api/user/login");
-
-let headers = {
-    "Authorization": "Bearer {token}",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST api/user/login`
-
-
-<!-- END_57e3b4272508c324659e49ba5758c70f -->
-
-<!-- START_7500c63828c1ba57680234e355fcbbce -->
-## List backpacks
-
-List all the public viewable packs using pagination
-
-> Example request:
-
-```php
-
-$client = new \GuzzleHttp\Client();
-$response = $client->get("http://noboat.test/api/packs", [
-    'headers' => [
-            "Authorization" => "Bearer {token}",
             "Content-Type" => "application/json",
         ],
     'json' => [
-            "page" => "5",
+            "email" => "test@test.com",
+            "password" => "password",
         ],
 ]);
 $body = $response->getBody();
@@ -95,28 +49,27 @@ print_r(json_decode((string) $body));
 
 
 ```bash
-curl -X GET -G "http://noboat.test/api/packs" \
-    -H "Authorization: Bearer {token}" \
+curl -X POST "http://noboat.test/api/public/login" \
     -H "Content-Type: application/json" \
-    -d '{"page":5}'
+    -d '{"email":"test@test.com","password":"password"}'
 
 ```
 
 ```javascript
-const url = new URL("http://noboat.test/api/packs");
+const url = new URL("http://noboat.test/api/public/login");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 }
 
 let body = {
-    "page": 5
+    "email": "test@test.com",
+    "password": "password"
 }
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: headers,
     body: body
 })
@@ -129,42 +82,47 @@ fetch(url, {
 
 ```json
 {
-    "data": {
-        "id": 0,
-        "name": "Dr. Chauncey Lubowitz III",
-        "image": "\/storage\/packs\/pHVEjQRz1Dc8RQxgXXLAfO4yZZUHpHbkU0CH3Dfw.png",
-        "cost": 100,
-        "heart_count": 241,
-        "item_count": 10,
-        "weight_ounces": 10,
-        "weight_imperial": "0.6 lb.",
-        "weight_metric": "0.3 kg."
-    }
+    "access_token": "{token}",
+    "token_type": "Bearer",
+    "expires_at": "2029-08-02 04:16:22"
+}
+```
+> Example response (401):
+
+```json
+{
+    "message": "Unauthorized"
 }
 ```
 
 ### HTTP Request
-`GET api/packs`
+`POST api/public/login`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    page | integer |  optional  | optional The page number to return.
+    email | required |  optional  | The user's email address.
+    password | required |  optional  | The user's password.
 
-<!-- END_7500c63828c1ba57680234e355fcbbce -->
+<!-- END_3338623ec1be24c33c9d05357cb399fb -->
 
-<!-- START_7213f238adb4daadf1bde8f76c4b1b4e -->
-## Display the specified resource.
+#Packs
+
+APIs for listing and viewing packs
+<!-- START_cada61ef55ca6b8d0b311205a8f15402 -->
+## List backpacks
+
+List all the public viewable packs using pagination
 
 > Example request:
 
 ```php
 
 $client = new \GuzzleHttp\Client();
-$response = $client->get("http://noboat.test/api/packs/1", [
-    'headers' => [
-            "Authorization" => "Bearer {token}",
+$response = $client->get("http://noboat.test/api/public/packs", [
+    'query' => [
+            "page" => "1",
         ],
 ]);
 $body = $response->getBody();
@@ -173,15 +131,158 @@ print_r(json_decode((string) $body));
 
 
 ```bash
-curl -X GET -G "http://noboat.test/api/packs/1" \
-    -H "Authorization: Bearer {token}"
+curl -X GET -G "http://noboat.test/api/public/packs" 
 ```
 
 ```javascript
-const url = new URL("http://noboat.test/api/packs/1");
+const url = new URL("http://noboat.test/api/public/packs");
+
+    let params = {
+            "page": "1",
+        };
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
 let headers = {
-    "Authorization": "Bearer {token}",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "one",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 5,
+            "name": "two",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 6,
+            "name": "three",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        },
+        {
+            "id": 7,
+            "name": "four",
+            "image": "",
+            "cost": 30,
+            "heart_count": 2,
+            "item_count": 6,
+            "weight_ounces": 51.69,
+            "weight_imperial": "3.2 lb.",
+            "weight_metric": "1.5 kg.",
+            "season": {
+                "data": {
+                    "name": "Summer"
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "total": 4,
+            "count": 4,
+            "per_page": 21,
+            "current_page": 1,
+            "total_pages": 1,
+            "links": {}
+        }
+    }
+}
+```
+
+### HTTP Request
+`GET api/public/packs`
+
+#### Query Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    page |  optional  | The page number.
+
+<!-- END_cada61ef55ca6b8d0b311205a8f15402 -->
+
+<!-- START_56bdd6111788516f2d03cc102020b722 -->
+## Get a backpack
+
+Get a pack and all the attached details
+
+> Example request:
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get("http://noboat.test/api/public/packs/1", [
+    'query' => [
+            "id" => "1",
+        ],
+]);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+
+```bash
+curl -X GET -G "http://noboat.test/api/public/packs/1" 
+```
+
+```javascript
+const url = new URL("http://noboat.test/api/public/packs/1");
+
+    let params = {
+            "id": "1",
+        };
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+let headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
 }
@@ -201,7 +302,7 @@ fetch(url, {
 {
     "data": {
         "id": 1,
-        "name": "Kim's Pack",
+        "name": "one",
         "image": "",
         "cost": 30,
         "heart_count": 2,
@@ -283,11 +384,17 @@ fetch(url, {
 ```
 
 ### HTTP Request
-`GET api/packs/{pack}`
+`GET api/public/packs/{pack}`
 
+#### Query Parameters
 
-<!-- END_7213f238adb4daadf1bde8f76c4b1b4e -->
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    id |  required  | The pack id.
 
+<!-- END_56bdd6111788516f2d03cc102020b722 -->
+
+#general
 <!-- START_37b2ac89fbef2e2e50c9c6fac4819308 -->
 ## Store a newly created resource in storage.
 

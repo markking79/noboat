@@ -11,9 +11,9 @@
 |
 */
 
-Route::post('/user/login', 'Api\UserLoginController@login')->name('api.user.login');
+Route::post('/public/login', 'Api\UserLoginController@login')->name('api.user.login');
 
-Route::resource('packs', 'Api\PackController')->only(['index', 'show']);
+Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
 
 Route::middleware(['auth:api'])->name('api.user.')->group(function() {
     Route::apiResource('user/pack_likes', 'Api\PackLikeController', ['as' => 'user'])->only(['store', 'destroy']);

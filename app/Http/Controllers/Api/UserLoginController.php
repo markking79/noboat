@@ -7,19 +7,36 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Authentication
+ *
+ * APIs for logging in
+ */
 class UserLoginController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Login
      *
-     * @return \Illuminate\Http\Response
+     * Login and return the bearer token
+     *
+     * @bodyParam email required The user's email address. Example: test@test.com
+     * @bodyParam password required The user's password. Example: password
+     *
+     * @response {
+     *  "access_token": "{token}",
+     *  "token_type": "Bearer",
+     *  "expires_at": "2029-08-02 04:16:22"
+     * }
+     *
+     * @response 401 {
+     *  "message": "Unauthorized"
+     * }
      */
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'password' => 'required|string'
         ]);
 
         $credentials = request(['email', 'password']);

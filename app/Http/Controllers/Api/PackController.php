@@ -7,22 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Transformers\PackTransformer;
 use App\Services\PackService;
 
+/**
+ * @group Packs
+ *
+ * APIs for listing and viewing packs
+ */
 class PackController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-
     /**
      * List backpacks
      *
      * List all the public viewable packs using pagination
      *
-     * @bodyParam page int optional The page number to return.
+     * @queryParam page The page number. Example: 1
      *
-     * @transformer \App\Transformers\PackTransformer
      */
     public function index(Request $request, PackService $packService)
     {
@@ -37,11 +35,12 @@ class PackController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get a backpack
      *
-     * @param  int        $id
-     * @param PackService $packService
-     * @return \Illuminate\View\View
+     * Get a pack and all the attached details
+     *
+     * @queryParam id required The pack id. Example: 1
+     *
      */
     public function show($id, PackService $packService)
     {
