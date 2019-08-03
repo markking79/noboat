@@ -24,7 +24,7 @@
                 @endif
             </div>
             <div class="text-center col-12 mt-2">
-                <!--<iframe src="https://www.facebook.com/plugins/share_button.php?href={{config('APP_URL')}}{{url()->current()}}&layout=button&size=small&appId=538515852997725&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>-->
+                <iframe src="https://www.facebook.com/plugins/share_button.php?href={{config('APP_URL')}}{{url()->current()}}&layout=button&size=small&appId=538515852997725&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
             </div>
         </div>
         <div class="col-12 col-md-6">

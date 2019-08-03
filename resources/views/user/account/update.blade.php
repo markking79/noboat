@@ -9,7 +9,7 @@
             <h3>Update Account</h3>
         </div>
         <div class="card-body">
-            Account saved. <a href="{{route ('user.edit')}}">continue -></a>
+            Account updated. <a href="{{route ('user.edit')}}">continue -></a>
         </div>
     </div><br />
 
