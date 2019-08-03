@@ -5,9 +5,11 @@
 @section('content')
 
     <div class="row view-pack-heading-row">
+        @guest
         <div class="col-12 d-sm-block d-md-none text-right">
             <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
         </div>
+        @endguest
 
         <div class="col-12 col-md-2">
             <div class="image-content text-center">
@@ -22,7 +24,7 @@
                 @endif
             </div>
             <div class="text-center col-12 mt-2">
-                <iframe src="https://www.facebook.com/plugins/share_button.php?href={{config('APP_URL')}}{{url()->current()}}&layout=button&size=small&appId=538515852997725&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                <!--<iframe src="https://www.facebook.com/plugins/share_button.php?href={{config('APP_URL')}}{{url()->current()}}&layout=button&size=small&appId=538515852997725&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>-->
             </div>
         </div>
         <div class="col-12 col-md-6">
@@ -32,23 +34,22 @@
                 ${{number_format ($pack->visible_cost, 2)}} USD<br />
                 {{$pack->visible_item_count  ?? "0"}} items<br />
 
-                <span id="likableHeart" @if (!$pack->login_user_liked) style="display: none;" @endif>
-                    <svg class="heartSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(0.56640625) translate(0 0)">
-                            <path xmlns="http://www.w3.org/2000/svg" d="M512,179.078c0,43.181-18.609,82.015-48.245,108.922H464L304,448c-16,16-32,32-48,32s-32-16-48-32L48,288h0.245  C18.609,261.093,0,222.259,0,179.078C0,97.849,65.849,32,147.078,32C190.259,32,229.093,50.609,256,80.245  C282.907,50.609,321.741,32,364.922,32C446.15,32,512,97.849,512,179.078z"></path>
-                        </g></svg>
-                    </span>
-                <span id="unlikableHeart" @if ($pack->login_user_liked) style="display: none;" @endif>
-                    <svg class="heartSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(8.1209747251463) translate(-7.144999027252197 -7.145001411437988)">
-                            <path xmlns="http://www.w3.org/2000/svg" d="M37.299,10.731c-1.586-0.873-3.379-1.334-5.185-1.334c-2.646,0-5.162,0.967-7.112,2.696  c-1.953-1.729-4.474-2.696-7.119-2.696c-1.801,0-3.593,0.461-5.187,1.336c-3.424,1.896-5.551,5.5-5.551,9.406  c0,1.101,0.172,2.193,0.51,3.248c1.773,7.637,15.946,16.608,16.551,16.987c0.244,0.153,0.521,0.229,0.798,0.229  c0.276,0,0.554-0.078,0.798-0.23c0.604-0.379,14.768-9.352,16.545-16.987c0.336-1.054,0.508-2.146,0.508-3.248  C42.854,16.233,40.727,12.629,37.299,10.731z M39.473,22.523c-0.015,0.046-0.026,0.092-0.038,0.14  C38.321,27.666,29.29,34.497,25.003,37.32c-4.289-2.821-13.322-9.647-14.436-14.656c-0.011-0.048-0.023-0.096-0.039-0.142  c-0.254-0.774-0.383-1.575-0.383-2.382c0-2.815,1.534-5.414,4-6.779c1.146-0.63,2.438-0.963,3.736-0.963  c2.311,0,4.484,1.022,5.968,2.805c0.285,0.343,0.708,0.541,1.153,0.541h0.001c0.446,0,0.869-0.199,1.153-0.543  c1.477-1.781,3.647-2.803,5.957-2.803c1.301,0,2.593,0.333,3.733,0.96c2.47,1.368,4.004,3.966,4.004,6.782  C39.854,20.947,39.726,21.75,39.473,22.523z"></path>
-                        </g></svg>
-                    </span>
-                <span id="likeCountContent">{{$pack->heart_count  ?? "0"}}</span> likes
+                <like-pack
+                        v-bind:user-is-loggedin="@auth true @else false @endif"
+                        v-bind:user-has-liked="{{$pack->login_user_liked ? 'true' : 'false'}}"
+                        v-bind:pack-id="{{$pack->id}}"
+                        like-api-url="{{route ('api.user.pack_likes.store')}}"
+                        unlike-api-url="{{route ('api.user.pack_likes.destroy', ['pack_id' => $pack->id])}}"
+                        v-bind:pack-like-count="{{$pack->heart_count  ?? "0"}}"
+                ></like-pack>
             </p>
         </div>
         <div class="col-12 col-md-4 text-right">
+            @guest
             <span class="d-none d-md-block">
                 <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
             </span>
+            @endguest
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 10px;">
                 <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
                 <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Metric</a>
@@ -116,7 +117,8 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <h3>@if ($item->purchase_link)<a target="_blank" href="{{$item->purchase_link}}">@endif{{$item->name}}@if ($item->purchase_link)</a>@endif</h3>
-                                        <p>{{substr($item->description, 0, 100)}} @if (strlen($item->description) > 100) <a href="#" class="readMoreLink">read more</a> <span class="moreText" style="display: none;">{{substr($item->description, 100, 100000000)}}</span> @endif </p>
+                                        <p>
+                                            <readmore text="{{$item->description}}"></readmore>
                                     </div>
                                     <div class="col-12 col-md-2 text-left text-md-center">
                                         <p>${{number_format ($item->cost_each, 2)}} <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></p>
@@ -145,47 +147,4 @@
         @endforeach
     @endif
 
-@endsection
-@section('script')
-    <script>
-        window.onload = function () {
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
-            let pack_id = {{$pack->id}};
-
-            $('.readMoreLink').click (function (e) {
-                e.preventDefault ();
-
-                $(this).parent ().find ('.moreText').show ();
-                $(this).hide ();
-            });
-
-            @auth
-            $('#likableHeart svg').click (function () {
-                $('#likableHeart').hide ();
-                $('#unlikableHeart').show ();
-
-                $('#likeCountContent').html (parseInt($('#likeCountContent').html ())-1);
-
-                $.ajax({ url: '{{route ('api.pack_likes.destroy', ['pack_id' => $pack->id])}}', type: 'DELETE'});
-
-
-            });
-
-            $('#unlikableHeart svg').click (function () {
-                $('#likableHeart').show ();
-                $('#unlikableHeart').hide ();
-
-                $('#likeCountContent').html (parseInt($('#likeCountContent').html ())+1);
-
-                $.post ('{{route ('api.pack_likes.store')}}', {'pack_id': pack_id});
-
-
-
-            });
-            @endif
-
-        }
-
-    </script>
 @endsection

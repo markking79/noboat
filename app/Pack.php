@@ -66,9 +66,9 @@ class Pack extends Model
         return false;
     }
 
-    public function desired_weight_format ($metric = 'Imperial')
+    public function desired_weight_format ($metric = 'imperial')
     {
-        if ($metric == 'Imperial')
+        if ($metric == 'imperial')
             return $this->visible_imperial;
         else
             return $this->visible_metric;

@@ -394,105 +394,13 @@ Parameter | Status | Description
 
 <!-- END_56bdd6111788516f2d03cc102020b722 -->
 
-#general
-<!-- START_37b2ac89fbef2e2e50c9c6fac4819308 -->
-## Store a newly created resource in storage.
+#User Packs
 
-> Example request:
-
-```php
-
-$client = new \GuzzleHttp\Client();
-$response = $client->post("http://noboat.test/api/user/pack_likes", [
-    'headers' => [
-            "Authorization" => "Bearer {token}",
-        ],
-]);
-$body = $response->getBody();
-print_r(json_decode((string) $body));
-```
-
-
-```bash
-curl -X POST "http://noboat.test/api/user/pack_likes" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL("http://noboat.test/api/user/pack_likes");
-
-let headers = {
-    "Authorization": "Bearer {token}",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST api/user/pack_likes`
-
-
-<!-- END_37b2ac89fbef2e2e50c9c6fac4819308 -->
-
-<!-- START_b73c2b558dc3e8404e0c4f19343f5f43 -->
-## Remove the specified resource from storage.
-
-> Example request:
-
-```php
-
-$client = new \GuzzleHttp\Client();
-$response = $client->delete("http://noboat.test/api/user/pack_likes/1", [
-    'headers' => [
-            "Authorization" => "Bearer {token}",
-        ],
-]);
-$body = $response->getBody();
-print_r(json_decode((string) $body));
-```
-
-
-```bash
-curl -X DELETE "http://noboat.test/api/user/pack_likes/1" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL("http://noboat.test/api/user/pack_likes/1");
-
-let headers = {
-    "Authorization": "Bearer {token}",
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "DELETE",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`DELETE api/user/pack_likes/{pack_like}`
-
-
-<!-- END_b73c2b558dc3e8404e0c4f19343f5f43 -->
-
+APIs for listing and viewing user's packs
 <!-- START_6b18976a4e58014af7c633fb0dfb2f5a -->
-## Display a listing of the resource.
+## List user&#039;s backpacks
+
+List all the user's packs using pagination
 
 > Example request:
 
@@ -501,7 +409,11 @@ fetch(url, {
 $client = new \GuzzleHttp\Client();
 $response = $client->get("http://noboat.test/api/user/packs", [
     'headers' => [
+            "Accept" => "application/json",
             "Authorization" => "Bearer {token}",
+        ],
+    'query' => [
+            "page" => "1",
         ],
 ]);
 $body = $response->getBody();
@@ -511,15 +423,21 @@ print_r(json_decode((string) $body));
 
 ```bash
 curl -X GET -G "http://noboat.test/api/user/packs" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
 ```
 
 ```javascript
 const url = new URL("http://noboat.test/api/user/packs");
 
+    let params = {
+            "page": "1",
+        };
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
 let headers = {
-    "Authorization": "Bearer {token}",
     "Accept": "application/json",
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
 }
 
@@ -536,13 +454,18 @@ fetch(url, {
 
 ```json
 {
-    "message": "Unauthenticated."
+    "message": "Unauthorized"
 }
 ```
 
 ### HTTP Request
 `GET api/user/packs`
 
+#### Query Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    page |  optional  | The page number.
 
 <!-- END_6b18976a4e58014af7c633fb0dfb2f5a -->
 
@@ -556,6 +479,7 @@ fetch(url, {
 $client = new \GuzzleHttp\Client();
 $response = $client->post("http://noboat.test/api/user/packs", [
     'headers' => [
+            "Accept" => "application/json",
             "Authorization" => "Bearer {token}",
         ],
 ]);
@@ -566,6 +490,7 @@ print_r(json_decode((string) $body));
 
 ```bash
 curl -X POST "http://noboat.test/api/user/packs" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
 ```
 
@@ -573,8 +498,8 @@ curl -X POST "http://noboat.test/api/user/packs" \
 const url = new URL("http://noboat.test/api/user/packs");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Accept": "application/json",
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
 }
 
@@ -604,6 +529,7 @@ fetch(url, {
 $client = new \GuzzleHttp\Client();
 $response = $client->get("http://noboat.test/api/user/packs/1", [
     'headers' => [
+            "Accept" => "application/json",
             "Authorization" => "Bearer {token}",
         ],
 ]);
@@ -614,6 +540,7 @@ print_r(json_decode((string) $body));
 
 ```bash
 curl -X GET -G "http://noboat.test/api/user/packs/1" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
 ```
 
@@ -621,8 +548,8 @@ curl -X GET -G "http://noboat.test/api/user/packs/1" \
 const url = new URL("http://noboat.test/api/user/packs/1");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Accept": "application/json",
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
 }
 
@@ -659,6 +586,7 @@ fetch(url, {
 $client = new \GuzzleHttp\Client();
 $response = $client->put("http://noboat.test/api/user/packs/1", [
     'headers' => [
+            "Accept" => "application/json",
             "Authorization" => "Bearer {token}",
         ],
 ]);
@@ -669,6 +597,7 @@ print_r(json_decode((string) $body));
 
 ```bash
 curl -X PUT "http://noboat.test/api/user/packs/1" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
 ```
 
@@ -676,8 +605,8 @@ curl -X PUT "http://noboat.test/api/user/packs/1" \
 const url = new URL("http://noboat.test/api/user/packs/1");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Accept": "application/json",
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
 }
 
@@ -709,6 +638,7 @@ fetch(url, {
 $client = new \GuzzleHttp\Client();
 $response = $client->delete("http://noboat.test/api/user/packs/1", [
     'headers' => [
+            "Accept" => "application/json",
             "Authorization" => "Bearer {token}",
         ],
 ]);
@@ -719,6 +649,7 @@ print_r(json_decode((string) $body));
 
 ```bash
 curl -X DELETE "http://noboat.test/api/user/packs/1" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
 ```
 
@@ -726,8 +657,8 @@ curl -X DELETE "http://noboat.test/api/user/packs/1" \
 const url = new URL("http://noboat.test/api/user/packs/1");
 
 let headers = {
-    "Authorization": "Bearer {token}",
     "Accept": "application/json",
+    "Authorization": "Bearer {token}",
     "Content-Type": "application/json",
 }
 
@@ -746,5 +677,106 @@ fetch(url, {
 
 
 <!-- END_9116aa63467e667526d7fbfb57564db0 -->
+
+#general
+<!-- START_37b2ac89fbef2e2e50c9c6fac4819308 -->
+## Store a newly created resource in storage.
+
+> Example request:
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->post("http://noboat.test/api/user/pack_likes", [
+    'headers' => [
+            "Accept" => "application/json",
+            "Authorization" => "Bearer {token}",
+        ],
+]);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+
+```bash
+curl -X POST "http://noboat.test/api/user/pack_likes" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer {token}"
+```
+
+```javascript
+const url = new URL("http://noboat.test/api/user/pack_likes");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+
+### HTTP Request
+`POST api/user/pack_likes`
+
+
+<!-- END_37b2ac89fbef2e2e50c9c6fac4819308 -->
+
+<!-- START_b73c2b558dc3e8404e0c4f19343f5f43 -->
+## Remove the specified resource from storage.
+
+> Example request:
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->delete("http://noboat.test/api/user/pack_likes/1", [
+    'headers' => [
+            "Accept" => "application/json",
+            "Authorization" => "Bearer {token}",
+        ],
+]);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+
+```bash
+curl -X DELETE "http://noboat.test/api/user/pack_likes/1" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer {token}"
+```
+
+```javascript
+const url = new URL("http://noboat.test/api/user/pack_likes/1");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+
+### HTTP Request
+`DELETE api/user/pack_likes/{pack_like}`
+
+
+<!-- END_b73c2b558dc3e8404e0c4f19343f5f43 -->
 
 

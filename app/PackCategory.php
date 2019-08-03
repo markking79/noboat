@@ -35,9 +35,9 @@ class PackCategory extends Model
         return round ($this->total_ounces / 35.27, 1) . ' kg.';
     }
 
-    public function desired_weight_format ($metric = 'Imperial')
+    public function desired_weight_format ($metric = 'imperial')
     {
-        if ($metric == 'Imperial')
+        if ($metric == 'imperial')
             return $this->imperial_weight;
         else
             return $this->metric_weight;

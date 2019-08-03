@@ -21,6 +21,9 @@ class UserPackController extends Controller
      *
      * @queryParam page The page number. Example: 1
      *
+     * @response 401 {
+     *  "message": "Unauthorized"
+     * }
      */
     public function index(Request $request, PackService $packService)
     {

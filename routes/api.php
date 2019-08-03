@@ -11,12 +11,13 @@
 |
 */
 
-Route::post('/public/login', 'Api\UserLoginController@login')->name('api.user.login');
-
-Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
+Route::name('api.public.')->group(function() {
+    Route::post('/public/login', 'Api\UserLoginController@login')->name('login');
+    Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
+});
 
 Route::middleware(['auth:api'])->name('api.user.')->group(function() {
-    Route::apiResource('user/pack_likes', 'Api\PackLikeController', ['as' => 'user'])->only(['store', 'destroy']);
+    Route::apiResource('user/pack_likes', 'Api\PackLikeController')->only(['store', 'destroy']);
     Route::apiResource('user/packs', 'Api\UserPackController');
 });
 
