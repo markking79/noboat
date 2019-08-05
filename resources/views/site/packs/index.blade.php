@@ -16,48 +16,34 @@
 
     <div class="row">
         <div class="col-12 col-md-6">
-            <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                <div class="btn-group btn-group-sm" role="group">
-                    <button id="btnGroupPackWeight" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Weight (All)
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupPackWeight">
-                        <a class="dropdown-item @if (!$pack_filter_ounces_min && !$pack_filter_ounces_max) active @endif "  href="?pack_filter_ounces_min=&pack_filter_ounces_max=">All</a>
-                        <a class="dropdown-item @if (!$pack_filter_ounces_min && $pack_filter_ounces_max == '80') active @endif "  href="?pack_filter_ounces_min=0&pack_filter_ounces_max=80">Super Ultra Light <b>under <span class="convertOunces">80</span></b></a>
-                        <a class="dropdown-item @if ($pack_filter_ounces_min == '80' && $pack_filter_ounces_max == '160') active @endif "  href="?pack_filter_ounces_min=80&pack_filter_ounces_max=160">Ultra Light <b><span class="convertOunces">80</span> - <span class="convertOunces">160</span></b></a>
-                        <a class="dropdown-item @if ($pack_filter_ounces_min == '160' && $pack_filter_ounces_max == '240') active @endif " href="?pack_filter_ounces_min=160&pack_filter_ounces_max=240">Light <b><span class="convertOunces">160</span> - <span class="convertOunces">240</span></b></a>
-                        <a class="dropdown-item @if ($pack_filter_ounces_min == '240') active @endif "  href="?pack_filter_ounces_min=240&pack_filter_ounces_max=">Traditional <b>over <span class="convertOunces">240</span></b></a>
-                    </div>
-                </div>
-                <div class="btn-group btn-group-sm" role="group">
-                    <button id="btnGroupPackPrice" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Price (All)
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupPackPrice">
-                        <a class="dropdown-item @if (!$pack_filter_cost_min && !$pack_filter_cost_max) active @endif " href="?pack_filter_cost_min=&pack_filter_cost_max=">All</a>
-                        <a class="dropdown-item @if (!$pack_filter_cost_min && $pack_filter_cost_max == '500') active @endif "  href="?pack_filter_cost_min=0&pack_filter_cost_max=500">$0.00 - $500.00</a>
-                        <a class="dropdown-item @if ($pack_filter_cost_min == '500' && $pack_filter_cost_max == '1000') active @endif " href="?pack_filter_cost_min=500&pack_filter_cost_max=1000">$500.00 - $1000.00</a>
-                        <a class="dropdown-item @if ($pack_filter_cost_min == '1000' && $pack_filter_cost_max == '1500') active @endif " href="?pack_filter_cost_min=1000&pack_filter_cost_max=1500">$1500.00 - $2000.00</a>
-                        <a class="dropdown-item @if ($pack_filter_cost_min == '2000' && !$pack_filter_cost_max) active @endif " href="?pack_filter_cost_min=2000&pack_filter_cost_max=">$2000.00+</a>
-                    </div>
-                </div>
-                <div class="btn-group btn-group-sm" role="group">
-                    <button id="btnGroupPackSeason" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Season (All)
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupPackSeason">
-                        <a class="dropdown-item @if (!$pack_filter_season_id) active @endif " href="?pack_filter_season_id=">All</a>
-                        @if ($pack_seasons)
-                            @foreach ($pack_seasons as $season)
-                                <a class="dropdown-item @if ($pack_filter_season_id == $season->id) active @endif " href="?pack_filter_season_id={{$season->id}}">{{$season->name}}</a>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div><br /><br />
+            <filter-packs
+                    v-bind:weight-data="[
+                    {min: '', max: '', title: 'All', is_selected: @if (!$pack_filter_ounces_min && !$pack_filter_ounces_max) true @else false @endif},
+                    {min: '', max: '80', title: 'Super Ultra Light Under {{convertOunces(80, $pack_weight_units)}}', is_selected: @if (!$pack_filter_ounces_min && $pack_filter_ounces_max == '80') true @else false @endif},
+                    {min: '80', max: '160', title: 'Ultra Light {{convertOunces(80, $pack_weight_units)}} - {{convertOunces(160, $pack_weight_units)}}', is_selected: @if ($pack_filter_ounces_min == '80' && $pack_filter_ounces_max == '160') true @else false @endif},
+                    {min: '160', max: '240', title: 'Light {{convertOunces(160, $pack_weight_units)}} - {{convertOunces(240, $pack_weight_units)}}', is_selected: @if ($pack_filter_ounces_min == '160' && $pack_filter_ounces_max == '240') true @else false @endif},
+                    {min: '240', max: '', title: 'Traditional over {{convertOunces(240, $pack_weight_units)}}', is_selected: @if ($pack_filter_ounces_min == '240' && !$pack_filter_ounces_max) true @else false @endif}
+                    ]"
+
+                    v-bind:price-data="[
+                    {min: '', max: '', title: 'All', is_selected: @if (!$pack_filter_cost_min && !$pack_filter_cost_max) true @else false @endif},
+                    {min: '', max: '1000', title: '$0.00 - $1000.00', is_selected: @if (!$pack_filter_cost_min && $pack_filter_cost_max == '1000') true @else false @endif},
+                    {min: '1000', max: '2000', title: '$1000.00 - $2000.00', is_selected: @if ($pack_filter_cost_min == '1000' && $pack_filter_cost_max == '2000') true @else false @endif},
+                    {min: '2000', max: '', title: '$2000.00+', is_selected: @if ($pack_filter_cost_min == '2000' && !$pack_filter_cost_max) true @else false @endif}
+                    ]"
+
+                    v-bind:season-data="[
+                    {id: '', title: 'All', is_selected: @if (!$pack_filter_season_id) true @else false @endif},
+                    @if ($pack_seasons)
+                    @foreach ($pack_seasons as $season)
+                            {id: '{{$season->id}}', title: '{{$season->name}}', is_selected: @if ($pack_filter_season_id == $season->id) true @else false @endif},
+                        @endforeach
+                    @endif
+                    ]"
+            ></filter-packs><br /><br />
         </div>
         <div class="col-12 col-md-6 text-md-right">
-            <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 10px;">
+            <div class="btn-group btn-group-sm pb-2" role="group">
                 <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
                 <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Metric</a>
             </div><br />
@@ -96,7 +82,6 @@
                                         <svg class="heartSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(8.1209747251463) translate(-7.144999027252197 -7.145001411437988)">
                                                 <path xmlns="http://www.w3.org/2000/svg" d="M37.299,10.731c-1.586-0.873-3.379-1.334-5.185-1.334c-2.646,0-5.162,0.967-7.112,2.696  c-1.953-1.729-4.474-2.696-7.119-2.696c-1.801,0-3.593,0.461-5.187,1.336c-3.424,1.896-5.551,5.5-5.551,9.406  c0,1.101,0.172,2.193,0.51,3.248c1.773,7.637,15.946,16.608,16.551,16.987c0.244,0.153,0.521,0.229,0.798,0.229  c0.276,0,0.554-0.078,0.798-0.23c0.604-0.379,14.768-9.352,16.545-16.987c0.336-1.054,0.508-2.146,0.508-3.248  C42.854,16.233,40.727,12.629,37.299,10.731z M39.473,22.523c-0.015,0.046-0.026,0.092-0.038,0.14  C38.321,27.666,29.29,34.497,25.003,37.32c-4.289-2.821-13.322-9.647-14.436-14.656c-0.011-0.048-0.023-0.096-0.039-0.142  c-0.254-0.774-0.383-1.575-0.383-2.382c0-2.815,1.534-5.414,4-6.779c1.146-0.63,2.438-0.963,3.736-0.963  c2.311,0,4.484,1.022,5.968,2.805c0.285,0.343,0.708,0.541,1.153,0.541h0.001c0.446,0,0.869-0.199,1.153-0.543  c1.477-1.781,3.647-2.803,5.957-2.803c1.301,0,2.593,0.333,3.733,0.96c2.47,1.368,4.004,3.966,4.004,6.782  C39.854,20.947,39.726,21.75,39.473,22.523z"></path>
                                             </g></svg>
-                                        </span>
                                     @endif
 
 
@@ -127,36 +112,4 @@
 
     <br />
     {{ $packs->links() }}
-@endsection
-@section('script')
-    <script>
-        window.onload = function () {
-
-            ouncesConvertToPretty ('{{$pack_weight_units}}');
-
-            $('#btnGroupPackWeight').html ('Weight (' + $('#btnGroupPackWeight').parent ().find ('.active').text () + ')');
-            $('#btnGroupPackPrice').html ('Price (' + $('#btnGroupPackPrice').parent ().find ('.active').text () + ')');
-            $('#btnGroupPackSeason').html ('Season (' + $('#btnGroupPackSeason').parent ().find ('.active').text () + ')');
-        }
-
-
-        function ouncesConvertToPretty (convertTo)
-        {
-
-            if (convertTo == 'Metric')
-            {
-                $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 35.27).toFixed (1) + ' kg.');
-                });
-            }
-            else if (convertTo == 'Imperial')
-            {
-                $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 16).toFixed (1) + ' lb.');
-                });
-            }
-        }
-    </script>
 @endsection

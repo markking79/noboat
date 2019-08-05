@@ -10,6 +10,7 @@ window.Vue = require('vue');
 
 Vue.component('readmore', require('./components/ReadMoreComponent.vue').default);
 Vue.component('likePack', require('./components/LikePackComponent.vue').default);
+Vue.component('filterPacks', require('./components/FilterPacksComponent.vue').default);
 
 
 const app = new Vue({

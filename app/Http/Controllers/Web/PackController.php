@@ -19,11 +19,11 @@ class PackController extends Controller
     {
         $page_number = $packFilterRequest->get ('page', 1);
 
-        $pack_filter_ounces_min = $sessionService->value('pack_filter_ounces_min', '', $packFilterRequest);
-        $pack_filter_ounces_max = $sessionService->value('pack_filter_ounces_max', '', $packFilterRequest);
-        $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', '', $packFilterRequest);
-        $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', '', $packFilterRequest);
-        $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '', $packFilterRequest);
+        $pack_filter_ounces_min = $sessionService->value('pack_filter_ounces_min', null, $packFilterRequest);
+        $pack_filter_ounces_max = $sessionService->value('pack_filter_ounces_max', null, $packFilterRequest);
+        $pack_filter_cost_min = $sessionService->value('pack_filter_cost_min', null, $packFilterRequest);
+        $pack_filter_cost_max = $sessionService->value('pack_filter_cost_max', null, $packFilterRequest);
+        $pack_filter_season_id = $sessionService->value('pack_filter_season_id', '0', $packFilterRequest);
         $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial', $packFilterRequest);
 
         $pack_seasons = $packSeasonRepository->getAll();
