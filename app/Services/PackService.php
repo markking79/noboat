@@ -58,6 +58,18 @@ class PackService
         return $pack;
     }
 
+    public function getByIdAndUserId ($id, $user_id, $with_categories = false, $return_only_visible_categories = true)
+    {
+        $pack = $this->getById ($id, $with_categories, $return_only_visible_categories);
+        if (!$pack)
+            return false;
+
+        if ($pack->user_id != $user_id)
+            return false;
+
+        return $pack;
+    }
+
     public function getByIdWithAllPackItems ($id)
     {
         $pack = $this->packRepository->getByIdWithAllPackItems($id);

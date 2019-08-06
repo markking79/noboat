@@ -5,9 +5,9 @@ namespace App\Services;
 class SessionService
 {
 
-    public function value ($key, $default, $request)
+    public function value ($key, $default, $request = false)
     {
-        if($request->has($key))
+        if($request && $request->has($key))
             session([$key => $request->get ($key)]);
 
         $value = session($key, $default);

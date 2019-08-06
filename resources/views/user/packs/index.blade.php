@@ -8,7 +8,7 @@
             <h1>Your Packs</h1>
         </div>
         <div class="col-6 text-right">
-            <a class="btn btn-lg btn-primary" href="#">Add Pack</a><br /><br />
+            <a class="btn btn-lg btn-primary" href="{{route ('user.packs.create')}}">Add Pack</a><br /><br />
         </div>
     </div>
 

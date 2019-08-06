@@ -8,6 +8,7 @@ use App\Observers\UserObserver;
 use App\Pack;
 use App\PackItem;
 use App\User;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Redis;
 
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
 
         // redis
         foreach ((array) Redis::connections() as $connection) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\PackFilterRequest;
+use App\Repositories\PackSeasonRepository;
 use App\Services\PackService;
 use App\Services\SessionService;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UserPackController extends Controller
         $user = auth()->user();
 
         $page_number = $packFilterRequest->get ('page', 1);
-        $pack_weight_units = $sessionService->value('pack_weight_units', 'Imperial', $packFilterRequest);
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial', $packFilterRequest);
 
         $packs = $packService->getAllByUserIdPaginate($user->id, $page_number);
 
@@ -70,9 +71,21 @@ class UserPackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, SessionService $sessionService, PackService $packService, PackSeasonRepository $packSeasonRepository)
     {
-        dd ($id);
+        $user = auth()->user();
+
+        $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial');
+
+        $pack_seasons = $packSeasonRepository->getAll();
+
+        $pack = $packService->getByIdAndUserId ($id, $user->id, $with_categories = true, $return_only_visible_categories = false);
+
+        return view('user.packs.edit', [
+            'pack_weight_units' => $pack_weight_units,
+            'pack_seasons' => $pack_seasons,
+            'pack' => $pack
+        ]);
     }
 
     /**

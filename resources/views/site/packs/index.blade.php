@@ -9,7 +9,7 @@
         </div>
         @guest
             <div class="col-6 text-right">
-                <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
+                <a class="btn btn-lg btn-primary" href="{{route ('user.packs.create')}}">Add Your Pack</a><br /><br />
             </div>
         @endguest
     </div>

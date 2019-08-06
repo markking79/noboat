@@ -7,7 +7,7 @@
     <div class="row view-pack-heading-row">
         @guest
         <div class="col-12 d-sm-block d-md-none text-right">
-            <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
+            <a class="btn btn-lg btn-primary" href="{{route ('user.packs.create')}}">Add Your Pack</a><br /><br />
         </div>
         @endguest
 
