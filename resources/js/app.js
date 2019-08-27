@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+require ('blueimp-file-upload');
 
 window.Vue = require('vue');
 

@@ -4,18 +4,22 @@ namespace App\Services;
 
 use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
+use App\Repositories\PackAutoCompleteRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class PackService
 {
 
     private $packRepository;
     private $packCategoryRepository;
+    private $packAutoCompleteRepository;
 
-    public function __construct(PackRepository $packRepository, PackCategoryRepository $packCategoryRepository)
+    public function __construct(PackRepository $packRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository)
     {
         $this->packRepository = $packRepository;
         $this->packCategoryRepository = $packCategoryRepository;
+        $this->packAutoCompleteRepository = $packAutoCompleteRepository;
     }
 
     public function store ($user_id)
@@ -152,6 +156,35 @@ class PackService
         $pack->touch ();
         $pack->save ();
         $pack->categories = $categories;
+    }
+
+    public function delete ($id)
+    {
+        $this->packRepository->delete($id);
+    }
+
+    public function getPackAutoCompletesPaginate ($page)
+    {
+        $packautocompletes = $this->packAutoCompleteRepository->getAllPaginate($page);
+
+        return $packautocompletes;
+    }
+
+    public function copyPackItemImageAndSaveForAutoComplete ($item)
+    {
+        if ($item->image)
+        {
+            $final_file = str_replace ('packs/'.$item->pack_id.'/', 'temp/', $item->image);
+
+            if (Storage::disk('public')->exists($final_file))
+                Storage::disk('public')->delete($final_file);
+
+            $file = Storage::disk('public')->copy($item->image, $final_file);
+
+            return $final_file;
+        }
+
+        return false;
     }
 
     private function groupItemsByCategories (&$pack, &$categories, $return_only_visible = false) : Collection

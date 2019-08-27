@@ -63,8 +63,6 @@ class PackController extends Controller
         if (!$pack)
             abort(404);
 
-        //dd ($pack);
-
         return view('site/packs/show', compact('pack', 'pack_weight_units'));
     }
 }

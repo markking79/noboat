@@ -1,43 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
-use App\Services\PackService;
-use App\Transformers\PackTransformer;
+use App\PackItem;
+use App\Services\PackService;;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-/**
- * @group User Packs
- *
- * APIs for listing and viewing user's packs
- */
-class UserPackController extends Controller
+class AdminPackAutoCompleteController extends Controller
 {
     /**
-     * List user's backpacks
+     * Display a listing of the resource.
      *
-     * List all the user's packs using pagination
-     *
-     * @queryParam page The page number. Example: 1
-     *
-     * @response 401 {
-     *  "message": "Unauthorized"
-     * }
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request, PackService $packService)
     {
-        $user = auth()->user();
-
         $page_number = $request->get ('page', 1);
+        $items = $packService->getPackAutoCompletesPaginate ($page_number);
 
-        $packs = $packService->getAllByUserIdPaginate($user->id, $page_number);
-
-        if ($packs)
-            $packs = fractal($packs, new PackTransformer())->parseIncludes(['season'])->toArray();
-
-        return response()->json($packs);
-
+        return view ('admin.packs.auto_completes.index', compact ('items'));
     }
 
     /**
@@ -45,9 +27,17 @@ class UserPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, PackService $packService)
     {
-        //
+        if ($request->pack_id)
+        {
+            $item = PackItem::findOrFail($request->pack_id);
+            $item->image = $packService->copyPackItemImageAndSaveForAutoComplete ($item);
+        }
+        else
+            $item = new PackItem();
+
+        return view ('admin.packs.auto_completes.create', compact('item'));
     }
 
     /**
@@ -59,6 +49,8 @@ class UserPackController extends Controller
     public function store(Request $request)
     {
         //
+        //dd ($request);
+        return view ('admin.packs.auto_completes.store');
     }
 
     /**
@@ -101,17 +93,8 @@ class UserPackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, PackService $packService)
+    public function destroy($id)
     {
         //
-        $user = auth()->user();
-
-        $pack = $packService->getByIdAndUserId ($id, $user->id);
-
-        if ($pack)
-        {
-            $packService->delete ($pack->id);
-        }
-
     }
 }

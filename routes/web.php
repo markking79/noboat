@@ -15,9 +15,14 @@ Route::get('/', function () {return redirect(route('packs.index')); });
 Route::resource('packs', 'Web\PackController')->only(['index', 'show']);
 
 Auth::routes();
+
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function() {
     Route::get('', 'Web\UserController@index')->name ('index');
     Route::get('edit', 'Web\UserController@edit')->name ('edit');
     Route::post('update', 'Web\UserController@update')->name ('update');
     Route::resource('packs', 'Web\UserPackController');
+});
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('pack_auto_completes', 'Web\AdminPackAutoCompleteController');
 });

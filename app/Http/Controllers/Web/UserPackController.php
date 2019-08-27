@@ -81,6 +81,9 @@ class UserPackController extends Controller
 
         $pack = $packService->getByIdAndUserId ($id, $user->id, $with_categories = true, $return_only_visible_categories = false);
 
+        if (!$pack)
+            abort(404);
+
         return view('user.packs.edit', [
             'pack_weight_units' => $pack_weight_units,
             'pack_seasons' => $pack_seasons,

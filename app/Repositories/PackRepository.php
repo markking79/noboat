@@ -143,6 +143,21 @@ class PackRepository implements PackRepositoryInterface
         return $data;
     }
 
+    public function delete ($id)
+    {
+        $packWithItems = $this->getByIdWithAllPackItems ($id);
+
+        if ($packWithItems->items)
+        {
+            foreach ($packWithItems->items as $item)
+            {
+                $item->delete ();
+
+            }
+        }
+        Pack::destroy ($id);
+    }
+
     public function clearCache ()
     {
         Cache::tags('packs')->flush();

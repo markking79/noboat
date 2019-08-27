@@ -56,7 +56,7 @@
             <div class="text-center">
                 <div class="upload-btn-wrapper"><br />
                     <button class="btn btn-primary btn-sm">Upload</button>
-                    <input id="uploadPackImageBtn" type="file" name="photos[]" />
+                    <input id="uploadPackImageBtn" type="file" name="image" />
                     <input type="hidden" name="pack-asset-image" id="pack-asset-image" value="" />
                 </div>
 
@@ -267,7 +267,7 @@
                         <label>Upload Image</label><br />
                         <div class="upload-btn-wrapper">
                             <button class="btn btn-primary btn-sm">Upload</button>
-                            <input id="addItemUploadImageBtn" type="file" name="photos[]" />
+                            <input id="addItemUploadImageBtn" type="file" name="image" />
                         </div>
                         <div id="uploadAddItemImageProgressBar" class="progress" style="display: none;margin-top: 10px;">
                             <div class="progress-bar progress-bar-animated progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -331,7 +331,7 @@
                         <label>Upload Image</label><br />
                         <div class="upload-btn-wrapper">
                             <button class="btn btn-primary btn-sm">Upload</button>
-                            <input id="editItemUploadImageBtn" type="file" name="photos[]" />
+                            <input id="editItemUploadImageBtn" type="file" name="image" />
                         </div>
                         <div id="uploadEditItemImageProgressBar" class="progress" style="display: none;margin-top: 10px;">
 
@@ -677,7 +677,7 @@
             });
 
             $('#addItemUploadImageBtn').fileupload({
-                url: '/test',
+                url: '{{route ('api.public.image.store')}}',
                 dataType: 'json',
                 add: function (e, data) {
                     var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
@@ -705,7 +705,7 @@
             });
 
             $('#editItemUploadImageBtn').fileupload({
-                url: '/test',
+                url: '{{route ('api.public.image.store')}}',
                 dataType: 'json',
                 add: function (e, data) {
                     var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
@@ -733,9 +733,10 @@
             });
 
             $('#uploadPackImageBtn').fileupload({
-                url: '/test',
+                url: '{{route ('api.public.image.store')}}',
                 dataType: 'json',
                 add: function (e, data) {
+                    console.log ('dsf');
                     var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
                     if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                         alert('File type not supported');
@@ -744,7 +745,7 @@
                     data.submit();
                 },
                 done: function (e, data) {
-
+                    console.log ('dsf');
                     let image = data.result.image;
 
                     $(this).parent ().parent ().parent ().find ('.image-content').html ('<img src="'+image.url + '?v=' + Math.random() + '" />');
@@ -775,10 +776,12 @@
             });
 
             $('#confirmDeletePackBtn').click (function () {
-                $.post ('/test', {
-                    'pack_id': $('#id').val ()
-                }, function () {
-                    window.location = '{{route ('user.packs.index')}}';
+                $.ajax({
+                    url: '{{route ('api.user.packs.destroy', ['pack' => $pack->id]  )}}',
+                    type: 'DELETE',
+                    success: function(result) {
+                       window.location = '{{route ('user.packs.index')}}';
+                    }
                 });
             });
 

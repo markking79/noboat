@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}: @yield ('page-title')</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
@@ -103,12 +100,6 @@
                                     Account
                                 </a>
                             </div>
-                            @if (Auth()->user()->is_admin)
-                                <div class="left-menu-item">
-                                    <svg enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(1) translate(-5 -5.000007629394531)"><g xmlns=http://www.w3.org/2000/svg transform="translate(5 5) scale(7.631578947368421) translate(0 2.7960003912448883)"><g xmlns=http://www.w3.org/2000/svg id=_x33_43._Playlist><g><path d="M6.304,3.145l-4.608-2.88C0.759-0.321,0,0.1,0,1.204v6c0,1.104,0.759,1.525,1.696,0.94l4.608-2.88    C7.241,4.679,7.241,3.729,6.304,3.145z M36,1.204H12c-1.105,0-2,0.896-2,2v2c0,1.104,0.895,2,2,2h24c1.104,0,2-0.896,2-2v-2    C38,2.1,37.105,1.204,36,1.204z M1.696,20.145l4.608-2.88c0.937-0.586,0.895-1.461-0.093-1.955l-4.422-2.211    C0.801,12.605,0,13.1,0,14.204v5C0,20.309,0.759,20.729,1.696,20.145z M36,13.204H12c-1.105,0-2,0.896-2,2v2c0,1.104,0.895,2,2,2    h24c1.104,0,2-0.896,2-2v-2C38,14.1,37.105,13.204,36,13.204z M6.304,27.145l-4.608-2.88C0.759,23.679,0,24.1,0,25.204v6    c0,1.104,0.759,1.525,1.696,0.94l4.608-2.88C7.241,28.68,7.241,27.73,6.304,27.145z M36,25.204H12c-1.105,0-2,0.896-2,2v2    c0,1.104,0.895,2,2,2h24c1.104,0,2-0.896,2-2v-2C38,26.1,37.105,25.204,36,25.204z"></path></g></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g><g xmlns=http://www.w3.org/2000/svg></g></g></g></svg>
-                                    <a @if (\Request::is('admin/*') || \Request::is('admin/packs/autocomplete')) class="selected-side-menu-link"@endif href="/admin/packs/autocomplete">Admin Autocompletes</a>
-                                </div>
-                            @endif
                             <div class="left-menu-item">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(2.350081153515049) translate(-3.3000030517578125 -1.5500011444091797)">
                                         <path xmlns="http://www.w3.org/2000/svg" d="M89.3,29.6V8.9c0-3.3-2.7-6-6-6h-74c-3.3,0-6,2.7-6,6v3.9v78.2v2.7c0,2.2,1.3,4.3,3.2,5.3l45.6,23.6c2,1,4.4-0.4,4.4-2.7  V96.9h26.8c3.3,0,6-2.7,6-6V58.1h-12l0,23.8c0,1.7-1.3,3-3,3H56.6V54.1V34.6v-0.6c0-2.2-1.3-4.3-3.2-5.3L26.5,14.9l47.8,0  c1.7,0,3,1.3,3,3l0,11.8H89.3z"></path>
@@ -118,9 +109,18 @@
                                     @csrf
                                 </form>
                             </div>
+
+                            @if (Auth()->user()->is_admin)
+                                <div class="left-menu-spacer"></div>
+                                <div class="left-menu-item">
+                                    <svg enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(8.247773792735922) translate(-7.420000076293945 -7.390500068664551)"><path d="M42.378,21.532l-8.87,7.93l2.516,11.628c0.042,0.193-0.035,0.394-0.195,0.511c-0.087,0.062-0.19,0.096-0.294,0.096  c-0.086,0-0.173-0.022-0.251-0.067L25,35.644l-10.283,5.985c-0.172,0.099-0.385,0.088-0.545-0.028  c-0.16-0.115-0.236-0.315-0.194-0.51l2.515-11.628l-8.87-7.93c-0.147-0.133-0.203-0.34-0.142-0.527s0.228-0.322,0.425-0.343  l11.837-1.201l4.8-10.887c0.16-0.361,0.755-0.361,0.915,0l4.8,10.887l11.837,1.201c0.197,0.021,0.364,0.153,0.426,0.343  C42.581,21.193,42.525,21.398,42.378,21.532z"xmlns=http://www.w3.org/2000/svg></path></g></svg>
+                                    <a class="{{ (strpos(Route::currentRouteName(), 'admin') === 0) ? 'active' : '' }}" href="{{route ('admin.pack_auto_completes.index')}}">
+                                        Admin
+                                    </a>
+                                </div>
+                            @endif
                         @endauth
 
-                    <!-- <div class="left-menu-spacer"></div> -->
                     </div>
                     <div class="@guest col-12 @else col-lg-9 col-xl-10 col-md-12 @endguest">
                         @yield('content')
@@ -129,6 +129,8 @@
             </div>
         </main>
     </div>
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}"></script>
     @yield('script')
 </body>
 </html>

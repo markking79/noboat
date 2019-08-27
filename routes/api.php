@@ -14,6 +14,7 @@
 Route::name('api.public.')->group(function() {
     Route::post('/public/login', 'Api\UserLoginController@login')->name('login');
     Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
+    Route::resource('public/image', 'Api\UploadImageController')->only(['store']);
 });
 
 Route::middleware(['auth:api'])->name('api.user.')->group(function() {
