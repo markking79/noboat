@@ -22,6 +22,10 @@ Route::middleware(['auth:api'])->name('api.user.')->group(function() {
     Route::apiResource('user/packs', 'Api\UserPackController');
 });
 
+Route::middleware(['auth:api'])->name('api.admin.')->group(function() {
+    Route::apiResource('admin/pack_auto_completes', 'Api\AdminPackAutoCompleteController')->only (['index', 'destroy']);
+});
+
 // /api/user
 // /api/user/login' : api.user.login
 // /api/pack_likes/1 : api.user.pack_likes.store

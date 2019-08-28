@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Api;
 
-use App\PackItem;
-use App\Services\PackService;;
+use App\Services\PackService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,28 +15,35 @@ class AdminPackAutoCompleteController extends Controller
      */
     public function index(Request $request, PackService $packService)
     {
-        $page_number = $request->get ('page', 1);
-        $items = $packService->getPackAutoCompletesPaginate ($page_number);
+        $terms = $request->terms;
 
-        return view ('admin.packs.auto_completes.index', compact ('items'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request, PackService $packService)
-    {
-        if ($request->pack_id)
+        if ($terms)
         {
-            $item = PackItem::findOrFail($request->pack_id);
-            $item->image = $packService->copyPackItemImageAndSaveForAutoComplete ($item);
+            $data = $packService->searchPackAutoCompleteItem($terms);
         }
-        else
-            $item = new PackItem();
 
-        return view ('admin.packs.auto_completes.create', compact('item'));
+        return json_encode($data);
+
+
+        $splitTerm = explode(' ', $terms);
+        if (!$splitTerm)
+            return;
+
+        $whereArray = array();
+        foreach ($splitTerm as $term)
+            $whereArray[] = ['name', 'LIKE', "%$term%"];
+
+
+        $results = \App\Packautocomplete::where($whereArray)->get(['id', 'name']);
+
+        $slimmed_down = $results->map(function ($item, $key) {
+            return [
+                'label' => $item->name,
+                'id' => $item->id,
+            ];
+        });
+
+        return json_encode($slimmed_down);
     }
 
     /**
@@ -49,8 +55,6 @@ class AdminPackAutoCompleteController extends Controller
     public function store(Request $request)
     {
         //
-        //dd ($request);
-        return view ('admin.packs.auto_completes.store');
     }
 
     /**
@@ -62,17 +66,6 @@ class AdminPackAutoCompleteController extends Controller
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view ('admin.packs.auto_completes.edit');
     }
 
     /**
@@ -93,8 +86,8 @@ class AdminPackAutoCompleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, PackService $packService)
     {
-        //
+        $packService->deletePackAutoCompleteItem($id);
     }
 }

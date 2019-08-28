@@ -15,14 +15,6 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
         $this->secondsCache = config('custom.seconds_database_cache');
     }
 
-    public function store ($user_id)
-    {
-        return Pack::create ([
-            'user_id' => $user_id,
-            'name' => 'My Pack'
-        ]);
-    }
-
     public function getAllPaginate ($page)
     {
         $data = Cache::tags('packautocompletes')->remember('packautocompletes-'.$page, $this->secondsCache, function () use ($page) {
@@ -32,6 +24,29 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
 
         return $data;
 
+    }
+
+    public function search ($terms)
+    {
+        $data = Cache::tags('packautocompletes')->remember('packautocompletes-'.$terms, $this->secondsCache, function () use ($terms) {
+
+            $termsArray = explode(' ', $terms);
+            if (!$termsArray)
+                return null;
+
+            $whereArray = array();
+            foreach ($termsArray as $term)
+                $whereArray[] = ['name', 'LIKE', "%$term%"];
+
+            return Packautocomplete::where($whereArray)->get(['id', 'name', 'purchase_link', 'image', 'price', 'ounces']);
+        });
+
+        return $data;
+    }
+
+    public function delete ($id)
+    {
+        PackAutoComplete::destroy($id);
     }
 
     public function clearCache ()

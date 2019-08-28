@@ -170,6 +170,16 @@ class PackService
         return $packautocompletes;
     }
 
+    public function deletePackAutoCompleteItem ($id)
+    {
+        $this->packAutoCompleteRepository->delete($id);
+    }
+
+    public function searchPackAutoCompleteItem ($terms)
+    {
+        return $this->packAutoCompleteRepository->search($terms);
+    }
+
     public function copyPackItemImageAndSaveForAutoComplete ($item)
     {
         if ($item->image)
