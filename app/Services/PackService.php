@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Jobs\OptimizeImageJob;
 use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
 use App\Repositories\PackAutoCompleteRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+
 
 class PackService
 {
@@ -205,18 +207,12 @@ class PackService
 
         if ($values['image_file'])
         {
-            // split file by (.)
-            $filen = explode(".", $values['image_file']);
+            $final_file = $this->imageService->moveFile($values['image_file'], 'packs_autocomplete');
 
-            // get the last part split which will be the file extension
-            $ext = end($filen);
-
-            $final_file = 'images/packs_autocomplete/'.$id. '.'.$ext;
-
-            $success = $this->imageService->moveFile($values['image_file'], $final_file);
-
-            if ($success)
+            if ($final_file)
             {
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+
                 $item = $this->packAutoCompleteRepository->getById($id);
                 $item->image = $final_file;
                 $item->touch ();
@@ -233,17 +229,9 @@ class PackService
 
         if ($values['image_file'])
         {
-            // split file by (.)
-            $filen = explode(".", $values['image_file']);
+            $final_file = $this->imageService->moveFile($values['image_file'], 'packs_autocomplete');
 
-            // get the last part split which will be the file extension
-            $ext = end($filen);
-
-            $final_file = 'images/packs_autocomplete/'.$id. '.'.$ext;
-
-            $success = $this->imageService->moveFile($values['image_file'], $final_file);
-
-            if ($success)
+            if ($final_file)
             {
                 $item = $this->packAutoCompleteRepository->getById($id);
 
