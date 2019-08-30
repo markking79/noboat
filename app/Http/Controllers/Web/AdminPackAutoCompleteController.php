@@ -31,7 +31,9 @@ class AdminPackAutoCompleteController extends Controller
     {
         if ($request->pack_id)
         {
-            $item = PackItem::findOrFail($request->pack_id);
+            $item = $packService->getPackAutoCompleteById($request->pack_id);
+            if (!$item)
+                abort(404);
             $item->image = $packService->copyPackItemImageAndSaveForAutoComplete ($item);
         }
         else
@@ -50,7 +52,6 @@ class AdminPackAutoCompleteController extends Controller
     {
         //
         $packService->storePackAutoCompleteItem($request->only(['name', 'description', 'purchase_link', 'ounces', 'price', 'image_file']));
-        //dd ($request);
 
         return view ('admin.packs.auto_completes.store');
     }
@@ -72,10 +73,13 @@ class AdminPackAutoCompleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, PackService $packService)
     {
-        dd ($id);
-        return view ('admin.packs.auto_completes.edit');
+        $item = $packService->getPackAutoCompleteById($id);
+        if (!$item)
+            abort(404);
+
+        return view ('admin.packs.auto_completes.edit', compact('item'));
     }
 
     /**
@@ -85,9 +89,9 @@ class AdminPackAutoCompleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, PackService $packService)
     {
-        //
+        $packService->updatePackAutoCompleteItem($id, $request->only(['name', 'description', 'purchase_link', 'ounces', 'price', 'image_file']));
     }
 
     /**

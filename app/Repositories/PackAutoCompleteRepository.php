@@ -49,7 +49,7 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
             foreach ($termsArray as $term)
                 $whereArray[] = ['name', 'LIKE', "%$term%"];
 
-            return Packautocomplete::where($whereArray)->get(['id', 'name', 'purchase_link', 'image', 'price', 'ounces']);
+            return Packautocomplete::where($whereArray)->orderBy('created_at', 'desc')->get(['id', 'name', 'purchase_link', 'image', 'price', 'ounces']);
         });
 
         return $data;
@@ -59,6 +59,17 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
     {
         $item = Packautocomplete::create ($values);
         return $item->id;
+    }
+
+    public function update ($id, $values)
+    {
+        $item = $this->getById($id);
+        if ($item)
+        {
+            $item->fill ($values);
+            $item->save ();
+        }
+
     }
 
     public function delete ($id)

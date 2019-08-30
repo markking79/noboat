@@ -12,12 +12,11 @@
             <form method="POST" action="{{ route('admin.pack_auto_completes.store') }}">
                 @csrf
 
-
                 <div class="form-group row">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="text" name="name" value="{{ old('name', $item->name) }}" class="form-control" autofocus>
+                        <input id="name" type="text" name="name" value="{{ old('name', $item->name) }}" class="form-control" autofocus required>
                     </div>
                 </div>
                 <div class="form-group row d-none">
@@ -48,7 +47,7 @@
                     <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="number" name="price" step="any" value="{{ old('price', $item->cost_each ) }}" class="form-control">
+                        <input id="name" type="number" name="price" step="any" value="{{ old('price', $item->price ) }}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">

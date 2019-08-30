@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\ImageService;
 use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
 use App\Repositories\PackAutoCompleteRepository;
@@ -173,6 +172,13 @@ class PackService
         return $packautocompletes;
     }
 
+    public function getPackAutoCompleteById ($id)
+    {
+        $packautocomplete = $this->packAutoCompleteRepository->getById($id);
+
+        return $packautocomplete;
+    }
+
     public function deletePackAutoCompleteItem ($id)
     {
         $this->packAutoCompleteRepository->delete($id);
@@ -202,6 +208,40 @@ class PackService
             if ($success)
             {
                 $item = $this->packAutoCompleteRepository->getById($id);
+                $item->image = $final_file;
+                $item->touch ();
+                $item->save ();
+            }
+        }
+
+        return $id;
+    }
+
+    public function updatePackAutoCompleteItem ($id, $values)
+    {
+        $this->packAutoCompleteRepository->update ($id, $values);
+
+        if ($values['image_file'])
+        {
+            // split file by (.)
+            $filen = explode(".", $values['image_file']);
+
+            // get the last part split which will be the file extension
+            $ext = end($filen);
+
+            $final_file = 'images/packs_autocomplete/'.$id. '.'.$ext;
+
+            $success = $this->imageService->moveFile($values['image_file'], $final_file);
+
+            if ($success)
+            {
+                $item = $this->packAutoCompleteRepository->getById($id);
+
+                if ($item->image)
+                {
+                    $this->imageService->deleteFile($item->image);
+                }
+
                 $item->image = $final_file;
                 $item->touch ();
                 $item->save ();

@@ -12,6 +12,8 @@ interface PackAutoCompleteRepositoryInterface
 
     public function store ($values);
 
+    public function update ($id, $values);
+
     public function delete ($id);
 
     public function clearCache ();

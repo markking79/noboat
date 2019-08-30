@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Transformers\PackAutoCompleteItemTransformer;
 use App\Services\PackService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,33 +18,18 @@ class AdminPackAutoCompleteController extends Controller
     {
         $terms = $request->terms;
 
+        $data = false;
+
         if ($terms)
         {
             $data = $packService->searchPackAutoCompleteItem($terms);
+
+            if ($data)
+                $data = fractal($data, new PackAutoCompleteItemTransformer())->toArray();
         }
 
         return json_encode($data);
 
-
-        $splitTerm = explode(' ', $terms);
-        if (!$splitTerm)
-            return;
-
-        $whereArray = array();
-        foreach ($splitTerm as $term)
-            $whereArray[] = ['name', 'LIKE', "%$term%"];
-
-
-        $results = \App\Packautocomplete::where($whereArray)->get(['id', 'name']);
-
-        $slimmed_down = $results->map(function ($item, $key) {
-            return [
-                'label' => $item->name,
-                'id' => $item->id,
-            ];
-        });
-
-        return json_encode($slimmed_down);
     }
 
     /**
