@@ -23,37 +23,6 @@
                 </div>
             </div>
             <span id="searchResultsContent"></span>
-
-            <div class="row view-pack-row">
-                <div class="col-12">
-                    <hr />
-                </div>
-
-                <div class="col-12 col-md-1 text-center">
-                    <div class="image-content">
-                        <img src="" />
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(3.7815069787135234) translate(0 2.334503173828125)">
-                                    <path xmlns="http://www.w3.org/2000/svg" d="M64.571,0H12.118L0,19.388V72.02h76.689V19.387L64.571,0z M74.667,69.999H2.02V19.968L13.237,2.023h24.096v16.646H5.677  v2.021H71.01v-2.021H39.355V2.021H63.45l11.218,17.946L74.667,69.999L74.667,69.999z M24.344,37.333h28v2.021h-28V37.333z"></path>
-                                </g></svg>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h3 class="display_name">Name</h3>
-                    <p class="display_description"><a href="link" target="_blank">link</a></p>
-                </div>
-                <div class="col-12 col-md-2 text-left text-md-center">
-                    <p>$<span class="display_cost">price</span> <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></p>
-
-                </div>
-                <div class="col-12 col-md-2 text-left text-md-center">
-                    <p><span class="display_weight"> ounces</span> oz. <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
-                </div>
-                <div class="col-12 col-md-3 text-left text-md-right">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="#" class="btn btn-sm btn-primary editItemBtn">Edit</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div><br />
 
@@ -113,7 +82,7 @@
                     </div>
                     <div class="col-12 col-md-3 text-left text-md-right">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a id="editItemBtn-{{$item->id}}" href="#" class="btn btn-sm btn-primary editItemBtn" data-toggle="modal" data-target="#editItemModal">Edit</a>
+                            <a href="{{route ('admin.pack_auto_completes.edit', ['pack_auto_completes' => $item->id])}}" class="btn btn-sm btn-primary">Edit</a>
 
                             <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteItem-{{$item->id}}">Delete</a>
 
@@ -153,6 +122,10 @@
 
     <script>
 
+        var xhr = false;
+
+        let editUrl = '{{route ('admin.pack_auto_completes.edit', ['pack_auto_completes' => 123])}}';
+
         window.onload = function () {
 
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -177,10 +150,19 @@
 
                 let terms = $(this).val ();
 
+                if (xhr)
+                    xhr.abort ();
+
+                if (!terms)
+                {
+                    $('#searchResultsContent').html ('');
+                    return;
+                }
+
                 var url = '{{route ('api.admin.pack_auto_completes.index', ['terms' => 123])}}';
                 url = url.replace ('123', terms);
 
-                $.ajax({
+                xhr = $.ajax({
                     url: url,
                     success: function(data) {
 
@@ -200,16 +182,19 @@
                                         '                                    <path xmlns="http://www.w3.org/2000/svg" d="M64.571,0H12.118L0,19.388V72.02h76.689V19.387L64.571,0z M74.667,69.999H2.02V19.968L13.237,2.023h24.096v16.646H5.677  v2.021H71.01v-2.021H39.355V2.021H63.45l11.218,17.946L74.667,69.999L74.667,69.999z M24.344,37.333h28v2.021h-28V37.333z"></path>\n' +
                                         '                                </g></svg>';
 
-                                var price = '';
+                                var price = '$0.00';
                                 if (obj[i].price != null)
                                     price = '$' + obj[i].price.toFixed(2);
 
                                 var link = '';
                                 if (obj[i].purchase_link != null)
-                                    link = purchase_link;
+                                    link = obj[i].purchase_link;
 
+                                var ounces = '0';
+                                if (obj[i].ounces != null)
+                                    ounces = obj[i].ounces;
 
-                                console.log (price);
+                                var itemEditUrl = editUrl.replace ('123', obj[i].id);
 
                                 var html = '<div class="row view-pack-row">\n' +
                                     '                <div class="col-12">\n' +
@@ -230,11 +215,11 @@
                                     '\n' +
                                     '                </div>\n' +
                                     '                <div class="col-12 col-md-2 text-left text-md-center">\n' +
-                                    '                    <p><span class="display_weight"> '+ obj[i].ounces +'</span> oz. <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>\n' +
+                                    '                    <p><span class="display_weight"> '+ ounces +'</span> oz. <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>\n' +
                                     '                </div>\n' +
                                     '                <div class="col-12 col-md-3 text-left text-md-right">\n' +
                                     '                    <div class="btn-group" role="group">\n' +
-                                    '                        <a href="#" class="btn btn-sm btn-primary editItemBtn">Edit</a>\n' +
+                                    '                        <a href="'+itemEditUrl+'" class="btn btn-sm btn-primary editItemBtn">Edit</a>\n' +
                                     '                    </div>\n' +
                                     '                </div>\n' +
                                     '            </div>';

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\ImageService;
 use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
 use App\Repositories\PackAutoCompleteRepository;
@@ -14,12 +15,14 @@ class PackService
     private $packRepository;
     private $packCategoryRepository;
     private $packAutoCompleteRepository;
+    private $imageService;
 
-    public function __construct(PackRepository $packRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository)
+    public function __construct(PackRepository $packRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository, ImageService $imageService)
     {
         $this->packRepository = $packRepository;
         $this->packCategoryRepository = $packCategoryRepository;
         $this->packAutoCompleteRepository = $packAutoCompleteRepository;
+        $this->imageService = $imageService;
     }
 
     public function store ($user_id)
@@ -178,6 +181,34 @@ class PackService
     public function searchPackAutoCompleteItem ($terms)
     {
         return $this->packAutoCompleteRepository->search($terms);
+    }
+
+    public function storePackAutoCompleteItem ($values)
+    {
+        $id = $this->packAutoCompleteRepository->store ($values);
+
+        if ($values['image_file'])
+        {
+            // split file by (.)
+            $filen = explode(".", $values['image_file']);
+
+            // get the last part split which will be the file extension
+            $ext = end($filen);
+
+            $final_file = 'images/packs_autocomplete/'.$id. '.'.$ext;
+
+            $success = $this->imageService->moveFile($values['image_file'], $final_file);
+
+            if ($success)
+            {
+                $item = $this->packAutoCompleteRepository->getById($id);
+                $item->image = $final_file;
+                $item->touch ();
+                $item->save ();
+            }
+        }
+
+        return $id;
     }
 
     public function copyPackItemImageAndSaveForAutoComplete ($item)

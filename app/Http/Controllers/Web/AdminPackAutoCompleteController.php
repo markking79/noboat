@@ -46,10 +46,12 @@ class AdminPackAutoCompleteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, PackService $packService)
     {
         //
+        $packService->storePackAutoCompleteItem($request->only(['name', 'description', 'purchase_link', 'ounces', 'price', 'image_file']));
         //dd ($request);
+
         return view ('admin.packs.auto_completes.store');
     }
 
@@ -72,6 +74,7 @@ class AdminPackAutoCompleteController extends Controller
      */
     public function edit($id)
     {
+        dd ($id);
         return view ('admin.packs.auto_completes.edit');
     }
 

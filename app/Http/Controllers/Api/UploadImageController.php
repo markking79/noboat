@@ -29,15 +29,10 @@ class UploadImageController extends Controller
         if ($image)
         {
             // save image in temp folder
-            $file = Storage::disk('public')->put('temp', $image);
+            $file = Storage::disk('public')->put('images/temp', $image);
 
             // get the fill image path
             $full_path_file = $path = Storage::disk('public')->path($file);
-
-            // process the image so everything is perfect
-            //$this->correctImageOrientationAndSave ($full_path_file);
-            //$this->shrinkToMax1024AndSave ($full_path_file);
-            //ImageOptimizer::optimize($full_path_file);
 
             // return needed data
             $return_data = new \stdClass();

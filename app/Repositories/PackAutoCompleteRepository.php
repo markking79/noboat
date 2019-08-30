@@ -19,7 +19,18 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
     {
         $data = Cache::tags('packautocompletes')->remember('packautocompletes-'.$page, $this->secondsCache, function () use ($page) {
 
-            return PackAutoComplete::paginate(21);
+            return PackAutoComplete::orderBy('created_at', 'desc')->paginate(21);
+        });
+
+        return $data;
+
+    }
+
+    public function getById ($id)
+    {
+        $data = Cache::tags('packautocompletes')->remember('packautocompletesitem-'.$id, $this->secondsCache, function () use ($id) {
+
+            return PackAutoComplete::find($id);
         });
 
         return $data;
@@ -42,6 +53,12 @@ class PackAutoCompleteRepository implements PackAutoCompleteRepositoryInterface
         });
 
         return $data;
+    }
+
+    public function store ($values)
+    {
+        $item = Packautocomplete::create ($values);
+        return $item->id;
     }
 
     public function delete ($id)

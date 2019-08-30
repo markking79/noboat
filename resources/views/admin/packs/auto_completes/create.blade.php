@@ -55,14 +55,14 @@
                     <label for="weight" class="col-md-4 col-form-label text-md-right">Weight (in ounces)</label>
 
                     <div class="col-md-6">
-                        <input id="weight" type="number" step="any" name="weight" value="{{ old('weight', $item->ounces_each ) }}" class="form-control">
+                        <input id="ounces" type="number" step="any" name="ounces" value="{{ old('ounces', $item->ounces ) }}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="link" class="col-md-4 col-form-label text-md-right">Affiliate Link</label>
 
                     <div class="col-md-6">
-                        <input id="link" type="text" name="link" value="{{ old('link' ) }}" class="form-control" placeholder="http://www...">
+                        <input id="purchase_link" type="text" name="purchase_link" value="{{ old('purchase_link' ) }}" class="form-control" placeholder="http://www...">
                     </div>
                 </div>
 
