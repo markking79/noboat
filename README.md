@@ -59,7 +59,24 @@ Installation
     php artisan config:cache
     
     npm run production
-  
+ 
+Setup supervisor
+============  
+    sudo yum install supervisor
+    
+    cd /etc/supervisor/conf.d 
+    
+    nano laravel-worker.conf
+    
+    [program:laravel-worker]
+    process_name=%(program_name)s_%(process_num)02d
+    command=php /home/nobo/artisan queue:work sqs --sleep=3 --tries=3
+    autostart=true
+    autorestart=true
+    user=nobo
+    numprocs=8
+    redirect_stderr=true
+    stdout_logfile=/home/nobo/worker.log
     
 Installing jpegoptim
 ============

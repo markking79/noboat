@@ -233,6 +233,8 @@ class PackService
 
             if ($final_file)
             {
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+                
                 $item = $this->packAutoCompleteRepository->getById($id);
 
                 if ($item->image)
