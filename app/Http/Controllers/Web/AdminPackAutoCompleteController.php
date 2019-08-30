@@ -92,6 +92,8 @@ class AdminPackAutoCompleteController extends Controller
     public function update(Request $request, $id, PackService $packService)
     {
         $packService->updatePackAutoCompleteItem($id, $request->only(['name', 'description', 'purchase_link', 'ounces', 'price', 'image_file']));
+
+        return view ('admin.packs.auto_completes.update');
     }
 
     /**

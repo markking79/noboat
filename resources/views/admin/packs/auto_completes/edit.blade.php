@@ -4,6 +4,32 @@
 
 @section('content')
 
+    <div class="row">
+        <div class="col-12 text-right">
+            <a class="btn btn-lg btn-danger" href="#" data-toggle="modal" data-target="#deleteModal">Delete</a><br /><br />
+        </div>
+    </div>
+
+    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Delete Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Are you sure you would like to delete <b>{{$item->name}}</b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No Cancel</button>
+                    <button id="deleteConfirmBtn" type="button" class="btn btn-danger deleteConfirmBtn" data-dismiss="modal">Yes Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h3>Edit Pack Auto Complete</h3>
@@ -119,6 +145,20 @@
 
             $('#submitForm').submit (function () {
                 $(this).append ('<input type="hidden" name="_method" value="PUT">');
+            });
+
+            $('#deleteConfirmBtn').click (function () {
+
+                var url = '{{route ('api.admin.pack_auto_completes.destroy', ['id' => $item->id])}}';
+
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function(result) {
+                        window.location = '{{route ('admin.pack_auto_completes.index')}}';
+                    }
+                });
+
             });
 
         }

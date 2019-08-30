@@ -181,6 +181,16 @@ class PackService
 
     public function deletePackAutoCompleteItem ($id)
     {
+        $item = $this->packAutoCompleteRepository->getById($id);
+
+        if (!$item)
+            return false;
+
+        if ($item->image)
+        {
+            $this->imageService->deleteFile($item->image);
+        }
+
         $this->packAutoCompleteRepository->delete($id);
     }
 
