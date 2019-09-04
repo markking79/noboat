@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
 
             <div class="form-group">
                 <label for="title">Name</label>
@@ -92,7 +92,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-5">
             <div class="d-none d-md-flex" style="height: 30px;"></div>
             <div class="card">
                 <div class="card-body">
@@ -840,15 +840,14 @@
 
         function ouncesConvertToPretty (convertTo)
         {
-
-            if (convertTo == 'Metric')
+            if (convertTo == 'metric')
             {
                 $('.convertOunces').each (function () {
                     var ounces = parseInt($(this).text ());
                     $(this).text ((ounces / 35.27).toFixed (1) + ' kg.');
                 });
             }
-            else if (convertTo == 'Imperial')
+            else if (convertTo == 'imperial')
             {
                 $('.convertOunces').each (function () {
                     var ounces = parseInt($(this).text ());
@@ -860,12 +859,12 @@
         function ouncesConvertToPrettySingle (element, convertTo)
         {
 
-            if (convertTo == 'Metric')
+            if (convertTo == 'metric')
             {
                 var ounces = parseInt(element.text ());
                 element.text ((ounces / 35.27).toFixed (1) + ' kg.');
             }
-            else if (convertTo == 'Imperial')
+            else if (convertTo == 'imperial')
             {
                 var ounces = parseInt(element.text ());
                 element.text ((ounces / 16).toFixed (1) + ' lb.');
@@ -941,7 +940,7 @@
                 type: 'PUT',
                 data: {
                     'name': $('#name').val (),
-                    'visible': $('#visible').val (),
+                    'is_visible': $('#visible').val (),
                     'season_id': $('#season_id').val (),
                     'image': $('#pack-asset-image').val ()
                 },

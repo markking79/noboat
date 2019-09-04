@@ -189,6 +189,8 @@ class PackService
                 $item->save ();
             }
         }
+
+        $this->setPackStats ($id);
     }
 
     public function delete ($id)
@@ -204,6 +206,57 @@ class PackService
         }
 
         $this->packRepository->delete($id);
+    }
+
+    public function setPackStats ($id)
+    {
+        $item_count = 0;
+        $ounces = 0;
+        $cost = 0;
+
+        $pack = $this->getByIdWithAllPackItems ($id);
+
+
+        if ($pack->categories)
+        {
+            foreach ($pack->categories as $category)
+            {
+                if ($category->is_visible && $category->include_in_base_weight)
+                {
+                    if ($category->items)
+                    {
+                        foreach ($category->items as $item)
+                        {
+                            $ounces += $item->ounces_each * $item->quantity;
+                            $cost += $item->cost_each * $item->quantity;
+                        }
+                    }
+
+                }
+
+                if ($category->is_visible)
+                {
+                    if ($category->items)
+                    {
+                        foreach ($category->items as $item)
+                        {
+                            $item_count += 1;
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+
+        $values = ['visible_item_count' => $item_count,
+            'visible_ounces' => $ounces,
+            'visible_cost' => $cost,
+            ];
+
+        $this->packRepository->update ($id, $values);
+
     }
 
     public function getPackAutoCompletesPaginate ($page)
@@ -326,6 +379,8 @@ class PackService
             }
         }
 
+        $this->setPackStats ($values['pack_id']);
+
         return $id;
     }
 
@@ -348,12 +403,16 @@ class PackService
             }
         }
 
+        $this->setPackStats ($values['pack_id']);
+
         return $id;
     }
 
     public function sortPackItems ($values)
     {
         $this->packItemRepository->resort ($values);
+
+        $this->setPackStats ($values['pack_id']);
     }
 
     public function destoryPackItem ($id)
@@ -369,6 +428,8 @@ class PackService
         }
 
         $this->packItemRepository->destory($id);
+
+        $this->setPackStats ($item['pack_id']);
     }
 
     public function getPackItemById ($id)
@@ -434,5 +495,4 @@ class PackService
             //dd ($categories);
         }
     }
-
 }
