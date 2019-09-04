@@ -42,6 +42,40 @@ class ImageService
         return false;
     }
 
+    public function copyFile ($currentImageLocation, $folderName)
+    {
+        $finalImageLocation = false;
+
+        if ($currentImageLocation)
+        {
+
+            $full_current_file_path = storage_path('app/public') . '/' . $currentImageLocation;
+
+            if (is_file($full_current_file_path))
+            {
+                $fileName = basename($full_current_file_path);
+
+                $finalImageLocation = 'images/' . $folderName . '/' . $fileName;
+
+                // delete if already exists
+                $full_final_file_path = storage_path('app/public') . '/' . $finalImageLocation;
+                if (is_file($full_final_file_path))
+                {
+                    $this->deleteFile ($finalImageLocation);
+                }
+
+                $success = Storage::disk('public')->copy($currentImageLocation, $finalImageLocation);
+
+                if ($success)
+                {
+                    return $finalImageLocation;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function deleteFile ($imageLocation)
     {
         if ($imageLocation)

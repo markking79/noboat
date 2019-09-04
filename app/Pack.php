@@ -13,8 +13,9 @@ class Pack extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'user_id',
-        'pack_season_id',
+        'season_id',
         'name',
         'image',
         'heart_count',
@@ -36,7 +37,7 @@ class Pack extends Model
 
     public function items ()
     {
-        return $this->hasMany(PackItem::class);
+        return $this->hasMany(PackItem::class)->orderBy('weight');
     }
 
     public function likes()

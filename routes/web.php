@@ -20,6 +20,9 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function() {
     Route::get('', 'Web\UserController@index')->name ('index');
     Route::get('edit', 'Web\UserController@edit')->name ('edit');
     Route::post('update', 'Web\UserController@update')->name ('update');
+});
+
+Route::prefix('user')->name('user.')->group(function() {
     Route::resource('packs', 'Web\UserPackController');
 });
 

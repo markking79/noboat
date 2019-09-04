@@ -55,7 +55,7 @@ class UserPackAutoCompleteController extends Controller
     {
         //
 
-        $data = $packService->getPackAutoCompleteById($id);
+        $data = $packService->getPackAutoCompleteithCopiedImageByIdW($id);
 
         if ($data)
         {

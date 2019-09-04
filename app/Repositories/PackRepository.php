@@ -64,7 +64,7 @@ class PackRepository implements PackRepositoryInterface
             if ($season_id)
             {
 
-                $whereArray[] = ['pack_season_id', '=', $season_id];
+                $whereArray[] = ['season_id', '=', $season_id];
             }
             //dd ($whereArray);
 

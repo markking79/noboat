@@ -63,7 +63,7 @@ class UserPackItemController extends Controller
     public function update(Request $request, $id, PackService $packService)
     {
         //
-        $packService->updatePackItem($id, $request->only(['pack_id', 'name', 'category_id', 'description', 'purchase_link', 'ounces_each', 'cost_each', 'quantity', 'image', 'weight']));
+        $packService->updatePackItem($id, $request->only(['pack_id', 'name', 'category_id', 'description', 'purchase_link', 'ounces_each', 'cost_each', 'quantity', 'image']));
 
         $item = $packService->getPackItemById($id);
 

@@ -5,16 +5,29 @@
 @section('content')
     <span class="badge saved-badge badge-success">Saved</span>
 
-    <div id="pack-is-hidden-alert" class="alert alert-danger" role="alert" @if ($pack->is_visible) style="display: none;" @endif>
-        This pack is marked <b>private</b> and will not be listed on our site until you mark it <b>visible</b>.
-    </div>
+    @guest
+        <div  class="alert alert-danger" role="alert">
+            Your pack will be stored in your browser session until you are ready to create an account.
+        </div>
+    @else
+        <div id="pack-is-hidden-alert" class="alert alert-danger" role="alert" @if ($pack->is_visible) style="display: none;" @endif>
+            This pack is marked <b>private</b> and will not be listed on our site until you mark it <b>visible</b>.
+        </div>
+    @endguest
 
     <input type="hidden" id="id" name="id" value="{{$pack->id}}" />
     <div class="row">
         <div class="col-12 text-right">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletePackModal">
-                Delete Pack
-            </button>
+            @guest
+                <div class="btn-group btn-group-lg pb-2" role="group">
+                    <button class="btn btn-primary">Create Account</button>
+                    <button class="btn btn-primary">Login</button>
+                </div>
+            @else
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletePackModal">
+                    Delete Pack
+                </button>
+            @endguest
             <div class="d-flex d-md-none" style="margin-bottom: 10px;"></div>
         </div>
     </div>
@@ -72,6 +85,7 @@
                 <input name="name" id="name" class="form-control" value="{{$pack->name}}">
             </div>
 
+            @auth
             <div class="form-group">
                 <label for="visible">Visible On Site</label>
                 <select class="form-control" name="visible" id="visible">
@@ -79,6 +93,7 @@
                     <option value="0" @if (!$pack->is_visible) selected @endif>No (Keep Private)</option>
                 </select>
             </div>
+            @endauth
 
             <div class="form-group">
                 <label for="season">Season</label>
@@ -86,7 +101,7 @@
                     <option value="0">N/A</option>
                     @if ($pack_seasons)
                         @foreach ($pack_seasons as $season)
-                            <option value="{{$season->id}}" @if ($pack->packseason_id == $season->id) selected @endif>{{$season->name}}</option>
+                            <option value="{{$season->id}}" @if ($pack->season_id == $season->id) selected @endif>{{$season->name}}</option>
                         @endforeach
                     @endif
                 </select>
@@ -100,9 +115,11 @@
                         <div class="col">
                             <h5 class="card-title">Pack Overview</h5>
                         </div>
-                        <div class="col text-right">
-                            <a href="{{route ('packs.show', ['pack' => $pack])}}" class="btn btn-sm btn-primary">view on site</a>
-                        </div>
+                        @auth
+                            <div class="col text-right">
+                                <a href="{{route ('packs.show', ['pack' => $pack])}}" class="btn btn-sm btn-primary">view on site</a>
+                            </div>
+                        @endauth
                     </div>
 
 
@@ -417,7 +434,7 @@
 
                         if (obj.image)
                         {
-                            $('#add-item-asset-image').val (obj.image);
+                            $('#add-item-asset-image').val (obj.image_asset);
                             $('#addItemUploadImageBtn').parent ().parent ().find ('.image-content').html ('<img src="'+obj.image+'" />');
                             $('#addItemUploadImageBtn').parent ().parent ().find ('.image-content').show ();
                         }

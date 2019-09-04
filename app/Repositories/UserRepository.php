@@ -24,6 +24,30 @@ class UserRepository implements UserRepositoryInterface
         return $data;
     }
 
+    public function getByUuid ($uuid)
+    {
+        $data = Cache::tags('users')->remember('user_uuid-'.$uuid, $this->secondsCache, function () use ($uuid) {
+            return User::where ('uuid', $uuid)->first ();
+        });
+
+        if (!$data)
+        {
+            $data = $this->create(['uuid' => $uuid]);
+        }
+
+        return $data;
+    }
+
+    public function create ($values)
+    {
+        return User::create ([
+            'uuid' => $values['uuid'],
+            'email' => 'fake@fake.com',
+            'name' => 'Fake',
+            'password' => 'Fake'
+        ]);
+    }
+
     public function update ($id, $data)
     {
         $user = $this->getById($id);

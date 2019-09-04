@@ -16,7 +16,7 @@ class CreatePacksTable extends Migration
         Schema::create('packs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('pack_season_id')->nullable();
+            $table->unsignedBigInteger('season_id')->nullable();
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->integer('heart_count')->nullable();

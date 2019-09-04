@@ -8,6 +8,7 @@ use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
 use App\Repositories\PackAutoCompleteRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -32,6 +33,13 @@ class PackService
     public function store ($user_id)
     {
         return $this->packRepository->store($user_id);
+    }
+
+    public function storeInSession ()
+    {
+        $pack = $this->packRepository->create();
+        Session::put('pack', $pack);
+        return $pack;
     }
 
     public function getAllPaginate ($page, $ounces_min = false, $ounces_max = false, $cost_min = false, $cost_max = false, $season_id = false)
@@ -77,6 +85,22 @@ class PackService
 
         if ($pack->user_id != $user_id)
             return false;
+
+        return $pack;
+    }
+
+    public function getFromSessionByIdAndUserId ($with_categories = false, $return_only_visible_categories = true)
+    {
+        $pack = Session::get('pack');
+
+        if ($with_categories)
+        {
+            $categories = $this->packCategoryRepository->getAll();
+
+            $pack->categories = $this->groupItemsByCategories ($pack, $categories, $return_only_visible_categories);
+            $pack->unsetRelation('items');
+            $this->fillCategoryStats ($pack->categories);
+        }
 
         return $pack;
     }
@@ -273,6 +297,18 @@ class PackService
         return $packautocomplete;
     }
 
+    public function getPackAutoCompleteithCopiedImageByIdW ($id)
+    {
+        $packautocomplete = $this->packAutoCompleteRepository->getById($id);
+
+        if ($packautocomplete->image)
+        {
+            $packautocomplete->image = $this->imageService->copyFile($packautocomplete->image, 'temp');
+        }
+
+        return $packautocomplete;
+    }
+
     public function deletePackAutoCompleteItem ($id)
     {
         $item = $this->packAutoCompleteRepository->getById($id);
@@ -386,6 +422,12 @@ class PackService
 
     public function updatePackItem ($id, $values)
     {
+        $item = $this->packItemRepository->getById($id);
+        if (!$item)
+            return;
+
+        $old_image = $item->image;
+
         $this->packItemRepository->update($id, $values);
 
         if ($values['image'])
@@ -402,6 +444,8 @@ class PackService
                 $item->save ();
             }
         }
+        else if ($old_image)
+            $this->packItemRepository->update($id, ['image' => $old_image]);
 
         $this->setPackStats ($values['pack_id']);
 

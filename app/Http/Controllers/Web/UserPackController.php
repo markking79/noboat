@@ -6,8 +6,10 @@ use App\Http\Requests\PackFilterRequest;
 use App\Repositories\PackSeasonRepository;
 use App\Services\PackService;
 use App\Services\SessionService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class UserPackController extends Controller
 {
@@ -33,11 +35,25 @@ class UserPackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(PackService $packService)
+    public function create(PackService $packService, UserService $userService)
     {
         $user = auth()->user();
 
-        $pack = $packService->store($user->id);
+        $pack = false;
+
+        if (!$user)
+        {
+            $user = $userService->getByUuid(Session::getId());
+
+            $packs = $packService->getAllByUserIdPaginate($user->id, 1);
+
+            if ($packs)
+                $pack = $packs[0];
+
+        }
+
+        if (!$pack)
+            $pack = $packService->store($user->id);
 
         return redirect(route ('user.packs.edit', ['pack' => $pack]));
 
@@ -71,9 +87,14 @@ class UserPackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, SessionService $sessionService, PackService $packService, PackSeasonRepository $packSeasonRepository)
+    public function edit($id, SessionService $sessionService, UserService $userService, PackService $packService, PackSeasonRepository $packSeasonRepository)
     {
         $user = auth()->user();
+
+        if (!$user)
+        {
+            $user = $userService->getByUuid(Session::getId());
+        }
 
         $pack_weight_units = $sessionService->value('pack_weight_units', 'imperial');
 
