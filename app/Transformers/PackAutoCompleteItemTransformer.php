@@ -22,8 +22,8 @@ class PackAutoCompleteItemTransformer extends TransformerAbstract
             'description' => (string) $packAutoComplete->description,
             'purchase_link' => (string) $packAutoComplete->purchase_link,
             'image' => (string) (($packAutoComplete->image) ? Storage::url ($packAutoComplete->image) : ''),
-            'price' => (float) $packAutoComplete->cost_each,
-            'ounces' => (float) $packAutoComplete->ounces_each,
+            'price' => (float) $packAutoComplete->price,
+            'ounces' => (float) $packAutoComplete->ounces,
         ];
     }
 

@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\PackItem;
-use App\Repositories\PackRepository;
+use App\Repositories\PackItemRepository;
 
 class PackItemObserver
 {
@@ -15,8 +15,8 @@ class PackItemObserver
      */
     public function created(PackItem $packItem)
     {
-        $packRepository = new PackRepository ();
-        $packRepository->clearCache ();
+        $packItem = new PackItemRepository ();
+        $packItem->clearCache ();
     }
 
     /**
@@ -27,8 +27,8 @@ class PackItemObserver
      */
     public function updated(PackItem $packItem)
     {
-        $packRepository = new PackRepository ();
-        $packRepository->clearCache ();
+        $packItem = new PackItemRepository ();
+        $packItem->clearCache ();
     }
 
     /**
@@ -39,8 +39,8 @@ class PackItemObserver
      */
     public function deleted(PackItem $packItem)
     {
-        $packRepository = new PackRepository ();
-        $packRepository->clearCache ();
+        $packItem = new PackItemRepository ();
+        $packItem->clearCache ();
     }
 
     /**
@@ -51,8 +51,8 @@ class PackItemObserver
      */
     public function restored(PackItem $packItem)
     {
-        $packRepository = new PackRepository ();
-        $packRepository->clearCache ();
+        $packItem = new PackItemRepository ();
+        $packItem->clearCache ();
     }
 
     /**
@@ -63,7 +63,7 @@ class PackItemObserver
      */
     public function forceDeleted(PackItem $packItem)
     {
-        $packRepository = new PackRepository ();
-        $packRepository->clearCache ();
+        $packItem = new PackItemRepository ();
+        $packItem->clearCache ();
     }
 }

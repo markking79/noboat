@@ -12,6 +12,7 @@ class PackItem extends Model
      * @var array
      */
     protected $fillable = [
+        'pack_id',
         'category_id',
         'name',
         'description',

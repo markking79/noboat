@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\OptimizeImageJob;
+use App\Repositories\PackItemRepository;
 use App\Repositories\PackRepository;
 use App\Repositories\PackCategoryRepository;
 use App\Repositories\PackAutoCompleteRepository;
@@ -14,13 +15,15 @@ class PackService
 {
 
     private $packRepository;
+    private $packItemRepository;
     private $packCategoryRepository;
     private $packAutoCompleteRepository;
     private $imageService;
 
-    public function __construct(PackRepository $packRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository, ImageService $imageService)
+    public function __construct(PackRepository $packRepository, PackItemRepository $packItemRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository, ImageService $imageService)
     {
         $this->packRepository = $packRepository;
+        $this->packItemRepository = $packItemRepository;
         $this->packCategoryRepository = $packCategoryRepository;
         $this->packAutoCompleteRepository = $packAutoCompleteRepository;
         $this->imageService = $imageService;
@@ -162,8 +165,44 @@ class PackService
         $pack->categories = $categories;
     }
 
+    public function update ($id, $values)
+    {
+        $this->packRepository->update ($id, $values);
+
+        if ($values['image'])
+        {
+            $final_file = $this->imageService->moveFile($values['image'], 'packs');
+
+            if ($final_file)
+            {
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+
+                $item = $this->packRepository->getById($id);
+
+                if ($item->image)
+                {
+                    $this->imageService->deleteFile($item->image);
+                }
+
+                $item->image = $final_file;
+                $item->touch ();
+                $item->save ();
+            }
+        }
+    }
+
     public function delete ($id)
     {
+        $item = $this->packRepository->getById($id);
+
+        if (!$item)
+            return false;
+
+        if ($item->image)
+        {
+            $this->imageService->deleteFile($item->image);
+        }
+
         $this->packRepository->delete($id);
     }
 
@@ -234,7 +273,7 @@ class PackService
             if ($final_file)
             {
                 OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
-                
+
                 $item = $this->packAutoCompleteRepository->getById($id);
 
                 if ($item->image)
@@ -266,6 +305,76 @@ class PackService
         }
 
         return false;
+    }
+
+    public function storePackItem ($values)
+    {
+        $id = $this->packItemRepository->store($values);
+
+        if ($values['image'])
+        {
+            $final_file = $this->imageService->moveFile($values['image'], 'packs_items');
+
+            if ($final_file)
+            {
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+
+                $item = $this->packItemRepository->getById($id);
+                $item->image = $final_file;
+                $item->touch ();
+                $item->save ();
+            }
+        }
+
+        return $id;
+    }
+
+    public function updatePackItem ($id, $values)
+    {
+        $this->packItemRepository->update($id, $values);
+
+        if ($values['image'])
+        {
+            $final_file = $this->imageService->moveFile($values['image'], 'packs_items');
+
+            if ($final_file)
+            {
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+
+                $item = $this->packItemRepository->getById($id);
+                $item->image = $final_file;
+                $item->touch ();
+                $item->save ();
+            }
+        }
+
+        return $id;
+    }
+
+    public function sortPackItems ($values)
+    {
+        $this->packItemRepository->resort ($values);
+    }
+
+    public function destoryPackItem ($id)
+    {
+        $item = $this->packItemRepository->getById($id);
+
+        if (!$item)
+            return false;
+
+        if ($item->image)
+        {
+            $this->imageService->deleteFile($item->image);
+        }
+
+        $this->packItemRepository->destory($id);
+    }
+
+    public function getPackItemById ($id)
+    {
+        $item = $this->packItemRepository->getById($id);
+        return $item;
     }
 
     private function groupItemsByCategories (&$pack, &$categories, $return_only_visible = false) : Collection

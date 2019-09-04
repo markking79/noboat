@@ -119,7 +119,7 @@ class PackRepository implements PackRepositoryInterface
             }
             //dd ($whereArray);
 
-            return Pack::where($whereArray)->with (['season', 'likes'])->orderBy ('heart_count', 'desc')->paginate(21);
+            return Pack::where($whereArray)->with (['season', 'likes'])->orderBy ('created_at', 'desc')->paginate(21);
         });
 
         return $data;
@@ -141,6 +141,17 @@ class PackRepository implements PackRepositoryInterface
         });
 
         return $data;
+    }
+
+    public function update ($id, $values)
+    {
+        $item = $this->getById($id);
+        if ($item)
+        {
+            $item->fill ($values);
+            $item->save ();
+        }
+
     }
 
     public function delete ($id)

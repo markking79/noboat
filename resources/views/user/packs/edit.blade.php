@@ -107,8 +107,11 @@
 
 
                     <p class="card-text">
+                        <svg class=more-info-svg-badge data-content="Everything except Consumable & Worn." data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
                         Base Weight: <span id="pack_base_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_base_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
+                        <svg class=more-info-svg-badge data-content="Everything except Worn." data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
                         Total Pack Weight: <span id="pack_total_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_total_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
+                        <svg class=more-info-svg-badge data-content="Everything."data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
                         Skin Out Weight: <span id="pack_skin_out_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_skin_out_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
                         Cost: $<span id="pack_cost_display">{{ number_format ($pack->visible_cost, 2) }}</span><br />
                         Item Count: <span id="pack_item_count_display">{{$pack->visible_item_count ?? '0'}}</span><br />
@@ -246,6 +249,7 @@
 
     <div class="modal fade addItemModal" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Add Item</h5>
@@ -253,6 +257,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <input type="hidden" id="addItemPurchaseLink" value="" />
                     <div class="form-group">
@@ -280,8 +285,8 @@
                     <div class="form-group">
                         <label for="addItemCategory">Category</label>
                         <select class="form-control" name="addItemCategory" id="addItemCategory">
-                            @if ($pack->categories_with_items)
-                                @foreach ($pack->categories_with_items as $category)
+                            @if ($pack->categories)
+                                @foreach ($pack->categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             @endif
@@ -305,10 +310,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <p id="addItemErrorMessage" class="text-danger d-none">Name is required.</p>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button id="addItemBtn" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                    <button id="addItemBtn" type="button" class="btn btn-primary">Save</button>
                 </div>
+
             </div>
+
         </div>
     </div>
 
@@ -345,8 +353,8 @@
                     <div class="form-group">
                         <label for="editItemCategory">Category</label>
                         <select class="form-control" name="editItemCategory" id="editItemCategory">
-                            @if ($pack->categories_with_items)
-                                @foreach ($pack->categories_with_items as $category)
+                            @if ($pack->categories)
+                                @foreach ($pack->categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             @endif
@@ -370,8 +378,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <p id="addItemErrorMessage" class="text-danger d-none">Name is required.</p>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button id="editItemSaveBtn" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                    <button id="editItemSaveBtn" type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -385,25 +394,31 @@
 
         window.onload = function () {
 
+            $('[data-toggle="popover"]').popover();
+
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
             $('#addItemName').autocomplete({
                 appendTo: "#addItemAutoCompleteWrapper",
-                source: '/test',
+                source: '{{route ('api.user.pack_auto_completes.index')}}',
                 select: function( event, ui ) {
-                    $.post ('/test', {'id': ui.item.id}, function (data) {
+
+                    var url = '{{route ('api.user.pack_auto_completes.show', ['id' => 123])}}';
+                    url = url.replace ('123', ui.item.id);
+
+                    $.get (url, function (data) {
 
                         obj = eval('(' + data + ')');
                         $('#addItemPrice').val (parseFloat (obj.price).toFixed(2));
-                        $('#addItemWeight').val (obj.weight);
+                        $('#addItemWeight').val (obj.ounces);
                         $('#addItemQuantity').val ('1');
                         $('#addItemDescription').val (obj.description);
-                        $('#addItemPurchaseLink').val (obj.link);
+                        $('#addItemPurchaseLink').val (obj.purchase_link);
 
                         if (obj.image)
                         {
                             $('#add-item-asset-image').val (obj.image);
-                            $('#addItemUploadImageBtn').parent ().parent ().find ('.image-content').html ('<img src="'+obj.image_url+'" />');
+                            $('#addItemUploadImageBtn').parent ().parent ().find ('.image-content').html ('<img src="'+obj.image+'" />');
                             $('#addItemUploadImageBtn').parent ().parent ().find ('.image-content').show ();
                         }
                         else
@@ -447,7 +462,7 @@
                         categories[category_id] = items;
                     });
 
-                    $.post ('/test', {
+                    $.post ('{{route ('api.user.pack_items_sort.store')}}', {
                         'pack_id': $('#id').val (),
                         'categories': categories
                     });
@@ -507,18 +522,28 @@
                 let purchase_link = $('#addItemPurchaseLink').val ();
                 let image = $('#add-item-asset-image').val ();
 
-                $.post ('/test', {
+                if (!name)
+                {
+                   $('#addItemErrorMessage').removeClass('d-none');
+                   return;
+                }
+
+                $.post ('{{route ('api.user.pack_items.store')}}', {
                     'pack_id': pack_id,
                     'name' : name,
                     'category_id': categoryid,
-                    'price': price,
+                    'cost_each': price,
                     'quantity': quantity,
-                    'weight': weight,
+                    'ounces_each': weight,
                     'description': description,
                     'image': image,
                     'purchase_link': purchase_link
                 }, function (data) {
-                    var itemId = data;
+
+                    obj = eval('(' + data + ')');
+
+                    var itemId = obj.id;
+                    var image_url = obj.image;
 
                     if (!quantity)
                         quantity = '1';
@@ -529,8 +554,7 @@
 
                     if (image)
                     {
-                        var ext = image.split('.').pop();
-                        image = '/storage/images/packs/' + pack_id + '/' + itemId + '.' + ext + '?v=' + Math.random();
+                        image = image_url;
                     }
 
                     price = parseFloat (price).toFixed(2);
@@ -608,6 +632,8 @@
                     updateWeightDisplay ();
                 });
 
+                $('#addItemModal').modal('hide');
+                $('#addItemErrorMessage').addClass('d-none');
 
             });
 
@@ -623,56 +649,71 @@
                 let description = $('#editItemDescription').val ();
                 let image = $('#edit-item-asset-image').val ();
 
-                $.post ('/test', {
-                    'item_id': item_id,
-                    'pack_id': pack_id,
-                    'name' : name,
-                    'category_id': categoryid,
-                    'price': price,
-                    'quantity': quantity,
-                    'weight': weight,
-                    'description': description,
-                    'image': image
-                }, function (data) {
-                    var itemId = data;
+                if (!name)
+                {
+                    $('#editItemErrorMessage').removeClass('d-none');
+                    return;
+                }
 
-                    if (categoryid != $('#item-'+itemId + ' #itemCategoryId').val ())
-                    {
-                        copiedItem = $('#item-'+itemId).clone();
-                        $('#item-'+itemId).remove();
-                        $("#sortable-"+categoryid).append(copiedItem);
-                    }
+                var url = '{{route ('api.user.pack_items.update', ['id' => 123])}}';
+                url = url.replace ('123', item_id);
 
-                    $('#item-'+itemId + ' #itemName').val (name);
-                    $('#item-'+itemId + ' #itemDescription').val (description);
-                    $('#item-'+itemId + ' #itemCost').val (price);
-                    $('#item-'+itemId + ' #itemWeight').val (weight);
-                    $('#item-'+itemId + ' #itemQuantity').val (quantity);
-                    //$('#item-'+itemId + ' #itemImage').val ('');
-                    $('#item-'+itemId + ' #itemCategoryId').val (categoryid);
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {
+                        'item_id': item_id,
+                        'pack_id': pack_id,
+                        'name' : name,
+                        'category_id': categoryid,
+                        'price': price,
+                        'quantity': quantity,
+                        'weight': weight,
+                        'description': description,
+                        'image': image
+                    },
+                    success: function(data) {
+                        obj = eval('(' + data + ')');
 
-                    $('#item-'+itemId + ' .display_name').html (name);
-                    $('#item-'+itemId + ' .display_cost').html (parseFloat (price).toFixed(2));
-                    $('#item-'+itemId + ' .display_weight').html (weight);
-                    $('#item-'+itemId + ' .convertOunces').html (weight);
-                    $('#item-'+itemId + ' .display_quantity').html (quantity);
-                    $('#item-'+itemId + ' .display_description').html (description);
+                        var itemId = obj.id;
+                        var image_url = obj.image;
 
-                    if (image)
-                    {
-                        if (image)
+                        if (categoryid != $('#item-'+itemId + ' #itemCategoryId').val ())
                         {
-                            var ext = image.split('.').pop();
-                            image = '/storage/images/packs/' + pack_id + '/' + itemId + '.' + ext;
+                            copiedItem = $('#item-'+itemId).clone();
+                            $('#item-'+itemId).remove();
+                            $("#sortable-"+categoryid).append(copiedItem);
                         }
 
-                        $('#item-'+itemId + ' .image-content').html ('<img src="'+image + '?v=' + Math.random() + '" />');
-                        $('#item-'+itemId + ' #itemImage').val (image + '?v=' + Math.random());
+                        $('#item-'+itemId + ' #itemName').val (name);
+                        $('#item-'+itemId + ' #itemDescription').val (description);
+                        $('#item-'+itemId + ' #itemCost').val (price);
+                        $('#item-'+itemId + ' #itemWeight').val (weight);
+                        $('#item-'+itemId + ' #itemQuantity').val (quantity);
+                        //$('#item-'+itemId + ' #itemImage').val ('');
+                        $('#item-'+itemId + ' #itemCategoryId').val (categoryid);
+
+                        $('#item-'+itemId + ' .display_name').html (name);
+                        $('#item-'+itemId + ' .display_cost').html (parseFloat (price).toFixed(2));
+                        $('#item-'+itemId + ' .display_weight').html (weight);
+                        $('#item-'+itemId + ' .convertOunces').html (weight);
+                        $('#item-'+itemId + ' .display_quantity').html (quantity);
+                        $('#item-'+itemId + ' .display_description').html (description);
+
+                        if (image)
+                        {
+                            image = image_url;
+
+                            $('#item-'+itemId + ' .image-content').html ('<img src="'+image + '?v=' + Math.random() + '" />');
+                            $('#item-'+itemId + ' #itemImage').val (image + '?v=' + Math.random());
+                        }
+
+                        updateWeightDisplay ();
                     }
-
-                    updateWeightDisplay ();
-
                 });
+
+                $('#editItemModal').modal('hide');
+                $('#editItemErrorMessage').addClass('d-none');
 
             });
 
@@ -839,13 +880,16 @@
 
                 $('#deleteItem-'+id).modal('hide');
 
+                var url = '{{route ('api.user.pack_items.destroy', ['id' => 123])}}';
+                url = url.replace ('123', id);
 
-                $.post ('/test', {
-                    'pack_id': $('#id').val (),
-                    'item_id': id
-                }, function () {
-                    $('#item-'+id).remove ();
-                    updateWeightDisplay ();
+                xhr = $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function() {
+                        $('#item-'+id).remove ();
+                        updateWeightDisplay ();
+                    }
                 });
             });
 
@@ -892,19 +936,25 @@
             if (xhr)
                 xhr.abort ();
 
-            xhr = $.post ('/test', {
-                'pack_id': $('#id').val (),
-                'name': $('#name').val (),
-                'visible': $('#visible').val (),
-                'season_id': $('#season_id').val (),
-                'image': $('#pack-asset-image').val ()
-            }, function () {
-                xhr = false;
+            xhr = $.ajax({
+                url: '{{route ('api.user.packs.update', ['pack' => $pack->id])}}',
+                type: 'PUT',
+                data: {
+                    'name': $('#name').val (),
+                    'visible': $('#visible').val (),
+                    'season_id': $('#season_id').val (),
+                    'image': $('#pack-asset-image').val ()
+                },
+                success: function() {
+                    xhr = false;
 
-                $('.saved-badge').show ();
-                setTimeout ("$('.saved-badge').hide ();", 1000);
-                $('#pack-asset-image').val ('');
+                    $('.saved-badge').show ();
+                    setTimeout ("$('.saved-badge').hide ();", 1000);
+                    $('#pack-asset-image').val ('');
+                }
             });
+
+
         }
 
         function updateWeightDisplay ()
