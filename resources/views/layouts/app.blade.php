@@ -33,13 +33,25 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+                    @guest
+                        <div class="top-right links d-none d-lg-block">
+                            <a href="{{route ('packs.index')}}">Compare Packs</a>
+                            @if (!strpos(Route::currentRouteName(), 'user.packs') === 0)
+                                <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                            @endif
+                        </div>
+                    @endguest
                     <ul class="navbar-nav ml-auto d-block d-lg-none">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
+                            <a class="nav-link" href="{{route ('packs.index')}}">
+                                Compare Packs
+                            </a>
+                            @if (!strpos(Route::currentRouteName(), 'user.packs') === 0)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>

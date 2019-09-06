@@ -13,6 +13,7 @@
 
 Route::name('api.public.')->group(function() {
     Route::post('/public/login', 'Api\UserLoginController@login')->name('login');
+    Route::post('/public/register', 'Api\UserRegisterController@register')->name('register');
     Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
     Route::resource('public/image', 'Api\UploadImageController')->only(['store']);
 });

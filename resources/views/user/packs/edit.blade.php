@@ -462,7 +462,7 @@
                     <div class="modal-footer">
                         <p id="registerErrorMessage" class="text-danger d-none"></p>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button id="loginBtn" type="button" class="btn btn-primary">Submit</button>
+                        <button id="registerBtn" type="button" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </div>
@@ -941,6 +941,27 @@
                     }
                 }).fail(function() {
                     $('#loginErrorMessage').removeClass('d-none');
+                });
+            });
+
+            $('#registerBtn').click (function () {
+                $.post ('{{route ('api.public.register')}}', {
+                    'name': $('#registerName').val (),
+                    'email': $('#registerEmail').val (),
+                    'password': $('#registerPassword').val (),
+                    'confirm_password': $('#registerPasswordConfirmation').val (),
+                }, function (data) {
+                    
+                    if (data.message == 'Error')
+                    {
+                        $('#registerErrorMessage').removeClass('d-none').html (data.error);
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
+                }).fail(function() {
+                    $('#registerErrorMessage').removeClass('d-none').html ('Error, something went wrong.');
                 });
             });
 
