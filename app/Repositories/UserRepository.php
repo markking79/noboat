@@ -42,7 +42,7 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::create ([
             'uuid' => $values['uuid'],
-            'email' => 'fake@fake.com',
+            'email' => 'fake@fake.com' . $this->createRandomString (),
             'name' => 'Fake',
             'password' => 'Fake'
         ]);
@@ -66,5 +66,17 @@ class UserRepository implements UserRepositoryInterface
     public function clearCache ()
     {
         Cache::tags('users')->flush();
+    }
+
+    function createRandomString($n = 50) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
     }
 }

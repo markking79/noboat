@@ -193,7 +193,7 @@ class PackService
     {
         $this->packRepository->update ($id, $values);
 
-        if ($values['image'])
+        if (isset ($values['image']) && $values['image'])
         {
             $final_file = $this->imageService->moveFile($values['image'], 'packs');
 

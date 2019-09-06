@@ -34,6 +34,7 @@ class UserLoginController extends Controller
      */
     public function login(Request $request)
     {
+
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
@@ -41,12 +42,15 @@ class UserLoginController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if(!Auth::attempt($credentials))
+        $success = Auth::guard('web')->attempt($credentials, $remember = true);
+
+        if(!$success)
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
 
         $user = $request->user();
+
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
 
@@ -55,6 +59,8 @@ class UserLoginController extends Controller
         $token->save();
 
         return response()->json([
+            'message' => 'Authorized',
+            'user_id' => $user->id,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(

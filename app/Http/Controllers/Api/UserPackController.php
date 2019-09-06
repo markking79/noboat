@@ -72,7 +72,7 @@ class UserPackController extends Controller
     public function update(Request $request, $id, PackService $packService)
     {
         //
-        $packService->update($id, $request->only(['name', 'is_visible', 'season_id', 'image']));
+        $packService->update($id, $request->only(['user_id', 'name', 'is_visible', 'season_id', 'image']));
 
     }
 

@@ -6,7 +6,7 @@
     <span class="badge saved-badge badge-success">Saved</span>
 
     @guest
-        <div  class="alert alert-danger" role="alert">
+        <div  class="alert alert-warning" role="alert">
             Your pack will be stored in your browser session until you are ready to create an account.
         </div>
     @else
@@ -20,8 +20,8 @@
         <div class="col-12 text-right">
             @guest
                 <div class="btn-group btn-group-lg pb-2" role="group">
-                    <button class="btn btn-primary">Create Account</button>
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Create Account</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
                 </div>
             @else
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletePackModal">
@@ -402,6 +402,72 @@
             </div>
         </div>
     </div>
+
+    @guest
+        <div class="modal fade loginModal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="text" id="loginEmail" name="loginEmail" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" name="loginPassword" id="loginPassword" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p id="loginErrorMessage" class="text-danger d-none">Invalid login.</p>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button id="loginBtn" type="button" class="btn btn-primary">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade registerModal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Create Account</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="loginEmail">Trail Name</label>
+                            <input type="text" id="registerName" name="registerName" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="text" id="registerEmail" name="registerEmail" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" name="registerPassword" id="registerPassword" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" name="registerPasswordConfirmation" id="registerPasswordConfirmation" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p id="registerErrorMessage" class="text-danger d-none"></p>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button id="loginBtn" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endguest
 @endsection
 @section('script')
 
@@ -848,6 +914,34 @@
                     $('#pack-is-hidden-alert').hide ();
                 else
                     $('#pack-is-hidden-alert').show ();
+            });
+
+            $('#loginBtn').click (function () {
+                $.post ('{{route ('api.public.login')}}', {
+                    'email': $('#loginEmail').val (),
+                    'password': $('#loginPassword').val ()
+                }, function (data) {
+
+                    if (data.message == 'Authorized')
+                    {
+                        $.ajax({
+                            url: '{{route ('api.user.packs.update', ['pack' => $pack->id])}}',
+                            type: 'PUT',
+                            data: {
+                                'user_id': data.user_id
+                            },
+                            success: function() {
+                                location.reload();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $('#loginErrorMessage').removeClass('d-none');
+                    }
+                }).fail(function() {
+                    $('#loginErrorMessage').removeClass('d-none');
+                });
             });
 
             setItemsFunctions ();
