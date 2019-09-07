@@ -47,7 +47,7 @@
         <div class="col-12 col-md-4 text-right">
             @guest
             <span class="d-none d-md-block">
-                <a class="btn btn-lg btn-primary" href="#">Add Your Pack</a><br /><br />
+                <a class="btn btn-lg btn-primary" href="{{route ('user.packs.create')}}">Add Your Pack</a><br /><br />
             </span>
             @endguest
             <div class="btn-group btn-group-sm pb-2" role="group">

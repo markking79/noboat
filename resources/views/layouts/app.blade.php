@@ -36,7 +36,7 @@
                     @guest
                         <div class="top-right links d-none d-lg-block">
                             <a href="{{route ('packs.index')}}">Compare Packs</a>
-                            @if (!strpos(Route::currentRouteName(), 'user.packs') === 0)
+                            @if (strpos(Route::currentRouteName(), 'user.packs') !== 0)
                                 <a href="{{ route('login') }}">{{ __('Login') }}</a>
                                 <a href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
@@ -70,6 +70,12 @@
                                 <a class="nav-link" href="{{route ('user.edit')}}">
                                     Account
                                 </a>
+
+                                @if (Auth()->user()->is_admin)
+                                    <a class="nav-link" href="{{route ('admin.pack_auto_completes.index')}}">
+                                        Admin
+                                    </a>
+                                @endif
 
                                 <a class="nav-link" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
