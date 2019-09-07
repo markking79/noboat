@@ -931,7 +931,7 @@
                                 'user_id': data.user_id
                             },
                             success: function() {
-                                location.reload();
+                                //location.reload();
                             }
                         });
                     }
@@ -951,7 +951,7 @@
                     'password': $('#registerPassword').val (),
                     'confirm_password': $('#registerPasswordConfirmation').val (),
                 }, function (data) {
-                    
+
                     if (data.message == 'Error')
                     {
                         $('#registerErrorMessage').removeClass('d-none').html (data.error);

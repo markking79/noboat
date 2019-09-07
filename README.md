@@ -52,6 +52,8 @@ Installation
     
     php artisan key:generate
     
+    php artisan passport:install
+    
     php artisan passport:keys
     
     php artisan storage:link
