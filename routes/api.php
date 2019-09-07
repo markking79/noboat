@@ -25,8 +25,11 @@ Route::middleware(['auth:api'])->name('api.user.')->group(function() {
     Route::apiResource('user/pack_likes', 'Api\PackLikeController')->only(['store', 'destroy']);
 });
 
-Route::name('api.user.')->group(function() {
+Route::middleware(['auth:api'])->name('api.user.')->group(function() {
     Route::apiResource('user/packs', 'Api\UserPackController');
+});
+
+Route::name('api.user.')->group(function() {
     Route::apiResource('user/pack_items', 'Api\UserPackItemController');
     Route::apiResource('user/pack_items_sort', 'Api\UserPackItemSortController');
     Route::apiResource('user/pack_auto_completes', 'Api\UserPackAutoCompleteController')->only (['index', 'show']);

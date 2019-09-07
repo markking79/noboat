@@ -84,7 +84,6 @@ class UserPackController extends Controller
      */
     public function destroy($id, PackService $packService)
     {
-        //
         $user = auth()->user();
 
         $pack = $packService->getByIdAndUserId ($id, $user->id);
