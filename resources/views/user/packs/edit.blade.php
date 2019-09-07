@@ -931,7 +931,7 @@
                                 'user_id': data.user_id
                             },
                             success: function() {
-                                //location.reload();
+                                location.reload();
                             }
                         });
                     }
