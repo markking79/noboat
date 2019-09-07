@@ -13,6 +13,12 @@ a {
   color: #fff;
 }
 
+.card-img-top
+{
+  width: auto;
+  max-width: 100%;
+}
+
 .btn-group > .btn:not(:first-child), .btn-group > .btn-group:not(:first-child)
 {
   border-left: 1px #979797 solid;
