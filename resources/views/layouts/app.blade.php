@@ -48,7 +48,7 @@
                             <a class="nav-link" href="{{route ('packs.index')}}">
                                 Compare Packs
                             </a>
-                            @if (!strpos(Route::currentRouteName(), 'user.packs') === 0)
+                            @if (strpos(Route::currentRouteName(), 'user.packs') !== 0)
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
