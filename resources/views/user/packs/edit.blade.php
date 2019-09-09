@@ -3,6 +3,7 @@
 @section('page-title') Edit Pack @endsection
 
 @section('content')
+
     <span class="badge saved-badge badge-success">Saved</span>
 
     @guest
@@ -946,6 +947,7 @@
 
             $('#registerBtn').click (function () {
                 $.post ('{{route ('api.public.register')}}', {
+                    'session_id': '{{Session::getId()}}',
                     'name': $('#registerName').val (),
                     'email': $('#registerEmail').val (),
                     'password': $('#registerPassword').val (),

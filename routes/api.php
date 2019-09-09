@@ -13,7 +13,7 @@
 
 Route::name('api.public.')->group(function() {
     Route::post('/public/login', 'Api\UserLoginController@login')->name('login')->middleware('api_session');
-    Route::post('/public/register', 'Api\UserRegisterController@register')->name('register');
+    Route::post('/public/register', 'Api\UserRegisterController@register')->name('register')->middleware('api_session');
 });
 
 Route::name('api.public.')->group(function() {
@@ -26,10 +26,11 @@ Route::middleware(['auth:api'])->name('api.user.')->group(function() {
 });
 
 Route::middleware(['auth:api'])->name('api.user.')->group(function() {
-    Route::apiResource('user/packs', 'Api\UserPackController');
+
 });
 
 Route::name('api.user.')->group(function() {
+    Route::apiResource('user/packs', 'Api\UserPackController');
     Route::apiResource('user/pack_items', 'Api\UserPackItemController');
     Route::apiResource('user/pack_items_sort', 'Api\UserPackItemSortController');
     Route::apiResource('user/pack_auto_completes', 'Api\UserPackAutoCompleteController')->only (['index', 'show']);

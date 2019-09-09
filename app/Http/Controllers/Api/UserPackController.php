@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Services\PackService;
+use App\Services\UserService;
 use App\Transformers\PackTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 /**
  * @group User Packs
@@ -69,11 +71,9 @@ class UserPackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, PackService $packService)
+    public function update(Request $request, $id, PackService $packService, UserService $userService)
     {
-        //
         $packService->update($id, $request->only(['user_id', 'name', 'is_visible', 'season_id', 'image']));
-
     }
 
     /**

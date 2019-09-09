@@ -33,9 +33,12 @@ class UserRegisterController extends Controller
             ]);
         }
 
-        $user = $userService->getByUuid(Session::getId());
+        $user = false;
+        if (isset($request->session_id))
+            $user = $userService->getByUuid($request->session_id);
         if ($user)
         {
+            $user->uuid = '';
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);

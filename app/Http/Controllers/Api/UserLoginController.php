@@ -42,8 +42,8 @@ class UserLoginController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        ///$success = Auth::guard('web')->attempt($credentials, $remember = true);
-        $success = Auth::attempt($credentials, $remember = true);
+        $success = Auth::guard('web')->attempt($credentials, $remember = true);
+        //$success = Auth::attempt($credentials, $remember = true);
 
         if(!$success)
             return response()->json([
@@ -69,5 +69,4 @@ class UserLoginController extends Controller
             )->toDateTimeString()
         ]);
     }
-
 }
