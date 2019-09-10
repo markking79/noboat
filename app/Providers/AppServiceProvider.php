@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Observers\PackAutoCompleteObserver;
 use App\Observers\PackItemObserver;
 use App\Observers\PackObserver;
 use App\Observers\UserObserver;
@@ -45,6 +46,6 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Pack::observe(PackObserver::class);
         PackItem::observe(PackItemObserver::class);
-        PackAutoComplete::observe(PackAutoComplete::class);
+        PackAutoComplete::observe(PackAutoCompleteObserver::class);
     }
 }
