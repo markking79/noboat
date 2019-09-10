@@ -6,6 +6,7 @@ use App\Observers\PackItemObserver;
 use App\Observers\PackObserver;
 use App\Observers\UserObserver;
 use App\Pack;
+use App\PackAutoComplete;
 use App\PackItem;
 use App\User;
 use Illuminate\Support\Facades\Schema;
@@ -44,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Pack::observe(PackObserver::class);
         PackItem::observe(PackItemObserver::class);
+        PackAutoComplete::observe(PackAutoComplete::class);
     }
 }
