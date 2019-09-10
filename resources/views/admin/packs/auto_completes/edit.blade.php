@@ -38,7 +38,6 @@
 
             <form id="submitForm" method="POST" action="{{ route('admin.pack_auto_completes.update', ['id' => $item->id]) }}">
                 @csrf
-
                 <div class="form-group row">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
@@ -119,9 +118,9 @@
                 url: '{{route ('api.public.image.store')}}',
                 dataType: 'json',
                 add: function (e, data) {
-                   // var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
-                    //if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                      //  alert('File type not supported');
+                    var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                    if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                        //alert('File type not supported');
                         //return;
                     }
                     data.submit();
