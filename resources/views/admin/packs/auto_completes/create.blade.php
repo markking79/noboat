@@ -92,10 +92,10 @@
                 url: '{{route ('api.public.image.store')}}',
                 dataType: 'json',
                 add: function (e, data) {
-                    var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
-                    if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                        alert('File type not supported');
-                        return;
+                    //var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i;
+                    //if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                      //  alert('File type not supported');
+                        //return;
                     }
                     data.submit();
                 },
