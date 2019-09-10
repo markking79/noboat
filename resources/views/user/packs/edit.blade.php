@@ -905,7 +905,7 @@
                     url: '{{route ('api.user.packs.destroy', ['pack' => $pack->id]  )}}',
                     type: 'DELETE',
                     success: function(result) {
-                       window.location = '{{route ('user.packs.index')}}';
+                        window.location = '{{route ('user.packs.index')}}';
                     }
                 });
             });

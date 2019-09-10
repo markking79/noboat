@@ -30,6 +30,7 @@ class UserPackController extends Controller
     public function index(Request $request, PackService $packService)
     {
         $user = auth()->user();
+        // $user = auth('api')->user();
 
         $page_number = $request->get ('page', 1);
 
@@ -84,7 +85,7 @@ class UserPackController extends Controller
      */
     public function destroy($id, PackService $packService)
     {
-        $user = auth()->user();
+        $user = auth('api')->user();
 
         $pack = $packService->getByIdAndUserId ($id, $user->id);
 
