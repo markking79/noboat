@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
+use App\Services\ImageService; // delete me
 
 class PackService
 {
@@ -350,7 +351,14 @@ class PackService
 
             if ($final_file)
             {
-                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+                //OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+
+                // delete me
+                $imageService = new ImageService ();
+                $imageService->correctImageOrientationAndSave($final_file);
+                $imageService->shrinkImageToMax1024AndSave($final_file);
+                $imageService->optimizeImage($final_file);
+                // end delete me
 
                 $item = $this->packAutoCompleteRepository->getById($id);
                 $item->image = $final_file;
