@@ -14,7 +14,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <meta property="og:url" content="{{config('app.url')}}{{url()->current()}}" />
+    <meta property="og:url" content="{{url()->current()}}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ config('app.name') }}" />
     <meta property="og:image" content="{{config('app.url')}}/images/packs/facebook-share.jpg" />
