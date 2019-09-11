@@ -191,6 +191,17 @@ class PackService
 
     public function update ($id, $values)
     {
+
+        if (!isset ($values['image']))
+        {
+            $values['image'] = null;
+        }
+
+        if (!$values['image'])
+        {
+            unset($values['image']);
+        }
+
         $this->packRepository->update ($id, $values);
 
         if (isset ($values['image']) && $values['image'])
