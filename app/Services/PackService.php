@@ -246,12 +246,16 @@ class PackService
 
     public function setPackStats ($id)
     {
+
+        $this->packRepository->clearCache();
+
         $item_count = 0;
         $ounces = 0;
         $cost = 0;
 
         $pack = $this->getByIdWithAllPackItems ($id);
 
+        logger ($pack);
 
         if ($pack->categories)
         {
@@ -276,6 +280,7 @@ class PackService
                     {
                         foreach ($category->items as $item)
                         {
+                            logger ($item);
                             $item_count += 1;
                         }
                     }
@@ -290,6 +295,8 @@ class PackService
             'visible_ounces' => $ounces,
             'visible_cost' => $cost,
             ];
+
+        logger ($values);
 
         $this->packRepository->update ($id, $values);
 
