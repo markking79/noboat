@@ -196,7 +196,11 @@
                                 <input type="hidden" id="itemCategoryId" value="{{$item->category_id}}" />
                                 <input type="hidden" id="itemName" value="{{$item->name}}" />
                                 <input type="hidden" id="itemDescription" value="{{$item->description}}" />
-                                <input type="hidden" id="itemImage" value="{{Storage::url($item->image)}}?v=@php echo rand (0,100000000); @endphp" />
+                                @if ($item->image)
+                                    <input type="hidden" id="itemImage" value="{{Storage::url($item->image)}}?v=@php echo rand (0,100000000); @endphp" />
+                                @else
+                                    <input type="hidden" id="itemImage" value="" />
+                                @endif
                                 <input type="hidden" id="itemCost" value="{{$item->cost_each}}" />
                                 <input type="hidden" id="itemWeight" value="{{$item->ounces_each}}" />
                                 <input type="hidden" id="itemQuantity" value="{{$item->quantity}}" />
@@ -714,6 +718,8 @@
                     $('#category-'+categoryid+ ' .card-body').append (html);
                     setItemsFunctions ();
                     updateWeightDisplay ();
+
+                    ouncesConvertToPretty ('{{$pack_weight_units}}');
                 });
 
                 $('#addItemModal').modal('hide');
@@ -750,9 +756,9 @@
                         'pack_id': pack_id,
                         'name' : name,
                         'category_id': categoryid,
-                        'price': price,
+                        'cost_each': price,
                         'quantity': quantity,
-                        'weight': weight,
+                        'ounces_each': weight,
                         'description': description,
                         'image': image
                     },
@@ -793,11 +799,14 @@
                         }
 
                         updateWeightDisplay ();
+
+                        ouncesConvertToPretty ('{{$pack_weight_units}}');
                     }
                 });
 
                 $('#editItemModal').modal('hide');
                 $('#editItemErrorMessage').addClass('d-none');
+
 
             });
 
@@ -977,21 +986,36 @@
             if (convertTo == 'metric')
             {
                 $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 35.27).toFixed (1) + ' kg.');
+
+                    var n = $(this).text ().indexOf("kg");
+
+                    if (n == -1)
+                    {
+                        var ounces = parseInt($(this).text ());
+                        $(this).text ((ounces / 35.27).toFixed (1) + ' kg.');
+                    }
+
                 });
             }
             else if (convertTo == 'imperial')
             {
                 $('.convertOunces').each (function () {
-                    var ounces = parseInt($(this).text ());
-                    $(this).text ((ounces / 16).toFixed (1) + ' lb.');
+
+                    var n = $(this).text ().indexOf("lb");
+
+                    if (n == -1)
+                    {
+                        var ounces = parseInt($(this).text ());
+                        $(this).text ((ounces / 16).toFixed (1) + ' lb.');
+                    }
+
                 });
             }
         }
 
         function ouncesConvertToPrettySingle (element, convertTo)
         {
+            var n = element.text ().indexOf("lb");
 
             if (convertTo == 'metric')
             {

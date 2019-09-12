@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "blueimp-file-upload": "^10.1.0",
-        "jquery-ui": "^1.12.1"
+        "jquery-ui": "^1.12.1",
+        "vue-expandable-image": "0.0.2"
     }
 }

@@ -117,7 +117,6 @@ class PackItemRepository implements PackItemRepositoryInterface
 
     public function clearCache ()
     {
-        logger ('cleared pack items cache');
         Cache::tags('pack_items')->flush();
     }
 }

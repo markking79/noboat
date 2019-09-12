@@ -14,7 +14,7 @@
         <div class="col-12 col-md-2">
             <div class="image-content text-center">
                 @if ($pack->image)
-                    <img src="{{Storage::url ($pack->image)}}" />
+                    <expandable-image src="{{Storage::url ($pack->image)}}" />
                 @else
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(8.932696708362196) translate(0.21500003337860107 -0.9419994354248047)">
                             <g xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +107,7 @@
                                     <div class="col-12 col-md-1 text-center">
                                         <div class="image-content">
                                             @if ($item->image)
-                                                <img src="{{Storage::url ($item->image)}}" />
+                                                <expandable-image src="{{Storage::url ($item->image)}}" />
                                             @else
                                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(5 5) scale(3.7815069787135234) translate(0 2.334503173828125)">
                                                         <path xmlns="http://www.w3.org/2000/svg" d="M64.571,0H12.118L0,19.388V72.02h76.689V19.387L64.571,0z M74.667,69.999H2.02V19.968L13.237,2.023h24.096v16.646H5.677  v2.021H71.01v-2.021H39.355V2.021H63.45l11.218,17.946L74.667,69.999L74.667,69.999z M24.344,37.333h28v2.021h-28V37.333z"></path>

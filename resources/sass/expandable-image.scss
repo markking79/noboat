@@ -1,0 +1,15 @@
+.expandable-image img
+{
+  width: auto !important;
+}
+
+.expandable-image
+{
+  height: 100%;
+  width: auto;
+}
+
+.image-content .expand-button svg
+{
+  display: none;
+}

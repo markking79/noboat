@@ -6,12 +6,15 @@
 
 require('./bootstrap');
 require ('blueimp-file-upload');
+import VueExpandableImage from 'vue-expandable-image'
 
 window.Vue = require('vue');
 
 Vue.component('readmore', require('./components/ReadMoreComponent.vue').default);
 Vue.component('likePack', require('./components/LikePackComponent.vue').default);
 Vue.component('filterPacks', require('./components/FilterPacksComponent.vue').default);
+
+Vue.use(VueExpandableImage);
 
 const app = new Vue({
     el: '#app',
