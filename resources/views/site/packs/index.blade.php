@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="@auth col-12 @else col-6 @endif ">
-            <h1>Compare Packs</h1>
+            <h1>Pack Lists</h1>
         </div>
         @guest
             <div class="col-6 text-right">

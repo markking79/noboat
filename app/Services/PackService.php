@@ -255,8 +255,6 @@ class PackService
 
         $pack = $this->getByIdWithAllPackItems ($id);
 
-        logger ($pack);
-
         if ($pack->categories)
         {
             foreach ($pack->categories as $category)
@@ -280,7 +278,6 @@ class PackService
                     {
                         foreach ($category->items as $item)
                         {
-                            logger ($item);
                             $item_count += 1;
                         }
                     }
@@ -295,8 +292,6 @@ class PackService
             'visible_ounces' => $ounces,
             'visible_cost' => $cost,
             ];
-
-        logger ($values);
 
         $this->packRepository->update ($id, $values);
 
