@@ -180,9 +180,9 @@ class ImageService
 
 
         // load image
-        try {
+        //try {
 
-        }
+        //}
         $img = Image::make($full_current_file_path);
         logger ('3');
         logger ($img);
