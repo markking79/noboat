@@ -10,8 +10,7 @@ use App\Repositories\PackAutoCompleteRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-
-//use App\Services\ImageService; // delete me
+use App\Services\ImageService;
 
 class PackService
 {
@@ -20,15 +19,15 @@ class PackService
     private $packItemRepository;
     private $packCategoryRepository;
     private $packAutoCompleteRepository;
-    //private $imageService;
+    private $imageService;
 
-    public function __construct(PackRepository $packRepository, PackItemRepository $packItemRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository)
+    public function __construct(PackRepository $packRepository, PackItemRepository $packItemRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository, ImageService $imageService)
     {
         $this->packRepository = $packRepository;
         $this->packItemRepository = $packItemRepository;
         $this->packCategoryRepository = $packCategoryRepository;
         $this->packAutoCompleteRepository = $packAutoCompleteRepository;
-        //$this->imageService = $imageService;
+        $this->imageService = $imageService;
     }
 
     public function store ($user_id)
