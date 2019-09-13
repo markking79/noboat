@@ -168,8 +168,9 @@ class ImageService
      */
     function shrinkImageToMax1024AndSave($file_path)
     {
+        logger ('1');
         $full_current_file_path = storage_path('app/public') . '/' . $file_path;
-
+        logger ('2');
         // load image
         $img = Image::make($full_current_file_path);
 
@@ -180,21 +181,28 @@ class ImageService
         // check if width or height is more than 1024
         if ($w > 1024 || $h > 1024)
         {
-
+            logger ('3');
             if($w > $h) {
+                logger ('4');
                 // resize via max width
                 $img->resize(1024, null, function ($constraint) {
+                    logger ('5');
                     $constraint->aspectRatio();
+                    logger ('6');
                 });
             } else {
+                logger ('7');
                 // resize via max height
                 $img->resize(null, 1024, function ($constraint) {
+                    logger ('8');
                     $constraint->aspectRatio();
+                    logger ('9');
                 });
             }
-
+            logger ('10');
             // save the image
             $img->save();
+            logger ('11');
         }
     }
 
