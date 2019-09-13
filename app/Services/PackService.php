@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-use App\Services\ImageService; // delete me
+//use App\Services\ImageService; // delete me
 
 class PackService
 {
@@ -20,15 +20,15 @@ class PackService
     private $packItemRepository;
     private $packCategoryRepository;
     private $packAutoCompleteRepository;
-    private $imageService;
+    //private $imageService;
 
-    public function __construct(PackRepository $packRepository, PackItemRepository $packItemRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository, ImageService $imageService)
+    public function __construct(PackRepository $packRepository, PackItemRepository $packItemRepository, PackCategoryRepository $packCategoryRepository, PackAutoCompleteRepository $packAutoCompleteRepository)
     {
         $this->packRepository = $packRepository;
         $this->packItemRepository = $packItemRepository;
         $this->packCategoryRepository = $packCategoryRepository;
         $this->packAutoCompleteRepository = $packAutoCompleteRepository;
-        $this->imageService = $imageService;
+        //$this->imageService = $imageService;
     }
 
     public function store ($user_id)
@@ -353,13 +353,13 @@ class PackService
 
             if ($final_file)
             {
-                //OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
+                OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
 
                 // delete me
-                $imageService = new ImageService ();
-                $imageService->correctImageOrientationAndSave($final_file);
-                $imageService->shrinkImageToMax1024AndSave($final_file);
-                $imageService->optimizeImage($final_file);
+                //$imageService = new ImageService ();
+                //$imageService->correctImageOrientationAndSave($final_file);
+                //$imageService->shrinkImageToMax1024AndSave($final_file);
+                //$imageService->optimizeImage($final_file);
                 // end delete me
 
                 $item = $this->packAutoCompleteRepository->getById($id);
