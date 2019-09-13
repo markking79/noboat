@@ -171,6 +171,8 @@ class ImageService
         logger ('1');
         $full_current_file_path = storage_path('app/public') . '/' . $file_path;
         logger ('2');
+
+        logger ($full_current_file_path);
         // load image
         $img = Image::make($full_current_file_path);
         logger ('3');
