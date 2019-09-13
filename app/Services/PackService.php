@@ -354,13 +354,6 @@ class PackService
             {
                 OptimizeImageJob::dispatch(new OptimizeImageJob($final_file));
 
-                // delete me
-                //$imageService = new ImageService ();
-                //$imageService->correctImageOrientationAndSave($final_file);
-                //$imageService->shrinkImageToMax1024AndSave($final_file);
-                //$imageService->optimizeImage($final_file);
-                // end delete me
-
                 $item = $this->packAutoCompleteRepository->getById($id);
                 $item->image = $final_file;
                 $item->touch ();
