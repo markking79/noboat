@@ -168,16 +168,21 @@ class ImageService
      */
     function shrinkImageToMax1024AndSave($file_path)
     {
+        logger (ini_get('memory_limit'));
+        ini_set('memory_limit ', -1);
+
         logger ('1');
         $full_current_file_path = storage_path('app/public') . '/' . $file_path;
         logger ('2');
 
         logger ($full_current_file_path);
 
-        Image::configure(array('driver' => 'imagick'));
 
 
         // load image
+        try {
+
+        }
         $img = Image::make($full_current_file_path);
         logger ('3');
         logger ($img);
