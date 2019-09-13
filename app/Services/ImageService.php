@@ -173,11 +173,13 @@ class ImageService
         logger ('2');
         // load image
         $img = Image::make($full_current_file_path);
-
+        logger ('3');
+        logger ($img);
         // get image size
         $w = $img->width();
         $h = $img->height();
-
+        logger ($w);
+        logger ($h);
         // check if width or height is more than 1024
         if ($w > 1024 || $h > 1024)
         {
