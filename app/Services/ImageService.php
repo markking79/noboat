@@ -173,6 +173,10 @@ class ImageService
         logger ('2');
 
         logger ($full_current_file_path);
+
+        Image::configure(array('driver' => 'imagick'));
+
+
         // load image
         $img = Image::make($full_current_file_path);
         logger ('3');
