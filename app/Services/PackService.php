@@ -358,7 +358,7 @@ class PackService
                 // delete me
                 $imageService = new ImageService ();
                 $imageService->correctImageOrientationAndSave($final_file);
-                $imageService->shrinkImageToMax1024AndSave($final_file);
+                //$imageService->shrinkImageToMax1024AndSave($final_file);
                 //$imageService->optimizeImage($final_file);
                 // end delete me
 
