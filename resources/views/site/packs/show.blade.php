@@ -51,8 +51,8 @@
             </span>
             @endguest
             <div class="btn-group btn-group-sm pb-2" role="group">
-                <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Imperial</a>
-                <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Metric</a>
+                <a href="?pack_weight_units=imperial" class="btn @if ($pack_weight_units == 'metric') btn-primary @else btn-secondary @endif ">Imperial</a>
+                <a href="?pack_weight_units=metric" class="btn @if ($pack_weight_units == 'imperial') btn-primary @else btn-secondary @endif ">Metric</a>
             </div>
         </div>
     </div><br />

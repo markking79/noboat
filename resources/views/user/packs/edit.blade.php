@@ -1033,11 +1033,11 @@
         {
             var convertToUnits = '{{$pack_weight_units}}';
 
-            if (convertToUnits == 'metric')
+            if (convertToUnits == 'imperial')
             {
                 return parseInt(ounces).toFixed (1) + ' oz.';
             }
-            else if (convertToUnits == 'imperial')
+            else if (convertToUnits == 'metric')
             {
                 var intOunces = parseInt(ounces);
                 return (intOunces * 28).toFixed (0) + ' g.';

@@ -82,7 +82,7 @@ class Pack extends Model
 
     public function small_desired_weight_format ($metric = 'imperial')
     {
-        if ($metric == 'imperial')
+        if ($metric == 'metric')
             return $this->grams_each;
         else
             return $this->visible_ounces . ' oz.';
