@@ -36,7 +36,7 @@ class PackItem extends Model
 
     public function getGramsEachAttribute ()
     {
-        return round ($this->ounces_each * 28, 0) . ' g.';
+        return round ($this->ounces_each * 28.3495, 0) . ' g.';
     }
 
     public function getImperialEachAttribute ()

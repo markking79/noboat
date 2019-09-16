@@ -28,7 +28,7 @@ class PackCategory extends Model
 
     public function getGramsEachAttribute ()
     {
-        return round ($this->total_ounces * 28, 0) . ' g.';
+        return round ($this->total_ounces * 28.3495, 0) . ' g.';
     }
 
     public function getImperialWeightAttribute ()

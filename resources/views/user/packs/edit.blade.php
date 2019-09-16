@@ -1040,7 +1040,7 @@
             else if (convertToUnits == 'metric')
             {
                 var intOunces = parseInt(ounces);
-                return (intOunces * 28).toFixed (0) + ' g.';
+                return (intOunces * 28.3495).toFixed (0) + ' g.';
             }
         }
 
