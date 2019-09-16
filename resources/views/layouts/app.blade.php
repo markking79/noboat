@@ -148,9 +148,38 @@
                         @yield('content')
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12 text-center"><a href="#" data-toggle="modal" data-target="#registerModal" class="text-danger">report an issue</a></div>
+                </div>
             </div>
         </main>
     </div>
+
+    <div class="modal fade reportAnIssueModal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="reportAnIssueModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Report An Issue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="reportIssueCompletedContent" style="display: none;">Thank you. Your message has been sent!</div>
+                    <div class="form-group">
+                        <label for="siteIssueMessage">Issue</label>
+                        <textarea id="siteIssueMessage" name="siteIssueMessage" class="form-control" rows="9"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="reportIssueCloseBtn" type="button" class="btn btn-danger" data-dismiss="modal" style="display: none;">Close</button>
+                    <button id="reportIssueCancelBtn" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button id="reportAnIssueBtn" type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
     @yield('script')

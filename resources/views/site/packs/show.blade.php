@@ -70,7 +70,7 @@
                             </div>
                             @if (count($category['items']) > 0)
                                 <div class="col-12 col-md-4 text-md-right">
-                                    {{$category->total_ounces}} oz. ({{$category->desired_weight_format ($pack_weight_units)}})<br />
+                                    {{$category->small_desired_weight_format ($pack_weight_units)}} ({{$category->desired_weight_format ($pack_weight_units)}})<br />
                                     ${{number_format ($category->total_cost, 2)}}
                                 </div>
                             @endif
@@ -83,13 +83,13 @@
                                 <div class="col-1">
 
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
 
                                 </div>
                                 <div class="col-2 text-center">
                                     <p><b>Price</b> <i>(each)</i></p>
                                 </div>
-                                <div class="col-2 text-center">
+                                <div class="col-3 text-center">
                                     <p><b>Weight</b> (each)</p>
                                 </div>
                                 <div class="col-1 text-center">
@@ -115,7 +115,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-5">
                                         <h3>@if ($item->purchase_link)<a target="_blank" href="{{$item->purchase_link}}">@endif{{$item->name}}@if ($item->purchase_link)</a>@endif</h3>
                                         <p>
                                             <readmore text="{{$item->description}}"></readmore>
@@ -124,8 +124,8 @@
                                         <p>${{number_format ($item->cost_each, 2)}} <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></p>
 
                                     </div>
-                                    <div class="col-12 col-md-2 text-left text-md-center">
-                                        <p>{{$item->ounces_each  ?? "0"}} oz. <i>({{$item->desired_weight_format ($pack_weight_units)}}) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
+                                    <div class="col-12 col-md-3 text-left text-md-center">
+                                        <p>{{$item->small_desired_weight_format (($pack_weight_units))}} <i>({{$item->desired_weight_format ($pack_weight_units)}}) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
                                     </div>
                                     <div class="col-12 col-md-1 text-left text-md-center">
                                         <p>x {{$item->quantity  ?? "0"}} <span class="d-inline-flex d-md-none font-weight-bold">(quantity)</span></p>

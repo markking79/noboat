@@ -20,3 +20,33 @@ const app = new Vue({
     el: '#app',
 });
 
+$(document).ready (function () {
+    $('.reportAnIssueModal #reportAnIssueBtn').click (function () {
+
+        var issue = $('#siteIssueMessage').val ();
+
+        $.post ('/api/public/report_issue', {
+            'issue': issue
+        }, function () {
+            $('.reportAnIssueModal .form-group').slideUp (300);
+            $('.reportAnIssueModal #reportIssueCompletedContent').slideDown (300);
+
+            $('.reportAnIssueModal #reportIssueCloseBtn').show ();
+            $('.reportAnIssueModal #reportIssueCancelBtn').hide ();
+            $('.reportAnIssueModal #reportAnIssueBtn').hide ();
+
+            $('#siteIssueMessage').val ('');
+        });
+    });
+
+    $('.reportAnIssueModal #reportIssueCloseBtn').click (function () {
+
+        $('.reportAnIssueModal .form-group').slideDown (300);
+        $('.reportAnIssueModal #reportIssueCompletedContent').slideUp (300);
+
+        $('.reportAnIssueModal #reportIssueCloseBtn').hide ();
+        $('.reportAnIssueModal #reportIssueCancelBtn').show ();
+        $('.reportAnIssueModal #reportAnIssueBtn').show ();
+    });
+
+});

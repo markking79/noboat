@@ -126,11 +126,11 @@
 
                     <p class="card-text">
                         <svg class=more-info-svg-badge data-content="Everything except Consumable & Worn." data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
-                        Base Weight: <span id="pack_base_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_base_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
+                        Base Weight: <span id="pack_base_weight_ounces_display">{{$pack->small_desired_weight_format ($pack_weight_units)}}</span> (<span id="pack_base_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
                         <svg class=more-info-svg-badge data-content="Everything except Worn." data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
-                        Total Pack Weight: <span id="pack_total_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_total_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
+                        Total Pack Weight: <span id="pack_total_weight_ounces_display">{{$pack->small_desired_weight_format ($pack_weight_units)}}</span> (<span id="pack_total_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
                         <svg class=more-info-svg-badge data-content="Everything."data-placement=bottom data-toggle=popover data-trigger=hover enable-background="new 0 0 300 300"version=1.1 viewBox="0 0 300 300"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g transform="translate(5 5) scale(0.6472593483814157) translate(-31.98046875 -31.978515625)"><g xmlns=http://www.w3.org/2000/svg><path d="M480,253C478.3,129.3,376.7,30.4,253,32S30.4,135.3,32,259c1.7,123.7,103.3,222.6,227,221C382.7,478.3,481.7,376.7,480,253   z M256,111.9c17.7,0,32,14.3,32,32s-14.3,32-32,32c-17.7,0-32-14.3-32-32S238.3,111.9,256,111.9z M300,395h-88v-11h22V224h-22v-12   h66v172h22V395z"></path></g></g></svg>
-                        Skin Out Weight: <span id="pack_skin_out_weight_ounces_display">{{$pack->visible_ounces  ?? '0'}}</span> oz. (<span id="pack_skin_out_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
+                        Skin Out Weight: <span id="pack_skin_out_weight_ounces_display">{{$pack->small_desired_weight_format ($pack_weight_units)}}</span> (<span id="pack_skin_out_weight_pretty_display" class="convertOunces">{{$pack->visible_ounces  ?? '0'}}</span>)<br />
                         Cost: $<span id="pack_cost_display">{{ number_format ($pack->visible_cost, 2) }}</span><br />
                         Item Count: <span id="pack_item_count_display">{{$pack->visible_item_count ?? '0'}}</span><br />
                         Likes: {{$pack->heart_count ?? '0' }}<br />
@@ -157,7 +157,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 text-md-right">
-                            <span class="categoryOunces">{{$category->total_ounces}}</span> oz. (<span class="convertOunces">{{$category->total_ounces}}</span>)<br />
+                            <span class="categoryOunces">{{$category->small_desired_weight_format ($pack_weight_units)}}</span> (<span class="convertOunces">{{$category->total_ounces}}</span>)<br />
                             $<span class="categoryCost">{{number_format ($category->total_cost, 2)}}</span>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
 
                                 </div>
                                 <div class="col-12 col-md-2 text-left text-md-center">
-                                    <p><span class="display_weight"> {{$item->ounces_each ?? "0"}}</span> oz. <i>(<span class="convertOunces">{{$item->ounces_each ?? "0"}}</span>) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
+                                    <p><span class="display_weight"> {{$item->small_desired_weight_format ($pack_weight_units)}}</span> <i>(<span class="convertOunces">{{$item->ounces_each ?? "0"}}</span>) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>
                                 </div>
                                 <div class="col-12 col-md-1 text-left text-md-center">
                                     <p>x <span class="display_quantity">{{$item->quantity ?? "0"}}</span> <span class="d-inline-flex d-md-none font-weight-bold">(quantity)</span></p>
@@ -681,7 +681,7 @@
                         '\n' +
                         '                                </div>\n' +
                         '                                <div class="col-12 col-md-2 text-left text-md-center">\n' +
-                        '                                    <p><span class="display_weight"> '+weight+'</span> oz. <i>(<span class="convertOunces">'+weight+'</span>) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>\n' +
+                        '                                    <p><span class="display_weight"> '+getSmallConvertToPretty(weight)+'</span> oz. <i>(<span class="convertOunces">'+weight+'</span>) <span class="d-inline-flex d-md-none font-weight-bold">(each)</span></i></p>\n' +
                         '                                </div>\n' +
                         '                                <div class="col-12 col-md-1 text-left text-md-center">\n' +
                         '                                    <p>x <span class="display_quantity">'+quantity+'</span> <span class="d-inline-flex d-md-none font-weight-bold">(quantity)</span></p>\n' +
@@ -785,7 +785,7 @@
 
                         $('#item-'+itemId + ' .display_name').html (name);
                         $('#item-'+itemId + ' .display_cost').html (parseFloat (price).toFixed(2));
-                        $('#item-'+itemId + ' .display_weight').html (weight);
+                        $('#item-'+itemId + ' .display_weight').html (getSmallConvertToPretty(weight));
                         $('#item-'+itemId + ' .convertOunces').html (weight);
                         $('#item-'+itemId + ' .display_quantity').html (quantity);
                         $('#item-'+itemId + ' .display_description').html (description);
@@ -1029,6 +1029,21 @@
             }
         }
 
+        function getSmallConvertToPretty (ounces)
+        {
+            var convertToUnits = '{{$pack_weight_units}}';
+
+            if (convertToUnits == 'metric')
+            {
+                return parseInt(ounces).toFixed (1) + ' oz.';
+            }
+            else if (convertToUnits == 'imperial')
+            {
+                var intOunces = parseInt(ounces);
+                return (intOunces * 28).toFixed (0) + ' g.';
+            }
+        }
+
         function setItemsFunctions ()
         {
             $('.confirmDeleteItemBtn').unbind ().click (function () {
@@ -1194,21 +1209,21 @@
             total_weight = parseFloat (total_weight).toFixed(1);
             total_cost = parseFloat (total_cost).toFixed(2);
 
-            $(this).find ('.categoryOunces').html (category_total_weight);
+            $(this).find ('.categoryOunces').html (getSmallConvertToPretty(category_total_weight));
             $(this).find ('.card-header').find ('.convertOunces').html (category_total_weight);
             $(this).find ('.categoryCost').html (category_total_cost);
 
             ouncesConvertToPrettySingle ($(this).find ('.card-header').find ('.convertOunces'), '{{$pack_weight_units}}');
 
-            $('#pack_base_weight_ounces_display').html (total_base_weight);
+            $('#pack_base_weight_ounces_display').html (getSmallConvertToPretty(total_base_weight));
             $('#pack_base_weight_pretty_display').html (total_base_weight);
             ouncesConvertToPrettySingle ($('#pack_base_weight_pretty_display'), '{{$pack_weight_units}}');
 
-            $('#pack_total_weight_ounces_display').html (total_pack_weight);
+            $('#pack_total_weight_ounces_display').html (getSmallConvertToPretty(total_pack_weight));
             $('#pack_total_weight_pretty_display').html (total_pack_weight);
             ouncesConvertToPrettySingle ($('#pack_total_weight_pretty_display'), '{{$pack_weight_units}}');
 
-            $('#pack_skin_out_weight_ounces_display').html (total_weight);
+            $('#pack_skin_out_weight_ounces_display').html (getSmallConvertToPretty(total_weight));
             $('#pack_skin_out_weight_pretty_display').html (total_weight);
             ouncesConvertToPrettySingle ($('#pack_skin_out_weight_pretty_display'), '{{$pack_weight_units}}');
 

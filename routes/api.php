@@ -19,6 +19,7 @@ Route::name('api.public.')->group(function() {
 Route::name('api.public.')->group(function() {
     Route::resource('public/packs', 'Api\PackController')->only(['index', 'show']);
     Route::resource('public/image', 'Api\UploadImageController')->only(['store']);
+    Route::resource('public/report_issue', 'Api\ReportIssueController')->only(['store']);
 });
 
 Route::middleware(['auth:api'])->name('api.user.')->group(function() {

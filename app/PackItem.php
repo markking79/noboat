@@ -34,6 +34,11 @@ class PackItem extends Model
         return $this->hasOne(PackCategory::class);
     }
 
+    public function getGramsEachAttribute ()
+    {
+        return round ($this->ounces_each * 28, 0) . ' g.';
+    }
+
     public function getImperialEachAttribute ()
     {
         return round ($this->ounces_each / 16, 1) . ' lb.';
@@ -50,6 +55,14 @@ class PackItem extends Model
             return $this->imperial_each;
         else
             return $this->metric_each;
+    }
+
+    public function small_desired_weight_format ($metric = 'imperial')
+    {
+        if ($metric == 'imperial')
+            return $this->grams_each;
+        else
+            return $this->ounces_each . ' oz.';
     }
 
 }

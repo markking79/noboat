@@ -45,6 +45,11 @@ class Pack extends Model
         return $this->belongsToMany('App\User', 'pack_likes', 'pack_id', 'user_id')->withTimestamps();
     }
 
+    public function getGramsEachAttribute ()
+    {
+        return round ($this->visible_ounces * 28, 0) . ' g.';
+    }
+
     public function getVisibleImperialAttribute ()
     {
         return round ($this->visible_ounces / 16, 1) . ' lb.';
@@ -73,6 +78,14 @@ class Pack extends Model
             return $this->visible_imperial;
         else
             return $this->visible_metric;
+    }
+
+    public function small_desired_weight_format ($metric = 'imperial')
+    {
+        if ($metric == 'imperial')
+            return $this->grams_each;
+        else
+            return $this->visible_ounces . ' oz.';
     }
 
     public function getDisplayDateAttribute ()
