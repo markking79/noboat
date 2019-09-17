@@ -1035,7 +1035,7 @@
 
             if (convertToUnits == 'imperial')
             {
-                return parseInt(ounces).toFixed (1) + ' oz.';
+                return parseFloat(ounces).toFixed (1) + ' oz.';
             }
             else if (convertToUnits == 'metric')
             {
