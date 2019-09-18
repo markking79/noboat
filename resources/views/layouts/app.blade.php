@@ -18,6 +18,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ config('app.name') }}" />
     <meta property="og:image" content="{{config('app.url')}}/images/packs/facebook-share.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 </head>
 <body>
     <div id="app">
