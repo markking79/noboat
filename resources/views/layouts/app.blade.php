@@ -17,7 +17,7 @@
     <meta property="og:url" content="{{url()->current()}}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ config('app.name') }}" />
-    <meta property="og:image" content="{{config('app.url')}}/images/packs/facebook-share.jpg?v=3" />
+    <meta property="og:image" content="{{config('app.url')}}/images/packs/facebook-share.jpg?v=4" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 </head>
